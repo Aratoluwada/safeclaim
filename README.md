@@ -1,138 +1,150 @@
-# SafeClaim AI — Understand the Claim. Verify the Facts.
+# SafeClaim AI — Grounded Evidence & Rumour Guard Engine
 
-> **Grounded public-health, consumer protection, and social benefit verification engine powered by official Nigerian evidence and open-weight intelligence.**
+> **OSCA OPEN//BUILD 2026 Project**  
+> *Grounded public-health, consumer protection, and social benefit verification engine powered by official Nigerian regulatory evidence.*
 
-SafeClaim AI provides two connected interfaces:
-1. **Ask (Public Grounded Assistant):** A public question-and-answer interface in standard English and Nigerian Pidgin (`pcm`). Users query viral health rumours, predatory digital loan apps, and federal relief grants. The system returns answers strictly grounded in official gazettes (NCDC, FCCPC, NHIA, FMOH, INEC), provides passage citations, and abstains when adequate official evidence is absent.
-2. **Rumour Desk (Institutional Dashboard):** An intelligence console for public health analysts, agency communication desks (NCDC, FCCPC), and accredited fact-checkers (Dubawa, Africa Check). Tracks circulating claim clusters, highlights **Guidance Gaps** (viral rumours with zero published official guidance), inspects street phrasing, and produces broadcast-ready daily briefs.
-
----
-
-## 1. Problem & Context
-
-In Nigeria, viral misinformation regarding public-health emergencies (e.g. Ebola, Mpox, Cholera outbreaks), predatory digital lenders (defamatory contact shaming, illicit data harvesting), and fake federal palliative grants spreads rapidly through WhatsApp voice notes, closed groups, and social media.
-
-Traditional LLMs hallucinate plausible-sounding medical advice or unverified official policies. SafeClaim AI enforces a **strict evidence-grounded architecture**:
-- Answers cite specific official passage IDs (e.g. `ncdc#1`, `fccpc#1`).
-- Factual claims link directly to authoritative government circulars.
-- When no verified government publication exists, the model **abstains** explicitly (`NO_OFFICIAL_SOURCE_FOUND`), refusing to extrapolate or invent confirmation.
-- Emergency helplines (such as NCDC Toll-Free `6232` or WhatsApp `+234 809 955 5577`) are surfaced only when verified by official documentation.
+SafeClaim AI tackles viral misinformation circulating across Nigerian messaging channels (WhatsApp forwards, voice notes, viral X posts, and closed groups). Instead of hallucinating answers or giving unverified medical advice, SafeClaim operates on a **strict, evidence-grounded architecture**: every factual statement links to official government circulars, and the system **safely abstains** when official backing is absent.
 
 ---
 
-## 2. Key Architecture & File Structure
+## 🏛️ System Features & User Interfaces
+
+1. **Ask (Public Grounded Assistant):**
+   * Accessible in **English** and **Nigerian Pidgin (`pcm`)**.
+   * Verifies viral claims against official publications from the **NCDC**, **FCCPC**, **NASSP**, and **INEC**.
+   * Surfaces official emergency hotlines (e.g. NCDC Toll-Free `6232`, FCCPC `0800 033 2272`).
+   * One-click **"Forward Receipt to WhatsApp"** (`wa.me/?text=...`) to counter rumours directly in WhatsApp groups.
+   * Native **WhatsApp Bot Webhook** (`/api/v1/whatsapp/webhook`) for automated chat verification.
+
+2. **Rumour Desk (Agency & Fact-Checker Intelligence Dashboard):**
+   * Centroid-based clustering that tracks high-velocity circulating claim clusters in real time.
+   * Detects **Guidance Gaps**: viral rumours circulating with zero published official guidance.
+   * Generates pre-cleared, broadcast-ready counter-messages in English and Pidgin for radio and WhatsApp broadcast lists.
+   * Exports downloadable **Daily Intelligence Briefs** (`.md`) for public health agencies and fact-checkers (Dubawa, Africa Check).
+
+---
+
+## 🤖 Open-Weight Foundation Model (OSCA OPEN//BUILD Requirement B — 20 Points)
+
+SafeClaim is powered by **[`Qwen/Qwen2.5-7B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct)** (Apache 2.0 open-weight model) paired with a lightweight edge variant **[`Qwen/Qwen2.5-3B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct)** / **[`google/gemma-2-2b-it`](https://huggingface.co/google/gemma-2-2b-it)**.
+
+* **Repository:** Hugging Face ([`Qwen/Qwen2.5-7B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct))
+* **Licence:** **Apache 2.0** (Open weights, fully permissive).
+* **Serving Runtime:** Local Ollama (`qwen2.5:7b-instruct`) or vLLM via OpenAI-compatible API (`safeclaims/llm.py`). Runs quantized in 4-bit (`Q4_K_M`) requiring only ~4.7 GB RAM on standard student laptops.
+* **Meaningful Role in the Prototype:**
+  1. **Claim Normalization:** Distills noisy, unstructured Nigerian WhatsApp forwards and voice notes into canonical factual assertions.
+  2. **Grounded Natural Language Inference (NLI):** Evaluates logical entailment (Contradiction vs. Support) between claims and official Nigerian gazette passages.
+  3. **Bilingual WhatsApp Receipts:** Synthesizes bite-sized, empathetic counter-receipts in authentic **Nigerian Pidgin** and **English** for community WhatsApp debunking.
+  4. **Daily Intelligence Briefings:** Synthesizes rumour clusters into executive health briefs and drafts official advisories for Guidance Gaps.
+* **Grounding Guardrails & Limitations:**
+  To eliminate LLM hallucinations on emergency helplines and legal statutes, SafeClaim implements a **Grounded RAG architecture**: the model is constrained to cite exact official passage IDs (`<doc_id>#<chunk_id>`), with a deterministic offline fallback engine for low-connectivity rural health centers.
+
+
+---
+
+## 📐 Project Architecture
 
 ```text
-/
-├── index.html                     # HTML5 entry with synced SEO meta, Plus Jakarta Sans & Inter
-├── metadata.json                  # AI Studio applet manifest
-├── package.json                   # React 19, Tailwind v4, Lucide React, Express, TSX
-├── src/
-│   ├── types/
-│   │   └── api.ts                 # TypeScript schemas matching API_CONTRACT.md
-│   ├── data/
-│   │   └── demoData.ts            # Deterministic Nigerian public health & consumer dataset
-│   ├── api/
-│   │   ├── client.ts              # Typed API client, localStorage config, health checker
-│   │   ├── ask.ts                 # askQuestion() supporting Demo & Live modes
-│   │   └── rumours.ts             # getRumourStats, getClusters, getDailyBrief, reloadSyntheticDemo
-│   ├── utils/
-│   │   ├── translations.ts        # English ('en') & Nigerian Pidgin ('pcm') localization
-│   │   ├── briefGenerator.ts      # Markdown daily brief compiler & file download utility
-│   │   └── briefGenerator.test.ts # Fast-feedback unit tests via node:test & tsx
-│   ├── components/
-│   │   ├── common/
-│   │   │   ├── Navbar.tsx         # Responsive navbar, tab router, language switcher
-│   │   │   ├── DisclaimerBanner.tsx # Mandatory official disclaimer banner
-│   │   │   ├── SyntheticBanner.tsx  # Rumour Desk synthetic testbed notice & reload button
-│   │   │   ├── LanguageSelect.tsx # Accessible en / pcm switcher
-│   │   │   ├── VerdictBadge.tsx   # Color-coded badge for 3 official verdict labels
-│   │   │   └── BackendModeModal.tsx # Live API settings & open-weight model info
-│   │   ├── ask/
-│   │   │   ├── QuestionInput.tsx  # Search input & quick starter chips
-│   │   │   ├── AnswerCard.tsx     # Answer text with inline clickable [citation] tags
-│   │   │   ├── HotlineAlert.tsx   # Verified agency helpline card
-│   │   │   ├── SourceCard.tsx     # Expandable accordion with quoted official excerpt
-│   │   │   └── AbstentionCard.tsx # Polite fallback for unverified rumours
-│   │   └── rumour-desk/
-│   │       ├── StatsOverview.tsx  # KPI metric cards (Messages, Contradicted, Gaps, Domains)
-│   │       ├── FilterBar.tsx      # Domain & verdict filters, guidance gap toggle, search
-│   │       ├── ClusterTable.tsx   # Responsive cluster table & mobile card view
-│   │       ├── ClusterDrawer.tsx  # Slide-over inspection drawer with street quotes & suggested reply
-│   │       └── DailyBriefModal.tsx# Formatted Markdown brief reader & .md file downloader
-│   ├── pages/
-│   │   ├── AskPage.tsx            # Public verification interface
-│   │   └── RumourDeskPage.tsx     # Institutional intelligence dashboard
-│   ├── App.tsx                    # Main app shell & router
-│   ├── main.tsx                   # React root entry
-│   └── index.css                  # Tailwind CSS v4 directives
+sac/
+├── data/
+│   ├── corpus/                     # Official markdown guidance documents
+│   │   ├── ncdc_ebola_advisory_2026.md
+│   │   ├── fccpc_digital_lenders_advisory_2026.md
+│   │   ├── nassp_conditional_cash_transfer_2026.md
+│   │   └── inec_voter_accreditation_guidelines_2026.md
+│   ├── corpus_manifest.csv         # Metadata registry (ID, publisher, URL, domain)
+│   ├── index/                      # Serialized TF-IDF vector matrix & passage index
+│   └── precomputed_clusters.json   # Seed benchmark claim clusters for demo mode
+├── safeclaims/                     # Backend REST API package (Python / FastAPI)
+│   ├── config.py                   # System configuration, paths, and thresholds
+│   ├── ingest.py                   # Semantic section chunker & offline TF-IDF vectorizer
+│   ├── retrieve.py                 # Cosine similarity retrieval & calibrated threshold gating
+│   ├── claims.py                   # Input sanitization, claim extraction & domain routing
+│   ├── cluster.py                  # Online incremental centroid clustering engine
+│   ├── verdict.py                  # Strict 3-verdict classifier & WhatsApp broadcast generator
+│   ├── brief.py                    # Daily Intelligence Brief compiler
+│   └── server.py                   # FastAPI REST API & WhatsApp webhook
+├── safeclaim/                      # Frontend Application (React 19, Vite, Tailwind CSS v4)
+│   ├── src/components/ask/         # Ask interface, AnswerCard, WhatsApp share modal
+│   ├── src/components/rumour-desk/ # Cluster tables, metric cards, brief reader
+│   └── src/data/demoData.ts        # Client-side demo fixture
+├── eval/                           # Benchmarking & Safety Evaluation Suite
+│   ├── questions.jsonl             # 40 balanced Q&A evaluation cases
+│   ├── rumours.jsonl               # 30 labelled rumour cases
+│   └── run_eval.py                 # Benchmark runner
+├── docs/                           # Architecture, contracts, and evaluation reports
+│   ├── API_CONTRACT.md             # REST API specifications (RFC 7807 compliant)
+│   ├── FRONTEND_SPEC.md            # Frontend UI architecture and component guidelines
+│   ├── EVAL.md                     # Measured benchmark results and confusion matrix
+│   ├── MODEL.md                    # Modeling, clustering math, and safety design
+│   └── DECISIONS.md                # Architecture Decision Records (ADRs)
+└── tests/                          # Automated Pytest suite (23 unit & integration tests)
 ```
 
 ---
 
-## 3. Demo Mode vs. Live Mode
+## ⚡ Quickstart & Setup
 
-SafeClaim AI provides two explicit, user-switchable operating modes:
+### 1. Prerequisites
+- Python 3.11+
+- Node.js 18+ (for frontend)
 
-### Demo Mode (Active by default)
-- Operates entirely client-side without requiring a running backend container.
-- Uses curated, deterministic benchmark data for realistic Nigerian claims:
-  - **Outbreak:** Ebola rumour in Lagos (Refuted by NCDC advisory), Salt water concoctions (Dangerous myth refutation).
-  - **Scams:** Predatory loan apps (FCCPC registered lender whitelist), Fake N50k WhatsApp palliative grant (Phishing vector).
-  - **Benefits:** NHIA mandatory registration guidelines.
-  - **Guidance Gaps:** Unverified guava leaf concoctions for Mpox rashes (+74% 24h velocity, zero official advice).
-- Clearly labelled with synthetic warning banners.
-- Provides functional filtering, cluster inspection, language toggling, and brief exporting.
-
-### Live Mode
-- Connects to a companion backend server (e.g. `http://localhost:8000/api/v1` or configured `VITE_API_BASE_URL`).
-- Sends actual HTTP requests to:
-  - `POST /api/v1/ask`
-  - `GET /api/v1/rumours/stats`
-  - `GET /api/v1/rumours/clusters`
-  - `GET /api/v1/rumours/brief`
-  - `GET /api/v1/rumours/brief/download`
-- **Integrity Rule:** If the backend is unreachable or returns an error, SafeClaim displays a clear diagnostic error and never silently falls back to synthetic data pretending to be live.
-
----
-
-## 4. Open-Weight Model & Grounding Strategy
-
-The application is architected to interface with an open-weight model deployed by the backend teammate:
-- **Selected Model Candidates:** Mistral-7B-Instruct-v0.3 or Gemma-2-9B-IT (quantized 4-bit / 8-bit via vLLM or Hugging Face Text Generation Inference).
-- **Selection Rationale:** Permissive open-source licensing (Apache 2.0 / Gemma Open Terms), strong instruction-following for structured JSON extraction, and high context-window capacity for injecting official government passages.
-- **Retrieval Grounding:** Scraped corpus of gazettes and circulars from NCDC (`ncdc.gov.ng`), FCCPC (`fccpc.gov.ng`), NHIA (`nhia.gov.ng`), and INEC (`inecnigeria.org`).
-- **Abstention Threshold:** Cosine similarity gate < 0.72 triggers prompt-level abstention (`NO_OFFICIAL_SOURCE_FOUND`), ensuring model never hallucinates official government policy.
-
----
-
-## 5. Official Verdict Labels
-
-The UI strictly adheres to the 3 official verdict labels:
-1. `CONTRADICTED_BY_OFFICIAL_SOURCE` (Carmine Red): The claim is refuted by official advisories.
-2. `SUPPORTED_BY_OFFICIAL_SOURCE` (Emerald Green): The claim matches official published regulations or gazettes.
-3. `NO_OFFICIAL_SOURCE_FOUND` (Amber): No official source exists in the verified database. (Treated as a Guidance Gap when message volume is viral).
-
----
-
-## 6. Testing & Quality Assurance
-
-SafeClaim includes automated unit tests for pure logic:
+### 2. Backend Setup
 ```bash
-# Run unit tests using tsx and node:test runner
-npx --yes tsx --test src/utils/briefGenerator.test.ts
+# Activate virtual environment
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Build official document index
+python -m safeclaims.ingest
+
+# Run automated tests
+pytest tests/
 ```
 
-To compile and verify TypeScript types:
+### 3. Run the Backend API Server
 ```bash
-npm run lint
-npm run build
+uvicorn safeclaims.server:app --host 0.0.0.0 --port 8000 --reload
 ```
+Interactive Swagger UI documentation is available at: **`http://localhost:8000/docs`**
+
+### 4. Run the Frontend UI
+```bash
+cd safeclaim
+npm install
+npm run dev
+```
+Open **`http://localhost:3000`** in your browser.
 
 ---
 
-## 7. Outstanding Integration Items for Backend Teammate
+## 📊 Measured Benchmark Results
 
-1. **CORS:** Ensure the backend at `http://localhost:8000` allows CORS requests from the frontend origin (`http://localhost:3000`).
-2. **Streaming Support (Optional):** If token streaming is supported on `POST /ask`, provide SSE (Server-Sent Events) endpoint.
-3. **Cluster Embedding Threshold:** Confirm distance metric used for grouping citizen queries into claim clusters.
+Evaluated against the hand-curated Nigerian test suite (see [`docs/EVAL.md`](file:///home/danchi/Documents/code/sac/docs/EVAL.md) for full metrics):
+
+| Benchmark Area | Metric | Result | Target | Status |
+| :--- | :--- | :---: | :---: | :---: |
+| **Retrieval Engine (40 cases)** | **Top-4 Document Hit (Hit@4)** | **100.0%** | $\ge 90\%$ | Exceeded |
+| **Retrieval Engine (40 cases)** | **Surfaced Relevant Hit** | **97.14%** | $\ge 85\%$ | Exceeded |
+| **Retrieval Engine (40 cases)** | **False Discovery Rate (Out-of-Corpus)** | **0.0%** | $0.0\%$ | Perfect |
+| **Rumour Guard (30 cases)** | **Overall Accuracy** | **83.33%** | $\ge 75\%$ | Exceeded |
+| **Rumour Guard (30 cases)** | **Macro F1-Score** | **82.94%** | $\ge 75\%$ | Exceeded |
+| **Rumour Guard (30 cases)** | **Supported Recall** | **100.0%** | $\ge 90\%$ | Perfect |
+
+---
+
+## 🛡️ Hackathon Safety & Hard Rules Compliance
+
+1. **Grounded Only:** Answers and broadcast replies are anchored in passage IDs (`<doc_id>#<chunk_id>`).
+2. **Deterministic Abstention:** If similarity is below threshold or out-of-corpus, SafeClaim states that no official record exists.
+3. **No Medical Diagnosis:** Does not diagnose symptoms or prescribe home treatments; surfaces verified agency helplines.
+4. **Zero PII & Scam Defense:** Uses synthetic names (`FictionalApp_DemoXYZ`) in demonstrations to prevent defaming real entities.
+5. **Prompt Injection Hardening:** Inputs are capped at 500 characters and sanitized before downstream processing.
+
+---
+
+## 📜 License & Acknowledgements
+
+Built for the **OSCA OPEN//BUILD 2026** Hackathon. See [`ACKNOWLEDGEMENTS.md`](file:///home/danchi/Documents/code/sac/ACKNOWLEDGEMENTS.md) for data source attributions and open-source licenses.
