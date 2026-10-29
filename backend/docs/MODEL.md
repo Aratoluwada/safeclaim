@@ -7,11 +7,11 @@ This document details the open-weight foundation model, mathematical formulation
 ## 1. Open-Weight Model Architecture (OSCA OPEN//BUILD Requirement B — 20 Points)
 
 ### 1.1 Model Selection & Identity
-* **Primary Foundation Model:** [`Qwen/Qwen2.5-7B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct)
+* **Primary Foundation Model:** [`Qwen/Qwen2.5-7B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct) (local) / [`Qwen/Qwen2.5-32B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-32B-Instruct) (Groq Cloud)
 * **Lightweight Edge Variant:** [`Qwen/Qwen2.5-3B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct) / [`google/gemma-2-2b-it`](https://huggingface.co/google/gemma-2-2b-it)
-* **Model Repository:** Hugging Face Hub ([`Qwen/Qwen2.5-7B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct))
+* **Model Repository:** Hugging Face Hub ([`Qwen/Qwen2.5-7B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct) / [`Qwen/Qwen2.5-32B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-32B-Instruct))
 * **Licence & Compliance:** **Apache 2.0** (Open weights, commercially permissive, zero usage restrictions).
-* **Serving Runtime:** OpenAI-compatible inference protocol via local Ollama (`qwen2.5:7b-instruct`) or vLLM, with 4-bit quantization (`Q4_K_M`) requiring only ~4.7 GB RAM.
+* **Serving Runtime:** OpenAI-compatible inference protocol via local Ollama (`qwen2.5:7b-instruct`) or hosted inference on Groq Cloud LPU (`qwen-2.5-32b`, `https://api.groq.com/openai/v1`).
 
 ### 1.2 Why Qwen 2.5 7B Instruct Was Selected
 1. **State-of-the-Art Open-Weight Reasoning:** Qwen 2.5 7B is widely recognized as the top-performing open-weight instruction model in the sub-10B category, surpassing earlier open models in context comprehension and logical inference.
