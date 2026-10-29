@@ -30,6 +30,8 @@ const AUTH_DIR = path.join(__dirname, 'auth_info_baileys');
 const SUBSCRIBERS_PATH = path.join(__dirname, '..', '..', 'data', 'subscribers.json');
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8000/api/v1';
 const BRIDGE_PORT = process.env.BRIDGE_PORT || 3001;
+const BRIDGE_ADMIN_TOKEN = process.env.BRIDGE_ADMIN_TOKEN || '';
+const WEBHOOK_TOKEN = process.env.SAFECLAIM_WEBHOOK_TOKEN || '';
 
 // Global socket reference
 let sock = null;
@@ -248,11 +250,6 @@ async function connectToWhatsApp() {
       const trimmed = text.trim();
       if (!trimmed) return;
 
-      console.log(`[INCOMING] Message from ${pushName} (${senderJid}): "${trimmed}"`);
-
-      // Automatically register the citizen's number
-      registerSubscriber(senderJid, pushName);
-
       // Check opt-out commands
       if (trimmed.toUpperCase() === 'STOP' || trimmed.toUpperCase() === 'UNSUBSCRIBE') {
         deactivateSubscriber(senderJid);
@@ -266,10 +263,25 @@ async function connectToWhatsApp() {
         return;
       }
 
+      if (trimmed.toUpperCase() === 'SUBSCRIBE' || trimmed.toUpperCase() === 'START') {
+        registerSubscriber(senderJid, pushName);
+        await sock.sendMessage(
+          senderJid,
+          { text: 'You are subscribed to SafeClaim daily briefings. Send STOP anytime to unsubscribe.' },
+          { quoted: msg }
+        );
+        return;
+      }
+
+      console.log(`[INCOMING] Message received from an opted-in chat.`);
+
       // Query SafeClaim API
       const webhookRes = await fetch(`${BACKEND_URL}/whatsapp/webhook`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-SafeClaim-Webhook-Token': WEBHOOK_TOKEN,
+        },
         body: JSON.stringify({
           Body: trimmed,
           From: senderJid,
@@ -302,6 +314,16 @@ async function connectToWhatsApp() {
 const app = express();
 app.use(express.json());
 
+function requireAdmin(req, res, next) {
+  if (!BRIDGE_ADMIN_TOKEN) {
+    return res.status(503).json({ error: 'Bridge admin API is not configured' });
+  }
+  if (req.get('Authorization') !== `Bearer ${BRIDGE_ADMIN_TOKEN}`) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+}
+
 app.get('/health', (req, res) => {
   res.json({
     status: connectionState,
@@ -310,11 +332,11 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.get('/subscribers', (req, res) => {
+app.get('/subscribers', requireAdmin, (req, res) => {
   res.json(getSubscribers());
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', requireAdmin, (req, res) => {
   const { phone, name } = req.body;
   if (!phone) {
     return res.status(400).json({ error: 'phone is required' });
@@ -326,14 +348,14 @@ app.post('/register', (req, res) => {
 });
 
 // Trigger an immediate broadcast for demo testing
-app.post('/broadcast', async (req, res) => {
+app.post('/broadcast', requireAdmin, async (req, res) => {
   console.log('[API] Manual broadcast trigger received.');
   const result = await sendMorningBroadcast();
   res.json(result);
 });
 
 // Send a single message to a specific number
-app.post('/send', async (req, res) => {
+app.post('/send', requireAdmin, async (req, res) => {
   const { to, text } = req.body;
   if (!sock || connectionState !== 'connected') {
     return res.status(503).json({ error: 'WhatsApp is not connected' });
