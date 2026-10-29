@@ -36,6 +36,8 @@ class Config:
     LLM_MODEL: str = os.getenv("LLM_MODEL", "qwen2.5:7b-instruct")
     LLM_API_KEY: str = os.getenv("LLM_API_KEY", "ollama")
     LLM_TIMEOUT: float = float(os.getenv("LLM_TIMEOUT", "60.0"))
+    ADMIN_API_TOKEN: str = os.getenv("SAFECLAIM_ADMIN_TOKEN", "")
+    WHATSAPP_WEBHOOK_TOKEN: str = os.getenv("SAFECLAIM_WEBHOOK_TOKEN", "")
 
     # Retrieval & Grounding Thresholds
     # Queries below this similarity threshold trigger abstention (NO_OFFICIAL_SOURCE_FOUND)
