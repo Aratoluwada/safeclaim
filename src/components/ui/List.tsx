@@ -29,7 +29,7 @@ export const List: React.FC<ListProps> = ({
   }[spacing];
 
   const dividedClass = divided
-    ? 'divide-y divide-neutral-200 dark:divide-neutral-800'
+    ? 'divide-y divide-[#E8DFD5] dark:divide-[#3D352C]'
     : '';
 
   return (

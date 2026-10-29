@@ -47,7 +47,7 @@ export const VerdictStamp: React.FC<VerdictStampProps> = ({
     case 'SUPPORTED_BY_OFFICIAL_SOURCE':
       return (
         <span
-          className={`inline-flex items-center font-mono font-bold uppercase rounded-[3px] border-[#15803D] text-[#15803D] bg-[#F0FDF4] dark:bg-[#12281B] dark:border-[#22C55E] dark:text-[#86EFAC] shadow-xs select-none ${rotationClass} ${sizeClasses}`}
+          className={`inline-flex items-center font-mono font-bold uppercase rounded-[3px] border-[#15803D] text-[#15803D] bg-[#F0FDF4] dark:bg-accent-tint dark:border-[#22C55E] dark:text-[#86EFAC] shadow-xs select-none ${rotationClass} ${sizeClasses}`}
           style={{ boxShadow: 'inset 0 0 0 1px rgba(21, 128, 61, 0.25)' }}
           title="Verdict: Supported by Official Source"
         >

@@ -18,7 +18,7 @@ export const DashboardFrame: React.FC<DashboardFrameProps> = ({ className = '' }
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#0A5C36]"></span>
           </span>
-          <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#1F1B16] dark:text-[#EDE7DF]">
+          <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#1F1B16] dark:text-[#F4EEE4]">
             Live Institutional Intelligence
           </span>
         </div>
@@ -33,7 +33,7 @@ export const DashboardFrame: React.FC<DashboardFrameProps> = ({ className = '' }
           <div className="text-[10px] font-mono text-[#63584C] dark:text-[#A89E90] uppercase">
             Messages Analyzed
           </div>
-          <div className="text-xl font-display font-bold text-[#1F1B16] dark:text-[#EDE7DF]">
+          <div className="text-xl font-display font-bold text-[#1F1B16] dark:text-[#F4EEE4]">
             1,420
           </div>
         </div>
@@ -61,7 +61,7 @@ export const DashboardFrame: React.FC<DashboardFrameProps> = ({ className = '' }
           <div className="text-[10px] font-mono text-[#63584C] dark:text-[#A89E90] uppercase">
             Outbreak Clusters
           </div>
-          <div className="text-xl font-display font-bold text-[#0A5C36] dark:text-[#34D399]">
+          <div className="text-xl font-display font-bold text-accent">
             5
           </div>
         </div>
@@ -83,13 +83,13 @@ export const DashboardFrame: React.FC<DashboardFrameProps> = ({ className = '' }
                 rotate={false}
                 customLabel="Guidance Gap"
               />
-              <span className="text-[10px] font-mono text-stone-400">Viral: 340+ mentions</span>
+              <span className="text-[10px] font-mono text-[#7A6F62]">Viral: 340+ mentions</span>
             </div>
-            <p className="text-xs font-semibold text-[#1F1B16] dark:text-[#EDE7DF] truncate">
+            <p className="text-xs font-semibold text-[#1F1B16] dark:text-[#F4EEE4] truncate">
               "Federal Civil Service Commission 2026 Batch D Replacement Portal open on Facebook"
             </p>
           </div>
-          <ChevronRight className="w-4 h-4 text-stone-400 shrink-0" />
+          <ChevronRight className="w-4 h-4 text-[#7A6F62] shrink-0" />
         </div>
 
         {/* Row 2: Contradicted */}
@@ -102,13 +102,13 @@ export const DashboardFrame: React.FC<DashboardFrameProps> = ({ className = '' }
                 rotate={false}
                 customLabel="Contradicted"
               />
-              <span className="text-[10px] font-mono text-stone-400">NCDC Clarification</span>
+              <span className="text-[10px] font-mono text-[#7A6F62]">NCDC Clarification</span>
             </div>
-            <p className="text-xs font-semibold text-[#1F1B16] dark:text-[#EDE7DF] truncate">
+            <p className="text-xs font-semibold text-[#1F1B16] dark:text-[#F4EEE4] truncate">
               "Ebola case confirmed at General Hospital Lagos Island"
             </p>
           </div>
-          <ChevronRight className="w-4 h-4 text-stone-400 shrink-0" />
+          <ChevronRight className="w-4 h-4 text-[#7A6F62] shrink-0" />
         </div>
       </div>
     </div>

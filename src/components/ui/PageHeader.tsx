@@ -21,15 +21,15 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   className = '',
 }) => {
   return (
-    <header className={`border-b border-[#E8DFD5] dark:border-[#2D261F] pb-6 mb-8 ${className}`}>
+    <header className={`rounded-[1.75rem] bg-accent-tint border border-accent-border px-5 py-6 sm:px-8 sm:py-8 mb-8 ${className}`}>
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div className="space-y-2 max-w-3xl">
           {eyebrow && (
-            <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#0A5C36] dark:text-[#34D399]">
+            <div className="inline-flex items-center rounded-md bg-accent-solid px-2.5 py-1 text-xs font-mono font-bold uppercase tracking-wider text-white">
               {eyebrow}
             </div>
           )}
-          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1F1B16] dark:text-[#EDE7DF] text-left leading-tight">
+          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1F1B16] dark:text-[#F4EEE4] text-left leading-tight">
             {title}
           </h1>
           {description && (

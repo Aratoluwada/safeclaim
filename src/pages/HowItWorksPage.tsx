@@ -85,10 +85,10 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ language }) => {
               <Card variant="bordered" padding="md" className="space-y-3">
                 <div className="flex items-center justify-between border-b border-[#E8DFD5] dark:border-[#2D261F] pb-2.5">
                   <div className="flex items-center gap-2.5">
-                    <span className="font-mono text-xs font-bold text-[#0A5C36] dark:text-[#34D399] bg-[#EBF4EF] dark:bg-[#1B2F23] px-2.5 py-0.5 rounded-md border border-[#BBD8C3] dark:border-[#2A5239]">
+                    <span className="font-mono text-xs font-bold text-accent bg-accent-tint dark:bg-accent-tint px-2.5 py-0.5 rounded-md border border-accent-border">
                       Step {step.number}
                     </span>
-                    <h3 className="font-display font-bold text-base text-[#1F1B16] dark:text-[#EDE7DF]">
+                    <h3 className="font-display font-bold text-base text-[#1F1B16] dark:text-[#F4EEE4]">
                       {step.title}
                     </h3>
                   </div>
@@ -105,20 +105,20 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ language }) => {
 
       {/* Principles list */}
       <div className="rounded-2xl border-2 border-[#D4C5B3] dark:border-[#3D352C] p-6 bg-[#FAF7F2] dark:bg-[#1A1612] space-y-3">
-        <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-[#0A5C36] dark:text-[#34D399]">
+        <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-accent">
           Core Civic Commitments
         </h3>
-        <ul className="space-y-2.5 m-0 p-0 list-none text-xs sm:text-sm text-[#1F1B16] dark:text-[#EDE7DF] font-body">
+        <ul className="space-y-2.5 m-0 p-0 list-none text-xs sm:text-sm text-[#1F1B16] dark:text-[#F4EEE4] font-body">
           <li className="flex items-start gap-2.5">
-            <span className="text-[#0A5C36] dark:text-[#34D399] font-bold text-base leading-none">•</span>
+            <span className="text-accent font-bold text-base leading-none">•</span>
             <span><strong>Never Invent Citations:</strong> Passages must map to an actual gazette or circular URL.</span>
           </li>
           <li className="flex items-start gap-2.5">
-            <span className="text-[#0A5C36] dark:text-[#34D399] font-bold text-base leading-none">•</span>
+            <span className="text-accent font-bold text-base leading-none">•</span>
             <span><strong>Absence != Falsity:</strong> If an agency has not spoken on an emerging rumour, it is an unverified guidance gap, not a disproven claim.</span>
           </li>
           <li className="flex items-start gap-2.5">
-            <span className="text-[#0A5C36] dark:text-[#34D399] font-bold text-base leading-none">•</span>
+            <span className="text-accent font-bold text-base leading-none">•</span>
             <span><strong>Verified Hotlines Only:</strong> Helplines like NCDC 6232 are shown only when documented by verified records.</span>
           </li>
         </ul>

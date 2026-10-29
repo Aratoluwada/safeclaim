@@ -82,11 +82,11 @@ Verified via SafeClaim AI — The trusted neighbour with the receipts.`;
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-2xs"
     >
       <div
-        className="w-full max-w-lg rounded-2xl bg-[#FBF7F0] dark:bg-[#1C1814] border-2 border-[#D4C5B3] dark:border-[#3D352C] shadow-2xl p-5 sm:p-6 text-[#1F1B16] dark:text-[#EDE7DF] space-y-4"
+        className="w-full max-w-lg rounded-2xl bg-[#FBF7F0] dark:bg-[#1C1814] border-2 border-[#D4C5B3] dark:border-[#3D352C] shadow-2xl p-5 sm:p-6 text-[#1F1B16] dark:text-[#F4EEE4] space-y-4"
       >
         <div className="flex items-center justify-between border-b border-[#E8DFD5] dark:border-[#2D261F] pb-3">
           <div className="flex items-center gap-2">
-            <Share2 className="w-5 h-5 text-[#0A5C36] dark:text-[#34D399]" />
+            <Share2 className="w-5 h-5 text-accent" />
             <h3 id="share-modal-title" className="font-display font-bold text-lg">
               {t.shareVerdict}
             </h3>
@@ -94,7 +94,7 @@ Verified via SafeClaim AI — The trusted neighbour with the receipts.`;
           <button
             onClick={onClose}
             aria-label="Close dialog"
-            className="cursor-pointer p-1.5 rounded-lg text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 hover:bg-stone-200/50 dark:hover:bg-stone-800/50"
+            className="cursor-pointer p-1.5 rounded-lg text-[#63584C] hover:text-[#2D261F] dark:hover:text-[#E8DFD5] hover:bg-[#E8DFD5]/50 dark:hover:bg-[#2D261F]/50"
           >
             <X className="w-5 h-5" />
           </button>
@@ -112,7 +112,7 @@ Verified via SafeClaim AI — The trusted neighbour with the receipts.`;
         </div>
 
         {/* WhatsApp Preview Card */}
-        <div className="bg-[#FCFBF7] dark:bg-[#231F1A] p-3.5 rounded-xl border border-[#E8DFD5] dark:border-[#3D352C] font-mono text-xs text-[#1F1B16] dark:text-[#EDE7DF] whitespace-pre-wrap max-h-56 overflow-y-auto leading-relaxed">
+        <div className="bg-[#FCFBF7] dark:bg-[#231F1A] p-3.5 rounded-xl border border-[#E8DFD5] dark:border-[#3D352C] font-mono text-xs text-[#1F1B16] dark:text-[#F4EEE4] whitespace-pre-wrap max-h-56 overflow-y-auto leading-relaxed">
           {shareText}
         </div>
 
@@ -131,7 +131,7 @@ Verified via SafeClaim AI — The trusted neighbour with the receipts.`;
               </>
             ) : (
               <>
-                <Copy className="w-4 h-4 text-stone-500" />
+                <Copy className="w-4 h-4 text-[#63584C]" />
                 <span>Copy Formatted Text</span>
               </>
             )}

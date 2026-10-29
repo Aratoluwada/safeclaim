@@ -85,14 +85,14 @@ export const AskPage: React.FC<AskPageProps> = ({
         {/* Warm Editorial Header */}
         {!response && !isLoading && (
           <header className="text-center sm:text-left space-y-3 pt-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#EBF4EF] dark:bg-[#1B2F23] text-[#0A5C36] dark:text-[#34D399] font-mono font-bold text-xs">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-accent-tint dark:bg-accent-tint text-accent font-mono font-bold text-xs">
               <Sparkles className="w-3.5 h-3.5" />
               <span>
                 {language === 'pcm' ? 'Official Receipts Assistant' : 'Public Verification Assistant'}
               </span>
             </div>
 
-            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1F1B16] dark:text-[#EDE7DF] leading-tight">
+            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1F1B16] dark:text-[#F4EEE4] leading-tight">
               {language === 'pcm' ? (
                 <>
                   Understand di claim.{' '}
@@ -118,9 +118,9 @@ export const AskPage: React.FC<AskPageProps> = ({
                   ? 'Dem forward you something wey dey scare you or promise free money? Paste am enter here. SafeClaim dey check NCDC, FCCPC, and NHIA circulars to show you real proof.'
                   : 'Forwarded a suspicious health rumour, loan app claim, or grant announcement? Paste it below to evaluate with official Nigerian publications and exact receipts.'}
               </p>
-              <div className="hidden lg:flex items-center text-[#24306E] dark:text-[#8BA0E8] font-hand text-lg shrink-0">
+              <div className="hidden lg:flex items-center text-[#27358F] dark:text-[#AEB9FF] font-hand text-lg shrink-0">
                 <span>Paste forward here</span>
-                <HandArrow direction="curve-down" color="#24306E" className="ml-1 -mb-2" />
+                <HandArrow direction="curve-down" color="#27358F" className="ml-1 -mb-2" />
               </div>
             </div>
           </header>
@@ -145,9 +145,9 @@ export const AskPage: React.FC<AskPageProps> = ({
             aria-live="polite"
             className="rounded-2xl border-2 border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] p-8 sm:p-10 text-center shadow-sm space-y-4 max-w-xl mx-auto"
           >
-            <div className="w-10 h-10 border-3 border-[#0A5C36] dark:border-[#34D399] border-t-transparent rounded-full animate-spin mx-auto" />
+            <div className="w-10 h-10 border-3 border-accent border-t-transparent rounded-full animate-spin mx-auto" />
             <div className="space-y-1.5">
-              <h3 className="font-display font-bold text-lg text-[#1F1B16] dark:text-[#EDE7DF]">
+              <h3 className="font-display font-bold text-lg text-[#1F1B16] dark:text-[#F4EEE4]">
                 {t.verifyingButton}
               </h3>
               <p className="text-xs sm:text-sm text-[#63584C] dark:text-[#A89E90] font-mono">

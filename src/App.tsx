@@ -35,6 +35,16 @@ function ScrollToTop() {
   return null;
 }
 
+/** Each page gets its own accent color (see [data-accent] in index.css). */
+function accentForPath(pathname: string): string {
+  if (pathname.startsWith('/ask')) return 'sky';
+  if (pathname.startsWith('/desk')) return 'indigo';
+  if (pathname.startsWith('/how-it-works')) return 'violet';
+  if (pathname.startsWith('/verdicts')) return 'orchid';
+  if (pathname.startsWith('/faq')) return 'forest';
+  return pathname === '/' ? 'forest' : 'indigo';
+}
+
 function HashRedirect() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -93,6 +103,7 @@ function Layout({
   isDark: boolean;
   setIsDark: (dark: boolean) => void;
 }) {
+  const { pathname } = useLocation();
   const handleToggleTheme = () => {
     const next = !isDark;
     setIsDark(next);
@@ -100,11 +111,11 @@ function Layout({
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 selection:bg-[#0A5C36] selection:text-white">
+    <div data-accent={accentForPath(pathname)} className="flex flex-col min-h-screen bg-[#FBF7F0] dark:bg-[#171410] text-[#1F1B16] dark:text-[#F4EEE4] selection:bg-[#0A5C36] selection:text-white">
       {/* Skip to Content for WCAG keyboard accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-white dark:focus:bg-neutral-900 focus:text-neutral-900 dark:focus:text-neutral-100 focus:border-2 focus:border-[#0A5C36] focus:rounded-md focus:shadow-lg focus:font-mono focus:text-xs"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-white dark:focus:bg-[#221D18] focus:text-[#1F1B16] dark:focus:text-[#F4EEE4] focus:border-2 focus:border-accent focus:rounded-md focus:shadow-lg focus:font-mono focus:text-xs"
       >
         Skip to main content
       </a>

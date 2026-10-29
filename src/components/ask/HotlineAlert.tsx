@@ -23,7 +23,7 @@ export const HotlineAlert: React.FC<HotlineAlertProps> = ({ hotline, language })
   return (
     <aside
       aria-label="Official emergency helpline advisory"
-      className="rounded-2xl border-2 border-[#BBD8C3] dark:border-[#2A4B37] bg-[#EBF4EF]/80 dark:bg-[#12281B]/80 p-4 sm:p-5 shadow-xs"
+      className="rounded-2xl border-2 border-accent-border bg-accent-tint/80 dark:bg-accent-tint/80 p-4 sm:p-5 shadow-xs"
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1.5">
@@ -35,7 +35,7 @@ export const HotlineAlert: React.FC<HotlineAlertProps> = ({ hotline, language })
               Official Rapid Response
             </span>
           </div>
-          <h3 className="font-display font-bold text-base text-[#1F1B16] dark:text-[#EDE7DF]">
+          <h3 className="font-display font-bold text-base text-[#1F1B16] dark:text-[#F4EEE4]">
             {hotline.name}
           </h3>
           <p className="text-xs sm:text-sm text-[#63584C] dark:text-[#A89E90] font-body">
@@ -62,10 +62,10 @@ export const HotlineAlert: React.FC<HotlineAlertProps> = ({ hotline, language })
                 href={`https://wa.me/${hotline.alt_number.replace(/[^\d]/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white dark:bg-[#201C17] hover:bg-[#F5EFEB] dark:hover:bg-[#2A241F] text-[#1F1B16] dark:text-[#EDE7DF] text-xs font-mono font-bold border border-[#D4C5B3] dark:border-[#3D352C] shadow-2xs transition focus-ring min-h-[44px]"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white dark:bg-[#201C17] hover:bg-[#F5EFEB] dark:hover:bg-[#2A241F] text-[#1F1B16] dark:text-[#F4EEE4] text-xs font-mono font-bold border border-[#D4C5B3] dark:border-[#3D352C] shadow-2xs transition focus-ring min-h-[44px]"
                 title="Official WhatsApp Channel"
               >
-                <MessageSquare className="w-4 h-4 text-[#0A5C36] dark:text-[#34D399]" aria-hidden="true" />
+                <MessageSquare className="w-4 h-4 text-accent" aria-hidden="true" />
                 <span>WhatsApp: {hotline.alt_number}</span>
                 <ExternalLink className="w-3.5 h-3.5 text-[#8E8273]" aria-hidden="true" />
               </a>

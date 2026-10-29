@@ -8,7 +8,7 @@ interface HandArrowProps {
 
 export const HandArrow: React.FC<HandArrowProps> = ({
   className = '',
-  color = '#24306E',
+  color = '#27358F',
   direction = 'down-right',
 }) => {
   return (

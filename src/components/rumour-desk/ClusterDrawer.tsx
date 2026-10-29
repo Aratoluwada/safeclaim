@@ -76,7 +76,7 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
               {/* Header */}
               <header className="px-5 py-4 border-b border-[#E8DFD5] dark:border-[#2D261F] flex items-center justify-between bg-[#F5EFEB] dark:bg-[#201C17]">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-bold text-[#1F1B16] dark:text-[#EDE7DF] px-2 py-0.5 rounded-md bg-white dark:bg-[#2A241E] border border-[#D4C5B3] dark:border-[#3D352C]">
+                  <span className="font-mono text-xs font-bold text-[#1F1B16] dark:text-[#F4EEE4] px-2 py-0.5 rounded-md bg-white dark:bg-[#2A241E] border border-[#D4C5B3] dark:border-[#3D352C]">
                     {cluster.cluster_id}
                   </span>
                   <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-[#FAF7F2] dark:bg-[#26201A] text-[#63584C] dark:text-[#A89E90] capitalize border border-[#D4C5B3] dark:border-[#3D352C]">
@@ -91,7 +91,7 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                 </div>
                 <button
                   onClick={onClose}
-                  className="cursor-pointer p-1.5 rounded-lg text-[#63584C] hover:text-[#1F1B16] dark:text-[#A89E90] dark:hover:text-[#EDE7DF] transition hover:bg-stone-200/50 dark:hover:bg-stone-800/50 focus-ring"
+                  className="cursor-pointer p-1.5 rounded-lg text-[#63584C] hover:text-[#1F1B16] dark:text-[#A89E90] dark:hover:text-[#F4EEE4] transition hover:bg-[#E8DFD5]/50 dark:hover:bg-[#2D261F]/50 focus-ring"
                   aria-label="Close drawer"
                 >
                   <X className="w-5 h-5" />
@@ -105,7 +105,7 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                   <span className="text-[10px] font-mono uppercase tracking-wider text-[#63584C] dark:text-[#A89E90] font-bold">
                     Representative Claim
                   </span>
-                  <h2 id="drawer-title" className="font-display text-xl sm:text-2xl font-bold text-[#1F1B16] dark:text-[#EDE7DF] leading-snug">
+                  <h2 id="drawer-title" className="font-display text-xl sm:text-2xl font-bold text-[#1F1B16] dark:text-[#F4EEE4] leading-snug">
                     {cluster.representative_claim}
                   </h2>
                   <div className="pt-1">
@@ -117,13 +117,13 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                 <div className="grid grid-cols-2 gap-3 p-4 rounded-xl bg-white dark:bg-[#201C17] border border-[#D4C5B3] dark:border-[#3D352C] text-xs font-mono shadow-2xs">
                   <div>
                     <span className="text-[#63584C] dark:text-[#A89E90] block text-[11px] font-bold">Volume &amp; Velocity:</span>
-                    <span className="font-bold text-[#1F1B16] dark:text-[#EDE7DF]">
+                    <span className="font-bold text-[#1F1B16] dark:text-[#F4EEE4]">
                       {cluster.message_count} msgs ({cluster.growth_rate_24h || '0%'} 24h)
                     </span>
                   </div>
                   <div>
                     <span className="text-[#63584C] dark:text-[#A89E90] block text-[11px] font-bold">Languages Seen:</span>
-                    <span className="font-bold text-[#1F1B16] dark:text-[#EDE7DF] capitalize">
+                    <span className="font-bold text-[#1F1B16] dark:text-[#F4EEE4] capitalize">
                       {cluster.languages_seen.map((l) => (l === 'pcm' ? 'Naija Pidgin' : 'English')).join(', ')}
                     </span>
                   </div>
@@ -138,7 +138,7 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                   <span className="text-[10px] font-mono uppercase tracking-wider text-[#63584C] dark:text-[#A89E90] font-bold">
                     Analytical Verdict Explanation
                   </span>
-                  <div className="p-4 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] text-xs sm:text-sm text-[#1F1B16] dark:text-[#EDE7DF] leading-relaxed font-body shadow-2xs">
+                  <div className="p-4 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] text-xs sm:text-sm text-[#1F1B16] dark:text-[#F4EEE4] leading-relaxed font-body shadow-2xs">
                     {cluster.verdict.short_explanation}
                   </div>
                 </div>
@@ -147,14 +147,14 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                 {cluster.verdict.suggested_reply && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-[#0A5C36] dark:text-[#34D399] font-bold flex items-center gap-1.5">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-accent font-bold flex items-center gap-1.5">
                         <Send className="w-3.5 h-3.5" />
                         Suggested Broadcast Response
                       </span>
                       <button
                         type="button"
                         onClick={handleCopyReply}
-                        className="cursor-pointer inline-flex items-center gap-1 text-xs font-mono font-bold text-[#0A5C36] dark:text-[#34D399] hover:underline focus-ring"
+                        className="cursor-pointer inline-flex items-center gap-1 text-xs font-mono font-bold text-accent hover:underline focus-ring"
                       >
                         {copiedReply ? (
                           <>
@@ -169,7 +169,7 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                         )}
                       </button>
                     </div>
-                    <div className="p-4 rounded-xl bg-[#EBF4EF] dark:bg-[#12281B] border-l-4 border-l-[#0A5C36] dark:border-l-[#34D399] border border-[#BBD8C3] dark:border-[#2A5239] text-xs sm:text-sm text-[#1F1B16] dark:text-[#EDE7DF] font-body leading-relaxed italic">
+                    <div className="p-4 rounded-xl bg-accent-tint dark:bg-accent-tint border-l-4 border-l-accent border border-accent-border text-xs sm:text-sm text-[#1F1B16] dark:text-[#F4EEE4] font-body leading-relaxed italic">
                       &ldquo;{cluster.verdict.suggested_reply}&rdquo;
                     </div>
                   </div>
@@ -185,9 +185,9 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                     {cluster.sample_messages.map((msg, idx) => (
                       <li
                         key={idx}
-                        className="p-3.5 rounded-xl bg-white dark:bg-[#201C17] border border-[#D4C5B3] dark:border-[#3D352C] text-xs text-[#1F1B16] dark:text-[#EDE7DF] font-mono leading-relaxed shadow-2xs"
+                        className="p-3.5 rounded-xl bg-white dark:bg-[#201C17] border border-[#D4C5B3] dark:border-[#3D352C] text-xs text-[#1F1B16] dark:text-[#F4EEE4] font-mono leading-relaxed shadow-2xs"
                       >
-                        <span className="text-[#0A5C36] dark:text-[#34D399] font-bold mr-2 text-[11px]">#{idx + 1}</span>
+                        <span className="text-accent font-bold mr-2 text-[11px]">#{idx + 1}</span>
                         &ldquo;{msg}&rdquo;
                       </li>
                     ))}
@@ -208,21 +208,21 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                           className="p-4 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] text-xs space-y-2 shadow-2xs"
                         >
                           <div className="flex items-center justify-between font-mono">
-                            <span className="font-bold text-[#1F1B16] dark:text-[#EDE7DF] text-[11px] uppercase">
+                            <span className="font-bold text-[#1F1B16] dark:text-[#F4EEE4] text-[11px] uppercase">
                               {ev.publisher}
                             </span>
                             <a
                               href={ev.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-[11px] font-bold text-[#0A5C36] dark:text-[#34D399] hover:underline inline-flex items-center gap-1"
+                              className="text-[11px] font-bold text-accent hover:underline inline-flex items-center gap-1"
                             >
                               <span>Circular</span>
                               <ExternalLink className="w-3 h-3" />
                             </a>
                           </div>
-                          <p className="font-bold text-[#1F1B16] dark:text-[#EDE7DF] font-body text-sm">{ev.doc_title}</p>
-                          <blockquote className="official-document-sheet rounded-lg p-3 text-[#1F1B16] dark:text-[#EDE7DF] font-body italic text-xs leading-relaxed">
+                          <p className="font-bold text-[#1F1B16] dark:text-[#F4EEE4] font-body text-sm">{ev.doc_title}</p>
+                          <blockquote className="official-document-sheet rounded-lg p-3 text-[#1F1B16] dark:text-[#F4EEE4] font-body italic text-xs leading-relaxed">
                             &ldquo;{ev.excerpt}&rdquo;
                           </blockquote>
                         </li>

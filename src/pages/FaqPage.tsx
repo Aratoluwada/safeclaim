@@ -78,8 +78,8 @@ export const FaqPage: React.FC<FaqPageProps> = ({ language }) => {
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${index}`}
                 >
-                  <span className="font-display font-bold text-sm sm:text-base text-[#1F1B16] dark:text-[#EDE7DF] flex items-center gap-2.5">
-                    <HelpCircle className="w-4 h-4 text-[#0A5C36] dark:text-[#34D399] shrink-0" aria-hidden="true" />
+                  <span className="font-display font-bold text-sm sm:text-base text-[#1F1B16] dark:text-[#F4EEE4] flex items-center gap-2.5">
+                    <HelpCircle className="w-4 h-4 text-accent shrink-0" aria-hidden="true" />
                     <span>{faq.q}</span>
                   </span>
                   {isOpen ? (

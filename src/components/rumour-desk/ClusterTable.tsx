@@ -31,7 +31,7 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
   if (isLoading) {
     return (
       <div className="bg-white dark:bg-[#201C17] rounded-2xl border border-[#D4C5B3] dark:border-[#3D352C] p-12 text-center">
-        <div className="w-8 h-8 border-3 border-[#0A5C36] dark:border-[#34D399] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+        <div className="w-8 h-8 border-3 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-3" />
         <p className="text-xs font-mono text-[#63584C] dark:text-[#A89E90]">
           Loading circulating claim clusters...
         </p>
@@ -45,7 +45,7 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
         <div className="w-10 h-10 rounded-xl bg-[#FAF7F2] dark:bg-[#26201A] text-[#8E8273] flex items-center justify-center mx-auto">
           <Layers className="w-5 h-5" />
         </div>
-        <h3 className="font-display font-bold text-base text-[#1F1B16] dark:text-[#EDE7DF]">
+        <h3 className="font-display font-bold text-base text-[#1F1B16] dark:text-[#F4EEE4]">
           No clusters match your active filters
         </h3>
         <p className="text-xs sm:text-sm text-[#63584C] dark:text-[#A89E90] max-w-sm mx-auto font-body">
@@ -93,7 +93,7 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
                 >
                   {/* Volume & Velocity */}
                   <td className="py-3.5 px-4 align-top">
-                    <div className="font-mono font-bold text-[#1F1B16] dark:text-[#EDE7DF] text-xs">
+                    <div className="font-mono font-bold text-[#1F1B16] dark:text-[#F4EEE4] text-xs">
                       {cluster.message_count} msgs
                     </div>
                     {cluster.growth_rate_24h && (
@@ -116,7 +116,7 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
 
                   {/* Domain */}
                   <td className="py-3.5 px-4 align-top">
-                    <span className="inline-block px-2 py-0.5 rounded-md bg-[#FAF7F2] dark:bg-[#26201A] text-[#1F1B16] dark:text-[#EDE7DF] text-[11px] font-mono font-semibold capitalize border border-[#D4C5B3] dark:border-[#3D352C]">
+                    <span className="inline-block px-2 py-0.5 rounded-md bg-[#FAF7F2] dark:bg-[#26201A] text-[#1F1B16] dark:text-[#F4EEE4] text-[11px] font-mono font-semibold capitalize border border-[#D4C5B3] dark:border-[#3D352C]">
                       {cluster.domain.replace('_', ' ')}
                     </span>
                     {cluster.is_guidance_gap && (
@@ -129,7 +129,7 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
 
                   {/* Representative Claim */}
                   <td className="py-3.5 px-4 align-top">
-                    <p className="font-bold text-[#1F1B16] dark:text-[#EDE7DF] leading-snug">
+                    <p className="font-bold text-[#1F1B16] dark:text-[#F4EEE4] leading-snug">
                       {cluster.representative_claim}
                     </p>
                     <p className="text-[11px] text-[#63584C] dark:text-[#A89E90] mt-1 line-clamp-2">
@@ -182,7 +182,7 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
           >
             <div className="flex items-start justify-between gap-2">
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="px-2 py-0.5 rounded-md bg-[#FAF7F2] dark:bg-[#26201A] text-[#1F1B16] dark:text-[#EDE7DF] text-[11px] font-mono capitalize border border-[#D4C5B3] dark:border-[#3D352C]">
+                <span className="px-2 py-0.5 rounded-md bg-[#FAF7F2] dark:bg-[#26201A] text-[#1F1B16] dark:text-[#F4EEE4] text-[11px] font-mono capitalize border border-[#D4C5B3] dark:border-[#3D352C]">
                   {cluster.domain.replace('_', ' ')}
                 </span>
                 {cluster.is_guidance_gap && (
@@ -193,7 +193,7 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
                 )}
               </div>
               <div className="text-right font-mono">
-                <span className="font-bold text-[#1F1B16] dark:text-[#EDE7DF] text-xs">
+                <span className="font-bold text-[#1F1B16] dark:text-[#F4EEE4] text-xs">
                   {cluster.message_count} msgs
                 </span>
                 {cluster.growth_rate_24h && (
@@ -204,7 +204,7 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
               </div>
             </div>
 
-            <h4 className="font-display font-bold text-sm text-[#1F1B16] dark:text-[#EDE7DF] leading-snug">
+            <h4 className="font-display font-bold text-sm text-[#1F1B16] dark:text-[#F4EEE4] leading-snug">
               {cluster.representative_claim}
             </h4>
 

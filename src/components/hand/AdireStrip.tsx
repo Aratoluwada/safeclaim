@@ -13,9 +13,9 @@ export const AdireStrip: React.FC<AdireStripProps> = ({
     switch (theme) {
       case 'indigo':
         return {
-          bg: '#EEF1FA',
-          stroke: '#24306E',
-          fill: '#24306E',
+          bg: '#E3E8F8',
+          stroke: '#27358F',
+          fill: '#27358F',
           accent: '#7D8FC6',
         };
       case 'warm':
@@ -42,7 +42,7 @@ export const AdireStrip: React.FC<AdireStripProps> = ({
     <div
       role="presentation"
       aria-hidden="true"
-      className={`w-full h-3 overflow-hidden select-none border-y border-stone-200/60 dark:border-stone-800/60 ${className}`}
+      className={`w-full h-3 overflow-hidden select-none border-y border-[#E8DFD5]/60 dark:border-[#3D352C]/60 ${className}`}
       style={{ backgroundColor: c.bg }}
     >
       <svg

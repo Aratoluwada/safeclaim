@@ -163,7 +163,7 @@ export const RumourDeskPage: React.FC<RumourDeskPageProps> = ({
               <AlertTriangle className="w-4 h-4 text-red-600 shrink-0" />
               <span>Backend Error: Failed to contact live server</span>
             </div>
-            <p className="bg-white dark:bg-neutral-900 p-2 rounded border border-red-200 dark:border-red-900">
+            <p className="bg-white dark:bg-[#221D18] p-2 rounded border border-red-200 dark:border-red-900">
               {error}
             </p>
             <div className="flex gap-2 pt-1 font-sans">
