@@ -1,6 +1,6 @@
 # SafeClaim REST API Contract & Specification
 
-**Version:** 1.3.0  
+**Version:** 1.4.0  
 **Backend Framework:** FastAPI (Python 3.11)  
 **Base URL:** `http://localhost:8000/api/v1`  
 **Interactive Docs (Swagger UI):** `http://localhost:8000/docs`  
@@ -8,18 +8,18 @@
 
 > [!IMPORTANT]
 > **CURRENT IMPLEMENTATION STATUS:**
-> The implemented API currently provides health, language metadata, corpus sources, and evidence-only `/ask`. It does not yet implement the Rumour Desk endpoints or validate whether a retrieved passage supports an answer. The `/ask` examples below reflect the current runtime contract; scores and passage counts can change when the corpus or index changes. All corpus citations and hotlines are loaded from `data/corpus/` and `data/corpus_manifest.csv`.
+> The API exposes health, language metadata, corpus sources, evidence-only `/ask`, and synthetic Rumour Desk reads. Rumour submission, synthetic reload, and the WhatsApp webhook require separately configured tokens. The corpus is currently marked `unverified`; a retrieved passage is not proof of authenticity or answer support. The API does not claim `grounded: true`.
 
 ---
 
 ## 1. System Design Principles & Hard Rules Compliance
 
 All API responses strictly enforce the **SafeClaim Hackathon Rules**:
-1. **Evidence-only Ask:** The current API does not generate an answer or verdict. It returns potentially relevant official passages, and always sets `grounded: false` until answer support validation is implemented.
+1. **Evidence-only Ask:** The API returns potentially relevant indexed passages and always sets `grounded: false`; it does not generate or validate a factual answer.
 2. **Citations & Evidence Fidelity:** Every returned passage includes its passage ID (`<doc_id>#<chunk_id>`) and source metadata. A retrieval match is not proof that the passage answers or supports the question.
-3. **Safe Abstention:** If raw TF-IDF cosine similarity is below `RETRIEVAL_SIMILARITY_THRESHOLD`, the response states that no sufficiently relevant source was found in the indexed corpus. If passages are retrieved, the response explicitly says their support has not been validated.
+3. **Safe Abstention:** If raw TF-IDF cosine similarity is below `RETRIEVAL_SIMILARITY_THRESHOLD`, no passages are returned. This only describes this index, not all official guidance.
 4. **No Medical Diagnosis or Treatment Advice:** The API does not generate medical advice. It may return potentially relevant official excerpts and hotline metadata extracted from the corpus; relevance does not establish support.
-5. **Strict Verdict Labels:** Exactly one of:
+5. **Verdict labels:** Rumour verdict generation may return `NOT_VALIDATED` whenever model validation is unavailable or invalid. Decisive labels require cited retrieved passage IDs.
    - `CONTRADICTED_BY_OFFICIAL_SOURCE` (Refuted by indexed official document)
    - `SUPPORTED_BY_OFFICIAL_SOURCE` (Confirmed by indexed official document)
    - `NO_OFFICIAL_SOURCE_FOUND` (Meaning: *Not found in indexed corpus*. Does not imply guilt, approval, or disapproval)
@@ -60,15 +60,13 @@ Language status values: `"pending_human_check"` | `"verified"` | `"failed_check"
 | **System** | `GET` | `/meta/languages` | Language codes and human-verification status |
 | **Corpus** | `GET` | `/corpus/sources` | List sources from `corpus_manifest.csv` |
 | **Evidence Search** | `POST` | `/ask` | Potentially relevant passages or safe abstention; no answer validation |
-| **Rumour Desk** | `GET` | `/rumours/stats` | Not implemented |
-| **Rumour Desk** | `GET` | `/rumours/clusters` | Not implemented |
-| **Rumour Desk** | `GET` | `/rumours/clusters/{id}` | Not implemented |
-| **Rumour Desk** | `POST` | `/rumours/submit` | Not implemented |
-| **Rumour Desk** | `POST` | `/rumours/load-synthetic` | Not implemented |
-| **Rumour Desk** | `POST` | `/rumours/recompute` | Not implemented |
-| **Rumour Desk** | `GET` | `/rumours/jobs/{job_id}` | Not implemented |
-| **Rumour Desk** | `GET` | `/rumours/brief` | Not implemented |
-| **Rumour Desk** | `GET` | `/rumours/brief/download`| Not implemented |
+| **Rumour Desk** | `GET` | `/rumours/stats` | Synthetic fixture metrics only |
+| **Rumour Desk** | `GET` | `/rumours/clusters` | Synthetic fixture clusters only |
+| **Rumour Desk** | `POST` | `/rumours/submit` | Admin-token protected; submitted messages are not returned in public reads |
+| **Rumour Desk** | `POST` | `/rumours/load-synthetic` | Admin-token protected fixture reload |
+| **Rumour Desk** | `GET` | `/rumours/brief` | Synthetic fixture brief only |
+| **Rumour Desk** | `GET` | `/rumours/brief/download`| Synthetic fixture brief download; date strictly validated |
+| **WhatsApp** | `POST` | `/whatsapp/webhook` | Webhook-token protected evidence search, not a verdict |
 
 ---
 
@@ -125,7 +123,7 @@ Returns configured languages. Note that `status` reflects real human language ev
 ---
 
 #### `GET /corpus/sources`
-Returns the documents currently present in the manifest and corpus directory. Source verification is not performed by this endpoint.
+Returns manifest entries and their `verification_status`. All currently bundled entries are `unverified`.
 
 **Response `200 OK`:**
 ```json

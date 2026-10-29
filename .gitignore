@@ -24,4 +24,6 @@ auth_info_baileys/
 .env
 .env.local
 !.env.example
+backend/data/subscribers.json
+backend/scripts/whatsapp_bridge/auth_info_baileys/
 
