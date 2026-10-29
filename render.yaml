@@ -9,10 +9,14 @@ services:
     plan: free
     rootDir: backend
     buildCommand: pip install -r requirements.txt && python -m safeclaims.ingest
-    startCommand: uvicorn safeclaims.server:app --host 0.0.0.0 --port $PORT
+    startCommand: python -m uvicorn safeclaims.server:app --host 0.0.0.0 --port ${PORT:-10000}
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: PORT
+        value: "10000"
       - key: CORS_ORIGINS
         value: "*"
       - key: RETRIEVAL_SIMILARITY_THRESHOLD

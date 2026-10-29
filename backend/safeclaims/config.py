@@ -70,7 +70,7 @@ class Config:
 
     # API Server settings
     API_HOST: str = os.getenv("API_HOST", "0.0.0.0")
-    API_PORT: int = int(os.getenv("API_PORT", "8000"))
+    API_PORT: int = int(os.getenv("PORT") or os.getenv("API_PORT", "10000"))
     CORS_ORIGINS: list[str] = [
         origin.strip()
         for origin in os.getenv(
