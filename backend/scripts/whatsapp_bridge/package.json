@@ -1,0 +1,17 @@
+{
+  "name": "safeclaim-whatsapp-bridge",
+  "version": "1.0.0",
+  "description": "WhatsApp Baileys Bridge and Automated Morning Broadcast Engine for SafeClaim",
+  "main": "bridge.js",
+  "type": "module",
+  "scripts": {
+    "start": "node bridge.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.16",
+    "express": "^4.21.2",
+    "node-cron": "^3.0.3",
+    "pino": "^9.6.0",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
