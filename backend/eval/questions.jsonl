@@ -1,0 +1,40 @@
+{"question":"Can Ebola be transmitted through the air?","expected_doc_id":"ncdc_ebola_advisory_2026","should_retrieve":true}
+{"question":"Can loan apps access my phone contacts or send defamation messages?","expected_doc_id":"fccpc_digital_lenders_advisory_2026","should_retrieve":true}
+{"question":"Is there an application fee for the federal conditional cash transfer?","expected_doc_id":"nassp_conditional_cash_transfer_2026","should_retrieve":true}
+{"question":"Can a voter vote without BVAS biometric verification?","expected_doc_id":"inec_voter_accreditation_guidelines_2026","should_retrieve":true}
+{"question":"What is the incubation period for Ebola virus disease?","expected_doc_id":"ncdc_ebola_advisory_2026","should_retrieve":true}
+{"question":"What is the official toll-free hotline number for NCDC?","expected_doc_id":"ncdc_ebola_advisory_2026","should_retrieve":true}
+{"question":"How does Ebola virus spread between humans?","expected_doc_id":"ncdc_ebola_advisory_2026","should_retrieve":true}
+{"question":"What are the initial symptoms of Ebola infection?","expected_doc_id":"ncdc_ebola_advisory_2026","should_retrieve":true}
+{"question":"Is touching the body of someone who died from Ebola dangerous?","expected_doc_id":"ncdc_ebola_advisory_2026","should_retrieve":true}
+{"question":"What preventive hygiene measures stop Ebola spread?","expected_doc_id":"ncdc_ebola_advisory_2026","should_retrieve":true}
+{"question":"What should someone do if they suspect Ebola exposure?","expected_doc_id":"ncdc_ebola_advisory_2026","should_retrieve":true}
+{"question":"Can wild animals like fruit bats transmit Ebola virus?","expected_doc_id":"ncdc_ebola_advisory_2026","should_retrieve":true}
+{"question":"Are unregistered digital money lending apps legal in Nigeria?","expected_doc_id":"fccpc_digital_lenders_advisory_2026","should_retrieve":true}
+{"question":"Are loan apps permitted to send funeral posters of borrowers to contacts?","expected_doc_id":"fccpc_digital_lenders_advisory_2026","should_retrieve":true}
+{"question":"Where can consumers check the official list of approved loan apps?","expected_doc_id":"fccpc_digital_lenders_advisory_2026","should_retrieve":true}
+{"question":"Is distributing loan app APK files through WhatsApp links legal?","expected_doc_id":"fccpc_digital_lenders_advisory_2026","should_retrieve":true}
+{"question":"What is the toll-free consumer protection helpline for FCCPC?","expected_doc_id":"fccpc_digital_lenders_advisory_2026","should_retrieve":true}
+{"question":"What email address does FCCPC use to report loan app harassment?","expected_doc_id":"fccpc_digital_lenders_advisory_2026","should_retrieve":true}
+{"question":"Can digital lenders charge interest rates above approved regulatory ceilings?","expected_doc_id":"fccpc_digital_lenders_advisory_2026","should_retrieve":true}
+{"question":"Are microloan apps allowed to demand access to mobile media libraries?","expected_doc_id":"fccpc_digital_lenders_advisory_2026","should_retrieve":true}
+{"question":"How are households registered into the National Social Register?","expected_doc_id":"nassp_conditional_cash_transfer_2026","should_retrieve":true}
+{"question":"Can citizens register for federal cash transfers through WhatsApp links?","expected_doc_id":"nassp_conditional_cash_transfer_2026","should_retrieve":true}
+{"question":"Are National Identity Numbers required for conditional cash transfers?","expected_doc_id":"nassp_conditional_cash_transfer_2026","should_retrieve":true}
+{"question":"Does the government ever charge card issuance fees for welfare transfers?","expected_doc_id":"nassp_conditional_cash_transfer_2026","should_retrieve":true}
+{"question":"How are conditional cash transfer funds disbursed to beneficiaries?","expected_doc_id":"nassp_conditional_cash_transfer_2026","should_retrieve":true}
+{"question":"Does the government require beneficiaries to share bank card PINs or OTPs?","expected_doc_id":"nassp_conditional_cash_transfer_2026","should_retrieve":true}
+{"question":"What is the grievance redress hotline number for NASSP cash transfers?","expected_doc_id":"nassp_conditional_cash_transfer_2026","should_retrieve":true}
+{"question":"What is the toll-free SMS whistleblower number for social safety nets?","expected_doc_id":"nassp_conditional_cash_transfer_2026","should_retrieve":true}
+{"question":"Can community enumerators register families in person for the social register?","expected_doc_id":"nassp_conditional_cash_transfer_2026","should_retrieve":true}
+{"question":"Are cash handovers by political intermediaries permitted for federal grants?","expected_doc_id":"nassp_conditional_cash_transfer_2026","should_retrieve":true}
+{"question":"What time do polling units open and close on election day?","expected_doc_id":"inec_voter_accreditation_guidelines_2026","should_retrieve":true}
+{"question":"Are voters allowed to vote if they are in line before 2:30 PM?","expected_doc_id":"inec_voter_accreditation_guidelines_2026","should_retrieve":true}
+{"question":"Is manual accreditation allowed when BVAS fails to recognize a voter?","expected_doc_id":"inec_voter_accreditation_guidelines_2026","should_retrieve":true}
+{"question":"Is voting free of charge at all INEC polling units?","expected_doc_id":"inec_voter_accreditation_guidelines_2026","should_retrieve":true}
+{"question":"What is the official INEC Citizens Contact Centre phone number?","expected_doc_id":"inec_voter_accreditation_guidelines_2026","should_retrieve":true}
+{"question":"What is the secret recipe for baking french chocolate soufflé?","expected_doc_id":null,"should_retrieve":false}
+{"question":"What is the capital city of France?","expected_doc_id":null,"should_retrieve":false}
+{"question":"How can I invest in automated foreign exchange crypto arbitrage?","expected_doc_id":null,"should_retrieve":false}
+{"question":"What are the best astrological birth signs for business success?","expected_doc_id":null,"should_retrieve":false}
+{"question":"How to prepare traditional Nigerian party jollof rice with firewood?","expected_doc_id":null,"should_retrieve":false}
