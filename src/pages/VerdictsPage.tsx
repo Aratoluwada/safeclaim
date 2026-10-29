@@ -86,7 +86,7 @@ export const VerdictsPage: React.FC<VerdictsPageProps> = ({ language }) => {
               </div>
 
               <div className="space-y-2">
-                <h3 className="font-display text-xl font-bold text-[#1F1B16] dark:text-[#EDE7DF]">
+                <h3 className="font-display text-xl font-bold text-[#1F1B16] dark:text-[#F4EEE4]">
                   {item.name}
                 </h3>
                 <p className="text-xs sm:text-sm text-[#63584C] dark:text-[#A89E90] font-body leading-relaxed">
@@ -97,11 +97,11 @@ export const VerdictsPage: React.FC<VerdictsPageProps> = ({ language }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-mono">
                 <div className="p-3.5 rounded-xl bg-[#FAF7F2] dark:bg-[#1A1612] border border-[#E8DFD5] dark:border-[#2D261F]">
                   <span className="text-[#63584C] dark:text-[#A89E90] font-bold block mb-1">Example Claim:</span>
-                  <span className="text-[#1F1B16] dark:text-[#EDE7DF] font-body text-xs">{item.exampleClaim}</span>
+                  <span className="text-[#1F1B16] dark:text-[#F4EEE4] font-body text-xs">{item.exampleClaim}</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-[#FAF7F2] dark:bg-[#1A1612] border border-[#E8DFD5] dark:border-[#2D261F]">
                   <span className="text-[#63584C] dark:text-[#A89E90] font-bold block mb-1">Official Evidence:</span>
-                  <span className="text-[#1F1B16] dark:text-[#EDE7DF] font-body text-xs">{item.officialEvidence}</span>
+                  <span className="text-[#1F1B16] dark:text-[#F4EEE4] font-body text-xs">{item.officialEvidence}</span>
                 </div>
               </div>
             </Card>
@@ -114,7 +114,7 @@ export const VerdictsPage: React.FC<VerdictsPageProps> = ({ language }) => {
         <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-[#92400E] dark:text-[#FCD34D]">
           The Non-Equivalence Principle: Silence != Falsity
         </h4>
-        <p className="text-xs sm:text-sm text-[#1F1B16] dark:text-[#EDE7DF] leading-relaxed font-body">
+        <p className="text-xs sm:text-sm text-[#1F1B16] dark:text-[#F4EEE4] leading-relaxed font-body">
           A fundamental rule in SafeClaim fact-checking is that the absence of official guidance does not automatically prove a rumour is false. It simply means that no approved agency has published verification. When viral rumours surge without official statements, SafeClaim labels them as Guidance Gaps to prioritize institutional risk communication.
         </p>
       </div>

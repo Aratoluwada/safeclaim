@@ -91,7 +91,7 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
                   <FileText className="w-5 h-5 text-[#FAF4E8]" />
                 </div>
                 <div>
-                  <h2 id="brief-modal-title" className="font-display text-base font-bold text-[#1F1B16] dark:text-[#EDE7DF]">
+                  <h2 id="brief-modal-title" className="font-display text-base font-bold text-[#1F1B16] dark:text-[#F4EEE4]">
                     Institutional Intelligence Brief
                   </h2>
                   <div className="flex items-center gap-2 text-xs font-mono text-[#63584C] dark:text-[#A89E90]">
@@ -125,7 +125,7 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
 
                 <button
                   onClick={onClose}
-                  className="cursor-pointer p-1.5 rounded-lg text-[#63584C] hover:text-[#1F1B16] dark:text-[#A89E90] dark:hover:text-[#EDE7DF] transition hover:bg-stone-200/50 dark:hover:bg-stone-800/50 focus-ring ml-1"
+                  className="cursor-pointer p-1.5 rounded-lg text-[#63584C] hover:text-[#1F1B16] dark:text-[#A89E90] dark:hover:text-[#F4EEE4] transition hover:bg-[#E8DFD5]/50 dark:hover:bg-[#2D261F]/50 focus-ring ml-1"
                   aria-label="Close modal"
                 >
                   <X className="w-5 h-5" />
@@ -134,10 +134,10 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
             </div>
 
             {/* Scrollable Document Body */}
-            <div className="flex-1 overflow-y-auto p-5 sm:p-7 space-y-6 text-[#1F1B16] dark:text-[#EDE7DF] text-sm">
+            <div className="flex-1 overflow-y-auto p-5 sm:p-7 space-y-6 text-[#1F1B16] dark:text-[#F4EEE4] text-sm">
               {/* Executive Summary */}
               <section className="space-y-2">
-                <h3 className="text-xs font-mono uppercase tracking-wider text-[#0A5C36] dark:text-[#34D399] font-bold">
+                <h3 className="text-xs font-mono uppercase tracking-wider text-accent font-bold">
                   1. Executive Summary
                 </h3>
                 <p className="p-4 rounded-xl bg-white dark:bg-[#201C17] border border-[#D4C5B3] dark:border-[#3D352C] leading-relaxed font-body text-sm shadow-2xs">
@@ -158,16 +158,16 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
                     >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2 font-mono text-[11px]">
-                          <span className="font-bold text-[#1F1B16] dark:text-[#EDE7DF] capitalize">
+                          <span className="font-bold text-[#1F1B16] dark:text-[#F4EEE4] capitalize">
                             [{c.domain}]
                           </span>
                           <span className="text-[#8E8273]">{c.cluster_id}</span>
                         </div>
-                        <p className="font-bold text-[#1F1B16] dark:text-[#EDE7DF] font-body text-sm">{c.claim}</p>
+                        <p className="font-bold text-[#1F1B16] dark:text-[#F4EEE4] font-body text-sm">{c.claim}</p>
                       </div>
 
                       <div className="flex items-center gap-3 shrink-0 font-mono text-xs">
-                        <span className="font-bold text-[#1F1B16] dark:text-[#EDE7DF]">{c.count} msgs</span>
+                        <span className="font-bold text-[#1F1B16] dark:text-[#F4EEE4]">{c.count} msgs</span>
                         <VerdictStamp verdict={c.verdict} size="sm" rotate={false} />
                       </div>
                     </li>
@@ -193,8 +193,8 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
                         </span>
                         <span className="text-[#B45309] dark:text-[#FBBF24] font-bold">{g.count} messages</span>
                       </div>
-                      <p className="font-display font-bold text-[#1F1B16] dark:text-[#EDE7DF] text-sm sm:text-base">{g.claim}</p>
-                      <div className="pt-2 border-t border-[#FDE68A] dark:border-[#B45309]/40 text-[#1F1B16] dark:text-[#EDE7DF] leading-relaxed font-body">
+                      <p className="font-display font-bold text-[#1F1B16] dark:text-[#F4EEE4] text-sm sm:text-base">{g.claim}</p>
+                      <div className="pt-2 border-t border-[#FDE68A] dark:border-[#B45309]/40 text-[#1F1B16] dark:text-[#F4EEE4] leading-relaxed font-body">
                         <strong className="font-mono text-[#92400E] dark:text-[#FCD34D] text-xs uppercase font-bold">Recommended Action:</strong>{' '}
                         {g.suggested_action}
                       </div>
@@ -205,10 +205,10 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
 
               {/* Raw Markdown Accordion */}
               <details className="pt-2">
-                <summary className="text-xs font-mono font-bold text-[#63584C] dark:text-[#A89E90] cursor-pointer hover:text-[#1F1B16] dark:hover:text-[#EDE7DF]">
+                <summary className="text-xs font-mono font-bold text-[#63584C] dark:text-[#A89E90] cursor-pointer hover:text-[#1F1B16] dark:hover:text-[#F4EEE4]">
                   [+] View Raw Markdown Output
                 </summary>
-                <pre className="mt-2.5 p-4 rounded-xl bg-[#1F1B16] text-[#EDE7DF] font-mono text-xs overflow-x-auto whitespace-pre-wrap leading-relaxed max-h-52 border border-[#3D352C]">
+                <pre className="mt-2.5 p-4 rounded-xl bg-[#1F1B16] text-[#F4EEE4] font-mono text-xs overflow-x-auto whitespace-pre-wrap leading-relaxed max-h-52 border border-[#3D352C]">
                   {brief.markdown}
                 </pre>
               </details>

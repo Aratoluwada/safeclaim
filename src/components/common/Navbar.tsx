@@ -98,8 +98,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                       className={() =>
                         `inline-flex items-center px-3.5 py-2 text-sm font-semibold rounded-lg transition-colors focus-ring ${
                           item.isActive
-                            ? 'text-[#0A5C36] dark:text-[#34D399] bg-[#EBF4EF] dark:bg-[#1B2F23] shadow-2xs'
-                            : 'text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#EDE7DF] hover:bg-[#F5EFEB] dark:hover:bg-[#25201A]'
+                            ? 'text-accent bg-accent-tint dark:bg-accent-tint shadow-2xs'
+                            : 'text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#F4EEE4] hover:bg-[#F5EFEB] dark:hover:bg-[#25201A]'
                         }`
                       }
                     >
@@ -120,7 +120,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={onOpenSettings}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-bold rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] text-[#1F1B16] dark:text-[#EDE7DF] hover:bg-[#F5EFEB] dark:hover:bg-[#2A241F] transition cursor-pointer focus-ring shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-bold rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] text-[#1F1B16] dark:text-[#F4EEE4] hover:bg-[#F5EFEB] dark:hover:bg-[#2A241F] transition cursor-pointer focus-ring shadow-2xs"
               title="Configure API Mode & Model"
             >
               <Radio
@@ -136,7 +136,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={onToggleTheme}
-              className="cursor-pointer p-2 rounded-xl text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#EDE7DF] hover:bg-[#F5EFEB] dark:hover:bg-[#25201A] border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] transition focus-ring shadow-2xs"
+              className="cursor-pointer p-2 rounded-xl text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#F4EEE4] hover:bg-[#F5EFEB] dark:hover:bg-[#25201A] border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] transition focus-ring shadow-2xs"
               aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
               title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
@@ -159,7 +159,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               ref={hamburgerRef}
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="cursor-pointer p-2 rounded-xl text-[#1F1B16] dark:text-[#EDE7DF] hover:bg-[#F5EFEB] dark:hover:bg-[#25201A] border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] focus-ring"
+              className="cursor-pointer p-2 rounded-xl text-[#1F1B16] dark:text-[#F4EEE4] hover:bg-[#F5EFEB] dark:hover:bg-[#25201A] border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] focus-ring"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-nav-menu"
@@ -192,8 +192,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                       className={() =>
                         `block px-3.5 py-2.5 rounded-xl text-sm font-semibold transition ${
                           item.isActive
-                            ? 'bg-[#EBF4EF] dark:bg-[#1B2F23] text-[#0A5C36] dark:text-[#34D399]'
-                            : 'text-[#1F1B16] dark:text-[#EDE7DF] hover:bg-[#F5EFEB] dark:hover:bg-[#25201A]'
+                            ? 'bg-accent-tint dark:bg-accent-tint text-accent'
+                            : 'text-[#1F1B16] dark:text-[#F4EEE4] hover:bg-[#F5EFEB] dark:hover:bg-[#25201A]'
                         }`
                       }
                     >
@@ -217,7 +217,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenSettings();
                 }}
-                className="text-xs font-mono font-bold text-[#0A5C36] dark:text-[#34D399] underline flex items-center gap-1.5"
+                className="text-xs font-mono font-bold text-accent underline flex items-center gap-1.5"
               >
                 <span className="capitalize">{apiConfig.mode} Mode</span>
                 <Settings2 className="w-3.5 h-3.5" />

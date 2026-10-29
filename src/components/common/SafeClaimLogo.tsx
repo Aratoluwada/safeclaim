@@ -64,11 +64,11 @@ export const SafeClaimLogo: React.FC<SafeClaimLogoProps> = ({
       <div className="flex flex-col justify-center leading-none">
         <div className="flex items-baseline gap-1.5">
           <span
-            className={`font-display font-bold tracking-tight text-[#1F1B16] dark:text-[#EDE7DF] ${textSizes[size]}`}
+            className={`font-display font-bold tracking-tight text-[#1F1B16] dark:text-[#F4EEE4] ${textSizes[size]}`}
           >
             SafeClaim
           </span>
-          <span className="text-[10px] font-mono font-bold tracking-widest text-[#0A5C36] dark:text-[#34D399] uppercase px-1 py-0.5 rounded bg-[#EBF4EF] dark:bg-[#1B2F23]">
+          <span className="text-[10px] font-mono font-bold tracking-widest text-accent uppercase px-1 py-0.5 rounded bg-accent-tint dark:bg-accent-tint">
             AI
           </span>
         </div>

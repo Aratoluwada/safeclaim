@@ -25,7 +25,7 @@ export const NotFoundPage: React.FC = () => {
         HTTP 404 • Official Archive Record Missing
       </div>
 
-      <h1 className="font-display text-3xl sm:text-4xl font-bold text-[#1F1B16] dark:text-[#EDE7DF]">
+      <h1 className="font-display text-3xl sm:text-4xl font-bold text-[#1F1B16] dark:text-[#F4EEE4]">
         Page Not Found in{' '}
         <span className="relative inline-block">
           Gazette Registry

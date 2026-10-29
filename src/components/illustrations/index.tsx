@@ -133,7 +133,7 @@ export const EmptyIllustration: React.FC<IllustrationProps> = ({
     <line x1="42" y1="58" x2="75" y2="58" stroke="#E8DFD5" strokeWidth="2" strokeLinecap="round" />
     <line x1="42" y1="68" x2="80" y2="68" stroke="#E8DFD5" strokeWidth="2" strokeLinecap="round" />
     {/* Pencil */}
-    <path d="M85 30L95 40L65 70L55 70L55 60L85 30Z" fill="#24306E" />
+    <path d="M85 30L95 40L65 70L55 70L55 60L85 30Z" fill="#27358F" />
     <path d="M55 70L58 64L61 67L55 70Z" fill="#FAF4E8" />
   </svg>
 );

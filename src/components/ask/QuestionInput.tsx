@@ -72,7 +72,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
         </label>
 
         {/* Multi-line friendly search box styled like a warm civic dispatch pad */}
-        <div className="relative rounded-2xl bg-white dark:bg-[#201C17] border-2 border-[#D4C5B3] dark:border-[#3D352C] focus-within:border-[#0A5C36] dark:focus-within:border-[#34D399] transition-all p-3 sm:p-4 shadow-sm">
+        <div className="relative rounded-2xl bg-white dark:bg-[#201C17] border-2 border-[#D4C5B3] dark:border-[#3D352C] focus-within:border-accent transition-all p-3 sm:p-4 shadow-sm">
           <div className="flex items-start gap-3">
             <Search className="w-5 h-5 text-[#8E8273] mt-1 shrink-0" aria-hidden="true" />
             <textarea
@@ -94,7 +94,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                   ? 'Paste di rumour, WhatsApp broadcast, or type your question here...'
                   : 'Paste the forwarded message, rumour, or question to verify...'
               }
-              className="w-full text-base sm:text-lg font-body text-[#1F1B16] dark:text-[#EDE7DF] placeholder:text-[#8E8273]/80 bg-transparent focus:outline-none resize-none leading-relaxed"
+              className="w-full text-base sm:text-lg font-body text-[#1F1B16] dark:text-[#F4EEE4] placeholder:text-[#8E8273]/80 bg-transparent focus:outline-none resize-none leading-relaxed"
               aria-invalid={!!error}
               aria-describedby={error ? 'input-error-msg' : undefined}
             />
@@ -105,10 +105,10 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
               <button
                 type="button"
                 onClick={handlePasteClipboard}
-                className="cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-medium rounded-lg text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#EDE7DF] hover:bg-[#F5EFEB] dark:hover:bg-[#2A241F] transition"
+                className="cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-medium rounded-lg text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#F4EEE4] hover:bg-[#F5EFEB] dark:hover:bg-[#2A241F] transition"
                 title="Paste from clipboard"
               >
-                <ClipboardPaste className="w-3.5 h-3.5 text-[#0A5C36] dark:text-[#34D399]" />
+                <ClipboardPaste className="w-3.5 h-3.5 text-accent" />
                 <span>{language === 'pcm' ? 'Paste message' : 'Paste from clipboard'}</span>
               </button>
               <span className="hidden sm:inline text-[11px] font-mono text-[#8E8273]">
@@ -148,7 +148,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
           <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#63584C] dark:text-[#A89E90]">
             {t.starterPromptTitle}
           </span>
-          <span className="font-hand text-base text-[#24306E] dark:text-[#8BA0E8] transform -rotate-1">
+          <span className="font-hand text-base text-[#27358F] dark:text-[#AEB9FF] transform -rotate-1">
             {language === 'pcm' ? 'Click any one to check am' : 'Or try one of these rumours'}
           </span>
         </div>
@@ -160,9 +160,9 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                 type="button"
                 onClick={() => handleStarterClick(starter.query)}
                 disabled={isLoading}
-                className="cursor-pointer w-full text-left p-3.5 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] hover:border-[#0A5C36] dark:hover:border-[#34D399] bg-white dark:bg-[#201C17] hover:bg-[#FBF7F0] dark:hover:bg-[#25201A] transition text-sm text-[#1F1B16] dark:text-[#EDE7DF] flex items-start gap-2.5 focus-ring min-h-[48px] shadow-2xs group"
+                className="cursor-pointer w-full text-left p-3.5 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] hover:border-accent bg-white dark:bg-[#201C17] hover:bg-[#FBF7F0] dark:hover:bg-[#25201A] transition text-sm text-[#1F1B16] dark:text-[#F4EEE4] flex items-start gap-2.5 focus-ring min-h-[48px] shadow-2xs group"
               >
-                <FileSearch className="w-4 h-4 text-[#0A5C36] dark:text-[#34D399] mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
+                <FileSearch className="w-4 h-4 text-accent mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
                 <span className="font-medium leading-snug">{starter.label}</span>
               </button>
             </li>

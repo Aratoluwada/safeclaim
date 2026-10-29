@@ -27,7 +27,7 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
           id="language-select-compact"
           value={currentLanguage}
           onChange={(e) => onChange(e.target.value as LanguageCode)}
-          className="px-3 py-1.5 text-xs font-bold rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] text-[#1F1B16] dark:text-[#EDE7DF] focus-ring cursor-pointer"
+          className="px-3 py-1.5 text-xs font-bold rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] text-[#1F1B16] dark:text-[#F4EEE4] focus-ring cursor-pointer"
         >
           <option value="en">English (EN)</option>
           <option value="pcm">Naija Pidgin (PCM)</option>
@@ -47,8 +47,8 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
         onClick={() => onChange('en')}
         className={`px-3 py-1 rounded-lg transition-all cursor-pointer min-h-[32px] sm:min-h-[28px] focus-ring ${
           currentLanguage === 'en'
-            ? 'bg-white dark:bg-[#2A241E] text-[#0A5C36] dark:text-[#34D399] font-bold shadow-2xs border border-[#D4C5B3] dark:border-[#3D352C]'
-            : 'text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#EDE7DF]'
+            ? 'bg-white dark:bg-[#2A241E] text-accent font-bold shadow-2xs border border-[#D4C5B3] dark:border-[#3D352C]'
+            : 'text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#F4EEE4]'
         }`}
         aria-pressed={currentLanguage === 'en'}
       >
@@ -59,8 +59,8 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
         onClick={() => onChange('pcm')}
         className={`px-3 py-1 rounded-lg transition-all cursor-pointer min-h-[32px] sm:min-h-[28px] focus-ring ${
           currentLanguage === 'pcm'
-            ? 'bg-white dark:bg-[#2A241E] text-[#0A5C36] dark:text-[#34D399] font-bold shadow-2xs border border-[#D4C5B3] dark:border-[#3D352C]'
-            : 'text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#EDE7DF]'
+            ? 'bg-white dark:bg-[#2A241E] text-accent font-bold shadow-2xs border border-[#D4C5B3] dark:border-[#3D352C]'
+            : 'text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#F4EEE4]'
         }`}
         aria-pressed={currentLanguage === 'pcm'}
       >

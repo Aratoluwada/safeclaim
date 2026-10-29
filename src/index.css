@@ -12,17 +12,17 @@
   --font-hand: 'Caveat', cursive, handwriting, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* Brand: Forest Green (#0A5C36) & Adire Indigo (#24306E) */
+  /* Brand: Forest Green (#0A5C36) & Adire Indigo (#27358F) */
   --color-brand: #0A5C36;
   --color-brand-hover: #074528;
   --color-brand-active: #05331E;
   --color-brand-subtle: #EBF4EF;
   --color-brand-border: #BBD8C3;
 
-  --color-indigo: #24306E;
-  --color-indigo-hover: #1A2454;
-  --color-indigo-subtle: #EEF1FA;
-  --color-indigo-border: #CAD1E8;
+  --color-indigo: #27358F;
+  --color-indigo-hover: #1E2A73;
+  --color-indigo-subtle: #E3E8F8;
+  --color-indigo-border: #C5CEF0;
 
   --color-sage: #E3ECE5;
   --color-cream: #FAF4E8;
@@ -46,7 +46,7 @@
   --color-paper-dark-border: #3D352C;
   --color-paper-dark-border-strong: #52473B;
 
-  --color-ink-dark: #EDE7DF;
+  --color-ink-dark: #F4EEE4;
   --color-ink-dark-muted: #A89E90;
   --color-ink-dark-faint: #7A7165;
 
@@ -69,6 +69,124 @@
   --radius-tile: 16px;
   --radius-card: 18px;
   --radius-modal: 20px;
+
+}
+
+/* Variable-backed colors must be inlined so per-page [data-accent] overrides resolve at the element */
+@theme inline {
+  /* ---- Palette v2: accent families (never red / green / amber hues; those belong to verdicts) ---- */
+  /* Soft tile fills (auto-flip in dark mode via variables below) */
+  --color-sage-soft: var(--c-sage-soft);
+  --color-indigo-soft: var(--c-indigo-soft);
+  --color-sky-soft: var(--c-sky-soft);
+  --color-orchid-soft: var(--c-orchid-soft);
+  --color-violet-soft: var(--c-violet-soft);
+  --color-blush-soft: var(--c-blush-soft);
+  --color-cream-soft: var(--c-cream-soft);
+  /* Deep text/icon colors that sit on the soft fills */
+  --color-sage-ink: var(--c-sage-ink);
+  --color-indigo-ink: var(--c-indigo-ink);
+  --color-sky-ink: var(--c-sky-ink);
+  --color-orchid-ink: var(--c-orchid-ink);
+  --color-violet-ink: var(--c-violet-ink);
+  --color-blush-ink: var(--c-blush-ink);
+  /* Saturated hero tiles (white text) */
+  --color-forest-solid: var(--c-forest-solid);
+  --color-indigo-solid: var(--c-indigo-solid);
+  --color-sky-solid: var(--c-sky-solid);
+  --color-orchid-solid: var(--c-orchid-solid);
+  --color-violet-solid: var(--c-violet-solid);
+  --color-ink-solid: var(--c-ink-solid);
+  /* Page accent (set per route via data-accent on the layout root) */
+  --color-accent: var(--accent);
+  --color-accent-tint: var(--accent-tint);
+  --color-accent-tint-strong: var(--accent-tint-strong);
+  --color-accent-border: var(--accent-border);
+  --color-accent-solid: var(--accent-solid);
+}
+
+
+/* ============================================================
+   Palette v2 variables. All pairs verified WCAG AA.
+   ============================================================ */
+:root {
+  --c-sage-soft: #E1EEE5;   --c-sage-ink: #0A5C36;
+  --c-indigo-soft: #E3E8F8; --c-indigo-ink: #27358F;
+  --c-sky-soft: #BFE3F5;    --c-sky-ink: #0B5F8A;
+  --c-orchid-soft: #F3E1F0; --c-orchid-ink: #8A2F7D;
+  --c-violet-soft: #E8E1F6; --c-violet-ink: #5B3FA6;
+  --c-blush-soft: #FADCE3;  --c-blush-ink: #9C2A58;   /* blush: background tint only */
+  --c-cream-soft: #F3ECDF;
+  --c-forest-solid: #0A5C36;
+  --c-indigo-solid: #27358F;
+  --c-sky-solid: #0B5F8A;
+  --c-orchid-solid: #8A2F7D;
+  --c-violet-solid: #5B3FA6;
+  --c-ink-solid: #1F1B16;
+  --focus: #27358F;
+
+  /* default accent = forest */
+  --accent: #0A5C36;
+  --accent-solid: #0A5C36;
+  --accent-tint: #EBF4EF;
+  --accent-tint-strong: #D4E8DC;
+  --accent-border: #BBD8C3;
+}
+.dark {
+  --c-sage-soft: #143325;   --c-sage-ink: #7BD3A0;
+  --c-indigo-soft: #1C2250; --c-indigo-ink: #AEB9FF;
+  --c-sky-soft: #10303F;    --c-sky-ink: #8FD3F4;
+  --c-orchid-soft: #3A1F37; --c-orchid-ink: #E9A6DD;
+  --c-violet-soft: #2A2250; --c-violet-ink: #C5B3F5;
+  --c-blush-soft: #3A1C26;  --c-blush-ink: #F5A9C0;
+  --c-cream-soft: #221D18;
+  --c-forest-solid: #0F6B40;
+  --c-indigo-solid: #2F3FA3;
+  --c-sky-solid: #0E6F9F;
+  --c-orchid-solid: #9C3A8E;
+  --c-violet-solid: #6A4DBA;
+  --c-ink-solid: #2B2520;
+  --focus: #8FD3F4;
+
+  --accent: #34D399;
+  --accent-solid: #0A5C36;
+  --accent-tint: #12281B;
+  --accent-tint-strong: #1B2F23;
+  --accent-border: #2A5239;
+}
+
+/* Per-page accents */
+[data-accent="sky"] {
+  --accent: #0B5F8A; --accent-solid: #0B5F8A;
+  --accent-tint: #E3F3FB; --accent-tint-strong: #CBE8F7; --accent-border: #BFE3F5;
+}
+.dark [data-accent="sky"] {
+  --accent: #8FD3F4; --accent-solid: #0E6F9F;
+  --accent-tint: #10303F; --accent-tint-strong: #164258; --accent-border: #1F5470;
+}
+[data-accent="indigo"] {
+  --accent: #27358F; --accent-solid: #27358F;
+  --accent-tint: #E3E8F8; --accent-tint-strong: #D3DAF5; --accent-border: #C5CEF0;
+}
+.dark [data-accent="indigo"] {
+  --accent: #AEB9FF; --accent-solid: #2F3FA3;
+  --accent-tint: #1C2250; --accent-tint-strong: #252C66; --accent-border: #343E80;
+}
+[data-accent="violet"] {
+  --accent: #5B3FA6; --accent-solid: #5B3FA6;
+  --accent-tint: #E8E1F6; --accent-tint-strong: #DCD2F2; --accent-border: #D2C7EE;
+}
+.dark [data-accent="violet"] {
+  --accent: #C5B3F5; --accent-solid: #6A4DBA;
+  --accent-tint: #2A2250; --accent-tint-strong: #342B63; --accent-border: #433878;
+}
+[data-accent="orchid"] {
+  --accent: #8A2F7D; --accent-solid: #8A2F7D;
+  --accent-tint: #F3E1F0; --accent-tint-strong: #EBD0E6; --accent-border: #E5C3DF;
+}
+.dark [data-accent="orchid"] {
+  --accent: #E9A6DD; --accent-solid: #9C3A8E;
+  --accent-tint: #3A1F37; --accent-tint-strong: #4A2A46; --accent-border: #5E3358;
 }
 
 @layer base {
@@ -146,11 +264,8 @@
   outline-offset: 2px;
 }
 .focus-ring:focus-visible {
-  outline: 2px solid var(--color-brand);
+  outline: 3px solid var(--focus);
   outline-offset: 2px;
-}
-.dark .focus-ring:focus-visible {
-  outline: 2px solid #34D399;
 }
 
 /* Rubber stamp badge effect */

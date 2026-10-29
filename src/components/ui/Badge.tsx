@@ -27,11 +27,11 @@ export const Badge: React.FC<BadgeProps> = ({
 
   const variants = {
     neutral:
-      'bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700',
+      'bg-[#F5EFEB] dark:bg-[#2D261F] text-[#2D261F] dark:text-[#E8DFD5] border border-[#E8DFD5] dark:border-[#3D352C]',
     brand:
-      'bg-[#EBF4EF] dark:bg-[#0D2D1E] text-[#0A5C36] dark:text-[#6EE7B7] border border-[#C2DEC9] dark:border-[#1F4A33] font-semibold',
+      'bg-accent-tint dark:bg-accent-tint text-accent dark:text-[#6EE7B7] border border-accent-border font-semibold',
     outline:
-      'bg-transparent text-neutral-700 dark:text-neutral-300 border border-neutral-300 dark:border-neutral-700',
+      'bg-transparent text-[#4A4036] dark:text-[#CFC6B8] border border-[#D4C5B3] dark:border-[#3D352C]',
     contradicted:
       'bg-red-50 dark:bg-red-950/60 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-900 font-semibold',
     supported:

@@ -78,8 +78,8 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
             onClick={() => handleCitationClick(passageId)}
             className={`cursor-pointer inline-flex items-center font-mono font-bold text-xs mx-1 px-2 py-0.5 rounded-md transition-all focus-ring ${
               isSelected
-                ? 'bg-[#0A5C36] text-white ring-2 ring-[#0A5C36]/50 shadow-xs'
-                : 'bg-[#EBF4EF] dark:bg-[#1C3225] text-[#0A5C36] dark:text-[#34D399] border border-[#BBD8C3] dark:border-[#2A523A] hover:bg-[#D4E8DC]'
+                ? 'bg-[#0A5C36] text-white ring-2 ring-accent/50 shadow-xs'
+                : 'bg-accent-tint dark:bg-accent-tint text-accent border border-accent-border hover:bg-accent-tint-strong'
             }`}
             title={`View official citation for ${passageId}`}
           >
@@ -113,7 +113,7 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
 
         <div className="flex items-center gap-2">
           <Button variant="secondary" size="sm" onClick={() => setIsShareOpen(true)} className="font-bold">
-            <Share2 className="w-3.5 h-3.5 text-[#0A5C36] dark:text-[#34D399]" />
+            <Share2 className="w-3.5 h-3.5 text-accent" />
             <span>Share Receipt</span>
           </Button>
 
@@ -125,7 +125,7 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
               </>
             ) : (
               <>
-                <Copy className="w-3.5 h-3.5 text-stone-500" aria-hidden="true" />
+                <Copy className="w-3.5 h-3.5 text-[#63584C]" aria-hidden="true" />
                 <span>Copy</span>
               </>
             )}
@@ -139,20 +139,20 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
           <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#63584C] dark:text-[#A89E90]">
             Claim / Question Evaluated:
           </span>
-          <h2 className="font-display text-xl sm:text-2xl font-bold text-[#1F1B16] dark:text-[#EDE7DF] mt-1 text-left leading-snug">
+          <h2 className="font-display text-xl sm:text-2xl font-bold text-[#1F1B16] dark:text-[#F4EEE4] mt-1 text-left leading-snug">
             {response.question}
           </h2>
         </div>
 
         {/* Model's Neighbourly Explanation */}
         <div className="rounded-xl bg-[#FAF7F2] dark:bg-[#1A1612] border border-[#E8DFD5] dark:border-[#2D261F] p-5 sm:p-6 relative">
-          <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#0A5C36] dark:text-[#34D399] mb-2 flex items-center justify-between">
+          <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-accent mb-2 flex items-center justify-between">
             <span>Official Grounded Summary</span>
-            <span className="font-hand text-sm text-[#24306E] dark:text-[#8BA0E8]">
+            <span className="font-hand text-sm text-[#27358F] dark:text-[#AEB9FF]">
               {language === 'pcm' ? 'As di official paper talk am:' : 'Neighbourly explanation with receipts:'}
             </span>
           </div>
-          <div className="font-body text-base sm:text-lg text-[#1F1B16] dark:text-[#EDE7DF] leading-relaxed space-y-3 font-normal text-left">
+          <div className="font-body text-base sm:text-lg text-[#1F1B16] dark:text-[#F4EEE4] leading-relaxed space-y-3 font-normal text-left">
             <p>{renderFormattedAnswer(response.answer)}</p>
           </div>
         </div>
@@ -167,8 +167,8 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
           <section aria-labelledby="citations-section-heading" className="space-y-3.5 pt-2">
             <div className="flex flex-wrap items-center justify-between border-b border-[#E8DFD5] dark:border-[#2D261F] pb-2.5 gap-2">
               <div className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-[#0A5C36] dark:text-[#34D399]" aria-hidden="true" />
-                <h3 id="citations-section-heading" className="font-mono text-xs font-bold text-[#1F1B16] dark:text-[#EDE7DF] uppercase tracking-wider">
+                <BookOpen className="w-4 h-4 text-accent" aria-hidden="true" />
+                <h3 id="citations-section-heading" className="font-mono text-xs font-bold text-[#1F1B16] dark:text-[#F4EEE4] uppercase tracking-wider">
                   {t.citationsHeading} ({response.citations.length})
                 </h3>
               </div>
@@ -194,7 +194,7 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
         {/* Bottom bar */}
         <div className="pt-4 border-t border-[#E8DFD5] dark:border-[#2D261F] flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-xs text-[#63584C] dark:text-[#A89E90] font-mono">
-            <ShieldCheck className="w-4 h-4 text-[#0A5C36] dark:text-[#34D399]" aria-hidden="true" />
+            <ShieldCheck className="w-4 h-4 text-accent" aria-hidden="true" />
             <span>Answers strictly derived from approved Nigerian government publications.</span>
           </div>
 

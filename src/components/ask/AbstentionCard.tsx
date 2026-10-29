@@ -69,7 +69,7 @@ export const AbstentionCard: React.FC<AbstentionCardProps> = ({
           <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#63584C] dark:text-[#A89E90]">
             Claim Evaluated:
           </span>
-          <h2 className="font-display text-xl sm:text-2xl font-bold text-[#1F1B16] dark:text-[#EDE7DF] mt-1 text-left leading-snug">
+          <h2 className="font-display text-xl sm:text-2xl font-bold text-[#1F1B16] dark:text-[#F4EEE4] mt-1 text-left leading-snug">
             &ldquo;{question}&rdquo;
           </h2>
         </div>
@@ -84,7 +84,7 @@ export const AbstentionCard: React.FC<AbstentionCardProps> = ({
             <h3 className="font-display font-bold text-lg text-[#92400E] dark:text-[#FDE68A]">
               {t.abstentionLead}
             </h3>
-            <p className="text-sm text-[#1F1B16] dark:text-[#EDE7DF] leading-relaxed font-body">
+            <p className="text-sm text-[#1F1B16] dark:text-[#F4EEE4] leading-relaxed font-body">
               {explanation}
             </p>
 
@@ -112,15 +112,15 @@ export const AbstentionCard: React.FC<AbstentionCardProps> = ({
                   href={portal.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3.5 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] hover:border-[#0A5C36] dark:hover:border-[#34D399] bg-[#FAF7F2] dark:bg-[#1A1612] hover:bg-white dark:hover:bg-[#221C16] transition flex items-center justify-between group focus-ring min-h-[48px] shadow-2xs"
+                  className="p-3.5 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] hover:border-accent bg-[#FAF7F2] dark:bg-[#1A1612] hover:bg-white dark:hover:bg-[#221C16] transition flex items-center justify-between group focus-ring min-h-[48px] shadow-2xs"
                 >
                   <div>
-                    <span className="block text-xs font-bold text-[#1F1B16] dark:text-[#EDE7DF] group-hover:text-[#0A5C36] dark:group-hover:text-[#34D399]">
+                    <span className="block text-xs font-bold text-[#1F1B16] dark:text-[#F4EEE4] group-hover:text-accent">
                       {portal.name}
                     </span>
                     <span className="text-[11px] text-[#8E8273] font-mono">{portal.domain}</span>
                   </div>
-                  <ExternalLink className="w-3.5 h-3.5 text-[#8E8273] group-hover:text-[#0A5C36] dark:group-hover:text-[#34D399]" aria-hidden="true" />
+                  <ExternalLink className="w-3.5 h-3.5 text-[#8E8273] group-hover:text-accent" aria-hidden="true" />
                 </a>
               </li>
             ))}

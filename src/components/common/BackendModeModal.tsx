@@ -89,11 +89,11 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-[#E8DFD5] dark:border-[#2D261F] bg-[#F5EFEB] dark:bg-[#201C17]">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-[#EBF4EF] dark:bg-[#1B2F23] text-[#0A5C36] dark:text-[#34D399] flex items-center justify-center border border-[#BBD8C3] dark:border-[#2A5239] shadow-2xs">
+                <div className="w-9 h-9 rounded-xl bg-accent-tint dark:bg-accent-tint text-accent flex items-center justify-center border border-accent-border shadow-2xs">
                   <Server className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 id="backend-modal-title" className="font-display text-base font-bold text-[#1F1B16] dark:text-[#EDE7DF]">
+                  <h2 id="backend-modal-title" className="font-display text-base font-bold text-[#1F1B16] dark:text-[#F4EEE4]">
                     Operating Mode &amp; API Configuration
                   </h2>
                   <p className="text-xs text-[#63584C] dark:text-[#A89E90] font-mono">
@@ -103,7 +103,7 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
               </div>
               <button
                 onClick={onClose}
-                className="cursor-pointer p-1.5 rounded-lg text-[#63584C] hover:text-[#1F1B16] dark:text-[#A89E90] dark:hover:text-[#EDE7DF] transition hover:bg-stone-200/50 dark:hover:bg-stone-800/50 focus-ring"
+                className="cursor-pointer p-1.5 rounded-lg text-[#63584C] hover:text-[#1F1B16] dark:text-[#A89E90] dark:hover:text-[#F4EEE4] transition hover:bg-[#E8DFD5]/50 dark:hover:bg-[#2D261F]/50 focus-ring"
                 aria-label="Close dialog"
               >
                 <X className="w-5 h-5" />
@@ -123,14 +123,14 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
                     onClick={() => setConfig({ ...config, mode: 'demo' })}
                     className={`cursor-pointer p-4 rounded-xl border-2 text-left transition focus-ring ${
                       config.mode === 'demo'
-                        ? 'border-[#0A5C36] bg-[#EBF4EF]/60 dark:bg-[#12281B]/60 shadow-xs'
+                        ? 'border-accent bg-accent-tint/60 dark:bg-accent-tint/60 shadow-xs'
                         : 'border-[#D4C5B3] dark:border-[#3D352C] hover:border-[#8E8273] bg-white dark:bg-[#201C17]'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <Zap className="w-4 h-4 text-[#0A5C36] dark:text-[#34D399]" />
-                        <span className="font-display font-bold text-sm text-[#1F1B16] dark:text-[#EDE7DF]">Demo Mode</span>
+                        <Zap className="w-4 h-4 text-accent" />
+                        <span className="font-display font-bold text-sm text-[#1F1B16] dark:text-[#F4EEE4]">Demo Mode</span>
                       </div>
                       {config.mode === 'demo' && (
                         <Badge variant="brand" size="sm">Active</Badge>
@@ -146,14 +146,14 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
                     onClick={() => setConfig({ ...config, mode: 'live' })}
                     className={`cursor-pointer p-4 rounded-xl border-2 text-left transition focus-ring ${
                       config.mode === 'live'
-                        ? 'border-[#0A5C36] bg-[#EBF4EF]/60 dark:bg-[#12281B]/60 shadow-xs'
+                        ? 'border-accent bg-accent-tint/60 dark:bg-accent-tint/60 shadow-xs'
                         : 'border-[#D4C5B3] dark:border-[#3D352C] hover:border-[#8E8273] bg-white dark:bg-[#201C17]'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <Activity className="w-4 h-4 text-[#0A5C36] dark:text-[#34D399]" />
-                        <span className="font-display font-bold text-sm text-[#1F1B16] dark:text-[#EDE7DF]">Live Mode</span>
+                        <Activity className="w-4 h-4 text-accent" />
+                        <span className="font-display font-bold text-sm text-[#1F1B16] dark:text-[#F4EEE4]">Live Mode</span>
                       </div>
                       {config.mode === 'live' && (
                         <Badge variant="brand" size="sm">Active</Badge>
@@ -178,7 +178,7 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
                     value={config.baseUrl}
                     onChange={(e) => setConfig({ ...config, baseUrl: e.target.value })}
                     placeholder="http://localhost:8000/api/v1"
-                    className="flex-1 px-3.5 py-2.5 text-xs rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] font-mono text-[#1F1B16] dark:text-[#EDE7DF] focus-ring"
+                    className="flex-1 px-3.5 py-2.5 text-xs rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] font-mono text-[#1F1B16] dark:text-[#F4EEE4] focus-ring"
                   />
                   <Button
                     variant="secondary"
@@ -192,7 +192,7 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
                 </div>
 
                 {testResult.status === 'success' && (
-                  <div className="p-3 rounded-xl bg-[#F0FDF4] dark:bg-[#12281B] border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2 font-mono">
+                  <div className="p-3 rounded-xl bg-[#F0FDF4] dark:bg-accent-tint border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2 font-mono">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>{testResult.message} ({testResult.latencyMs}ms)</span>
                   </div>
@@ -207,8 +207,8 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
 
               {/* Architecture note */}
               <div className="p-4 rounded-xl bg-[#FAF7F2] dark:bg-[#201C17] border border-[#D4C5B3] dark:border-[#3D352C] text-xs space-y-1.5 text-[#63584C] dark:text-[#A89E90] shadow-2xs">
-                <div className="flex items-center gap-2 font-bold text-[#1F1B16] dark:text-[#EDE7DF] font-mono">
-                  <Cpu className="w-4 h-4 text-[#0A5C36] dark:text-[#34D399]" />
+                <div className="flex items-center gap-2 font-bold text-[#1F1B16] dark:text-[#F4EEE4] font-mono">
+                  <Cpu className="w-4 h-4 text-accent" />
                   <span>Model &amp; Retrieval Grounding Contract</span>
                 </div>
                 <p className="font-body leading-relaxed">
@@ -220,7 +220,7 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
             {/* Footer */}
             <div className="px-5 py-4 border-t border-[#E8DFD5] dark:border-[#2D261F] bg-[#F5EFEB] dark:bg-[#201C17] flex items-center justify-between">
               <span className="text-xs text-[#63584C] dark:text-[#A89E90] font-mono">
-                Mode: <strong className="text-[#1F1B16] dark:text-[#EDE7DF] capitalize">{config.mode}</strong>
+                Mode: <strong className="text-[#1F1B16] dark:text-[#F4EEE4] capitalize">{config.mode}</strong>
               </span>
               <div className="flex gap-2">
                 <Button variant="ghost" size="sm" onClick={onClose}>

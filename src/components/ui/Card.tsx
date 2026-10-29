@@ -25,15 +25,15 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
 
     const variants = {
       default:
-        'bg-white dark:bg-[#201C17] border border-[#D4C5B3] dark:border-[#3D352C] text-[#1F1B16] dark:text-[#EDE7DF] shadow-xs',
+        'bg-white dark:bg-[#201C17] border border-[#D4C5B3] dark:border-[#3D352C] text-[#1F1B16] dark:text-[#F4EEE4] shadow-xs',
       subtle:
-        'bg-[#F5EFEB] dark:bg-[#1C1814] border border-[#E8DFD5] dark:border-[#332B23] text-[#1F1B16] dark:text-[#EDE7DF]',
+        'bg-[#F5EFEB] dark:bg-[#1C1814] border border-[#E8DFD5] dark:border-[#332B23] text-[#1F1B16] dark:text-[#F4EEE4]',
       outline:
-        'bg-transparent border border-[#D4C5B3] dark:border-[#3D352C] text-[#1F1B16] dark:text-[#EDE7DF]',
+        'bg-transparent border border-[#D4C5B3] dark:border-[#3D352C] text-[#1F1B16] dark:text-[#F4EEE4]',
       bordered:
-        'bg-white dark:bg-[#201C17] border-2 border-[#D4C5B3] dark:border-[#3D352C] text-[#1F1B16] dark:text-[#EDE7DF] shadow-xs',
+        'bg-white dark:bg-[#201C17] border-2 border-[#D4C5B3] dark:border-[#3D352C] text-[#1F1B16] dark:text-[#F4EEE4] shadow-xs',
       document:
-        'official-document-sheet text-[#1F1B16] dark:text-[#EDE7DF]',
+        'official-document-sheet text-[#1F1B16] dark:text-[#F4EEE4]',
     }[variant];
 
     const paddings = {

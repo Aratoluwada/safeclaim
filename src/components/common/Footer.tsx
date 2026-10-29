@@ -23,7 +23,7 @@ export const Footer: React.FC<FooterProps> = ({ language, onOpenSettings }) => {
     <footer className="mt-auto">
       <AdireStrip theme="green" />
 
-      <div className="border-t border-[#E8DFD5] dark:border-[#3D352C] bg-[#F5EFEB] dark:bg-[#1A1612] text-[#63584C] dark:text-[#A89E90] text-xs">
+      <div className="border-t border-[#E8DFD5] dark:border-[#3D352C] bg-accent-tint text-[#63584C] dark:text-[#A89E90] text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {/* Brand column */}
@@ -40,32 +40,32 @@ export const Footer: React.FC<FooterProps> = ({ language, onOpenSettings }) => {
 
             {/* Column 1: Public Desk */}
             <div>
-              <h3 className="font-mono text-[11px] uppercase tracking-wider font-bold text-[#1F1B16] dark:text-[#EDE7DF] mb-3">
+              <h3 className="font-mono text-[11px] uppercase tracking-wider font-bold text-[#1F1B16] dark:text-[#F4EEE4] mb-3">
                 Public Assistant
               </h3>
               <ul className="space-y-2.5 m-0 p-0 list-none">
                 <li>
-                  <NavLink to="/" className="hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium">
+                  <NavLink to="/" className="hover:text-accent transition font-medium">
                     {t.navHome}
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/ask" className="hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium">
+                  <NavLink to="/ask" className="hover:text-accent transition font-medium">
                     {t.navAsk}
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/verdicts" className="hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium">
+                  <NavLink to="/verdicts" className="hover:text-accent transition font-medium">
                     {t.navVerdicts}
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/how-it-works" className="hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium">
+                  <NavLink to="/how-it-works" className="hover:text-accent transition font-medium">
                     {t.navHowItWorks}
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/faq" className="hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium">
+                  <NavLink to="/faq" className="hover:text-accent transition font-medium">
                     {t.navFaq}
                   </NavLink>
                 </li>
@@ -74,12 +74,12 @@ export const Footer: React.FC<FooterProps> = ({ language, onOpenSettings }) => {
 
             {/* Column 2: Institutional */}
             <div>
-              <h3 className="font-mono text-[11px] uppercase tracking-wider font-bold text-[#1F1B16] dark:text-[#EDE7DF] mb-3">
+              <h3 className="font-mono text-[11px] uppercase tracking-wider font-bold text-[#1F1B16] dark:text-[#F4EEE4] mb-3">
                 Institutional Rumour Desk
               </h3>
               <ul className="space-y-2.5 m-0 p-0 list-none">
                 <li>
-                  <NavLink to="/desk" className="hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium">
+                  <NavLink to="/desk" className="hover:text-accent transition font-medium">
                     Rumour Desk Dashboard
                   </NavLink>
                 </li>
@@ -87,7 +87,7 @@ export const Footer: React.FC<FooterProps> = ({ language, onOpenSettings }) => {
                   <button
                     type="button"
                     onClick={onOpenSettings}
-                    className="hover:text-[#0A5C36] dark:hover:text-[#34D399] transition cursor-pointer text-left font-mono font-medium"
+                    className="hover:text-accent transition cursor-pointer text-left font-mono font-medium"
                   >
                     Configure API &amp; Model
                   </button>
@@ -97,7 +97,7 @@ export const Footer: React.FC<FooterProps> = ({ language, onOpenSettings }) => {
                     href="/public/assets/aistudio/FRONTEND_SPEC__1__0384ef55.md"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium"
+                    className="inline-flex items-center gap-1 hover:text-accent transition font-medium"
                   >
                     <span>Backend Contract</span>
                     <ExternalLink className="w-3 h-3" />
@@ -108,7 +108,7 @@ export const Footer: React.FC<FooterProps> = ({ language, onOpenSettings }) => {
 
             {/* Column 3: Approved Sources */}
             <div>
-              <h3 className="font-mono text-[11px] uppercase tracking-wider font-bold text-[#1F1B16] dark:text-[#EDE7DF] mb-3">
+              <h3 className="font-mono text-[11px] uppercase tracking-wider font-bold text-[#1F1B16] dark:text-[#F4EEE4] mb-3">
                 Approved Civic Portals
               </h3>
               <ul className="space-y-2.5 m-0 p-0 list-none">
@@ -117,7 +117,7 @@ export const Footer: React.FC<FooterProps> = ({ language, onOpenSettings }) => {
                     href="https://ncdc.gov.ng"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium"
+                    className="inline-flex items-center gap-1 hover:text-accent transition font-medium"
                   >
                     <span>NCDC Public Advisories (6232)</span>
                     <ExternalLink className="w-3 h-3 text-[#8E8273]" />
@@ -128,7 +128,7 @@ export const Footer: React.FC<FooterProps> = ({ language, onOpenSettings }) => {
                     href="https://fccpc.gov.ng"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium"
+                    className="inline-flex items-center gap-1 hover:text-accent transition font-medium"
                   >
                     <span>FCCPC Delisted Loan Apps</span>
                     <ExternalLink className="w-3 h-3 text-[#8E8273]" />
@@ -139,7 +139,7 @@ export const Footer: React.FC<FooterProps> = ({ language, onOpenSettings }) => {
                     href="https://nhia.gov.ng"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium"
+                    className="inline-flex items-center gap-1 hover:text-accent transition font-medium"
                   >
                     <span>NHIA Health Guidelines</span>
                     <ExternalLink className="w-3 h-3 text-[#8E8273]" />
@@ -150,7 +150,7 @@ export const Footer: React.FC<FooterProps> = ({ language, onOpenSettings }) => {
                     href="https://inecnigeria.org"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium"
+                    className="inline-flex items-center gap-1 hover:text-accent transition font-medium"
                   >
                     <span>INEC Electoral Procedures</span>
                     <ExternalLink className="w-3 h-3 text-[#8E8273]" />
