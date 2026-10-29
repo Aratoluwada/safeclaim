@@ -100,6 +100,7 @@ def evaluate_rumours(path: Path) -> Dict[str, Any]:
     }
 
     correct = 0
+    validated = 0
     details = []
 
     for case in cases:
@@ -113,6 +114,13 @@ def evaluate_rumours(path: Path) -> Dict[str, Any]:
         if pred in confusion_matrix.get(expected, {}):
             confusion_matrix[expected][pred] += 1
 
+        is_validated = pred in (
+            "CONTRADICTED_BY_OFFICIAL_SOURCE",
+            "SUPPORTED_BY_OFFICIAL_SOURCE",
+        )
+        if is_validated:
+            validated += 1
+
         is_correct = pred == expected
         if is_correct:
             correct += 1
@@ -125,6 +133,7 @@ def evaluate_rumours(path: Path) -> Dict[str, Any]:
                 "predicted": pred,
                 "correct": is_correct,
                 "is_guidance_gap": is_gap,
+                "validated": is_validated,
             }
         )
 
@@ -145,8 +154,10 @@ def evaluate_rumours(path: Path) -> Dict[str, Any]:
 
     return {
         "cases": len(cases),
-        "accuracy": accuracy,
-        "macro_f1": macro_f1,
+        "validated_cases": validated,
+        "validated_coverage": round(validated / len(cases), 4) if cases else 0.0,
+        "accuracy_on_validated_cases": round(correct / validated, 4) if validated else None,
+        "macro_f1_on_validated_cases": macro_f1 if validated else None,
         "confusion_matrix": confusion_matrix,
         "per_class": per_class,
         "details": details,

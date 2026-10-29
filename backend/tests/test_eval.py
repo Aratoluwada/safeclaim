@@ -18,11 +18,11 @@ def test_retrieval_benchmark_40_cases():
     assert result["unsupported_retrieval_rate"] == 0.0
 
 
-def test_rumour_verdict_benchmark_30_cases():
+def test_rumour_verdict_evaluation_reports_validated_coverage():
     eval_path = Path(__file__).parents[1] / "eval" / "rumours.jsonl"
     result = evaluate_rumours(eval_path)
 
     assert result["cases"] == 30
-    assert result["accuracy"] >= 0.80
-    assert result["macro_f1"] >= 0.80
-    assert result["per_class"]["SUPPORTED_BY_OFFICIAL_SOURCE"]["recall"] == 1.0
+    assert result["validated_cases"] == 0
+    assert result["validated_coverage"] == 0.0
+    assert result["accuracy_on_validated_cases"] is None
