@@ -5,13 +5,8 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  LayoutDashboard,
-  ShieldAlert,
-  Flame,
   FileText,
-  RefreshCw,
   AlertTriangle,
-  Info,
   CheckCircle2,
 } from 'lucide-react';
 import {
@@ -35,6 +30,8 @@ import { ClusterDrawer } from '../components/rumour-desk/ClusterDrawer';
 import { DailyBriefModal } from '../components/rumour-desk/DailyBriefModal';
 import { ApiConfig } from '../api/client';
 import { DEMO_RUMOUR_STATS } from '../data/demoData';
+import { PageHeader } from '../components/ui/PageHeader';
+import { Button } from '../components/ui/Button';
 
 interface RumourDeskPageProps {
   language: LanguageCode;
@@ -65,6 +62,11 @@ export const RumourDeskPage: React.FC<RumourDeskPageProps> = ({
   const [selectedCluster, setSelectedCluster] = useState<ClaimCluster | null>(null);
   const [isBriefModalOpen, setIsBriefModalOpen] = useState(false);
   const [dailyBrief, setDailyBrief] = useState<DailyBrief | null>(null);
+
+  // Set document title
+  useEffect(() => {
+    document.title = 'Rumour Desk Dashboard — SafeClaim Institutional Intelligence';
+  }, []);
 
   // Load stats and clusters
   const fetchData = useCallback(async () => {
@@ -118,7 +120,7 @@ export const RumourDeskPage: React.FC<RumourDeskPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="space-y-6">
       {/* Synthetic Benchmark Banner */}
       <SyntheticBanner
         language={language}
@@ -126,75 +128,51 @@ export const RumourDeskPage: React.FC<RumourDeskPageProps> = ({
         isReloading={isReloading}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Title Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300">
-                Institutional Intel
-              </span>
-              <span className="text-xs text-slate-500 font-medium">
-                NCDC &bull; FCCPC &bull; NHIA &bull; INEC
-              </span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
-              Rumour Desk Dashboard
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
-              Inspect circulating misinformation clusters, monitor guidance gaps with zero official advisories, and prepare verified broadcast responses.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handleOpenBrief}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs sm:text-sm shadow-sm transition cursor-pointer"
-            >
-              <FileText className="w-4 h-4 text-emerald-300" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        {/* Page Header */}
+        <PageHeader
+          eyebrow="Institutional Intelligence Console"
+          title="Rumour Desk Dashboard"
+          description="Inspect circulating misinformation clusters, monitor guidance gaps with zero official advisories, and prepare verified broadcast responses."
+          actions={
+            <Button variant="primary" size="md" onClick={handleOpenBrief}>
+              <FileText className="w-4 h-4" />
               <span>Generate Daily Brief</span>
-            </button>
-          </div>
-        </div>
+            </Button>
+          }
+        />
 
         {/* Temporary Notification Banner */}
         {statusNotification && (
           <div
             role="status"
-            className="p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-semibold flex items-center gap-2 animate-fadeIn"
+            className="p-3 rounded-md bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs font-mono flex items-center gap-2"
           >
             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>{statusNotification}</span>
           </div>
         )}
 
-        {/* Error State */}
+        {/* Error Notice */}
         {error && (
           <div
             role="alert"
-            className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs sm:text-sm space-y-2"
+            className="p-4 rounded-md bg-red-50 dark:bg-red-950/60 border border-red-300 dark:border-red-800 text-red-800 dark:text-red-200 text-xs space-y-2 font-mono"
           >
-            <div className="flex items-center gap-2 font-bold">
-              <AlertTriangle className="w-4 h-4 text-red-600" />
-              <span>Backend Communication Notice</span>
+            <div className="flex items-center gap-2 font-semibold">
+              <AlertTriangle className="w-4 h-4 text-red-600 shrink-0" />
+              <span>Backend Error: Failed to contact live server</span>
             </div>
-            <p className="font-mono text-xs text-red-700 bg-white/70 p-2 rounded border border-red-200">
+            <p className="bg-white dark:bg-neutral-900 p-2 rounded border border-red-200 dark:border-red-900">
               {error}
             </p>
-            <div className="flex gap-2 pt-1">
-              <button
-                onClick={fetchData}
-                className="px-3 py-1 rounded-md bg-red-800 text-white text-xs font-bold"
-              >
+            <div className="flex gap-2 pt-1 font-sans">
+              <Button variant="danger" size="sm" onClick={fetchData}>
                 Retry
-              </button>
-              <button
-                onClick={onOpenSettings}
-                className="px-3 py-1 rounded-md bg-white border border-slate-300 text-slate-700 text-xs font-semibold"
-              >
-                Switch to Demo Mode
-              </button>
+              </Button>
+              <Button variant="secondary" size="sm" onClick={onOpenSettings}>
+                Configure Backend / Switch Mode
+              </Button>
             </div>
           </div>
         )}
@@ -212,7 +190,7 @@ export const RumourDeskPage: React.FC<RumourDeskPageProps> = ({
           totalResultsCount={clusters.length}
         />
 
-        {/* Main Cluster Table / Cards */}
+        {/* Main Cluster Table */}
         <section aria-label="Circulating claim clusters list">
           <ClusterTable
             clusters={clusters}
@@ -220,7 +198,7 @@ export const RumourDeskPage: React.FC<RumourDeskPageProps> = ({
             isLoading={isLoading}
           />
         </section>
-      </main>
+      </div>
 
       {/* Slide-over Inspection Drawer */}
       <ClusterDrawer

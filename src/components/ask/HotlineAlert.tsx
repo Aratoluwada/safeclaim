@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { PhoneCall, MessageSquare, AlertOctagon, ExternalLink } from 'lucide-react';
+import { PhoneCall, MessageSquare, ExternalLink } from 'lucide-react';
 import { HotlineInfo, LanguageCode } from '../../types/api';
 import { TRANSLATIONS } from '../../utils/translations';
 
@@ -22,56 +22,56 @@ export const HotlineAlert: React.FC<HotlineAlertProps> = ({ hotline, language })
 
   return (
     <aside
-      aria-label="Official emergency hotline advisory"
-      className="rounded-2xl border-2 border-emerald-600/30 bg-gradient-to-r from-emerald-50 via-emerald-100/40 to-teal-50 p-4 sm:p-5 shadow-sm"
+      aria-label="Official emergency helpline advisory"
+      className="rounded-md border border-emerald-300 dark:border-emerald-800 bg-[#EBF4EF]/70 dark:bg-[#0D2D1E]/60 p-4 border-l-4 border-l-[#0A5C36] dark:border-l-emerald-500"
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-emerald-800 text-white flex items-center justify-center shrink-0 shadow-sm">
-            <PhoneCall className="w-5 h-5 text-emerald-300" aria-hidden="true" />
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-[2px] bg-[#0A5C36] text-white">
+              {t.hotlineCalloutPrefix}
+            </span>
+            <span className="text-xs font-mono text-neutral-600 dark:text-neutral-400">
+              Verified Agency Channel
+            </span>
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-emerald-900 bg-emerald-200/80 px-2 py-0.5 rounded">
-                {t.hotlineCalloutPrefix}
-              </span>
-              <span className="text-xs text-emerald-800 font-medium">Verified Agency Channel</span>
-            </div>
-            <h3 className="text-sm sm:text-base font-bold text-slate-900 mt-0.5">
-              {hotline.name}
-            </h3>
-            <p className="text-xs text-slate-600 mt-0.5">
-              {t.hotlineCalloutAction}
-            </p>
-          </div>
+          <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+            {hotline.name}
+          </h3>
+          <p className="text-xs text-neutral-600 dark:text-neutral-300">
+            {t.hotlineCalloutAction}
+          </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5 sm:self-center">
-          {/* Primary Toll-Free Call button */}
-          <a
-            href={`tel:${hotline.number.replace(/\s+/g, '')}`}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-sm shadow-sm transition cursor-pointer"
-            title={`Call toll-free ${hotline.number}`}
-          >
-            <PhoneCall className="w-4 h-4 text-emerald-300" />
-            <span>Toll-Free: {hotline.number}</span>
-          </a>
-
-          {/* Alternate number or WhatsApp */}
-          {hotline.alt_number && (
+        {/* Semantic list of hotline contact actions */}
+        <ul className="flex flex-wrap items-center gap-2 m-0 p-0 list-none">
+          <li className="m-0 p-0">
             <a
-              href={`https://wa.me/${hotline.alt_number.replace(/[^\d]/g, '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-semibold text-xs border border-slate-300 shadow-xs transition cursor-pointer"
-              title="Official WhatsApp Channel"
+              href={`tel:${hotline.number.replace(/\s+/g, '')}`}
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-[#0A5C36] hover:bg-[#074628] text-white text-xs font-semibold shadow-2xs transition focus-ring min-h-[44px]"
+              title={`Call toll-free ${hotline.number}`}
             >
-              <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
-              <span>WhatsApp: {hotline.alt_number}</span>
-              <ExternalLink className="w-3 h-3 text-slate-400" />
+              <PhoneCall className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>Toll-Free: {hotline.number}</span>
             </a>
+          </li>
+
+          {hotline.alt_number && (
+            <li className="m-0 p-0">
+              <a
+                href={`https://wa.me/${hotline.alt_number.replace(/[^\d]/g, '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200 text-xs font-semibold border border-neutral-300 dark:border-neutral-700 shadow-2xs transition focus-ring min-h-[44px]"
+                title="Official WhatsApp Channel"
+              >
+                <MessageSquare className="w-3.5 h-3.5 text-[#0A5C36] dark:text-emerald-400" aria-hidden="true" />
+                <span>WhatsApp: {hotline.alt_number}</span>
+                <ExternalLink className="w-3 h-3 text-neutral-400" aria-hidden="true" />
+              </a>
+            </li>
           )}
-        </div>
+        </ul>
       </div>
     </aside>
   );

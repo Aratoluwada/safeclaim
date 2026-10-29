@@ -11,12 +11,12 @@ import {
   CheckCircle2,
   AlertCircle,
   Activity,
-  Layers,
-  ArrowRight,
-  ShieldCheck,
   Zap,
 } from 'lucide-react';
 import { ApiConfig, checkBackendHealth, getApiConfig, saveApiConfig } from '../../api/client';
+import { Button } from '../ui/Button';
+import { Card } from '../ui/Card';
+import { Badge } from '../ui/Badge';
 
 interface BackendModeModalProps {
   isOpen: boolean;
@@ -66,27 +66,27 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="backend-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-none"
     >
-      <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200">
+      <div className="bg-white dark:bg-neutral-900 rounded-md max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-xl border border-neutral-300 dark:border-neutral-700">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-950/40">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
-              <Server className="w-5 h-5" />
+            <div className="w-8 h-8 rounded-md bg-[#EBF4EF] dark:bg-[#0D2D1E] text-[#0A5C36] dark:text-emerald-400 flex items-center justify-center border border-[#C2DEC9] dark:border-[#1F4A33]">
+              <Server className="w-4 h-4" />
             </div>
             <div>
-              <h2 id="backend-modal-title" className="text-base font-bold text-slate-900">
-                Backend Architecture & Operating Mode
+              <h2 id="backend-modal-title" className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                Operating Mode & API Configuration
               </h2>
-              <p className="text-xs text-slate-500">
-                Configure live API integration or deterministic synthetic testbed
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 font-mono">
+                SafeClaim Environment Settings
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+            className="p-1 rounded-md text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 transition cursor-pointer focus-ring"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -94,68 +94,64 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
+        <div className="p-5 space-y-5">
           {/* Mode Selector */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
-              Select Operating Mode
+            <label className="block text-xs font-mono uppercase tracking-wider text-neutral-600 dark:text-neutral-400 mb-2">
+              Select Mode
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => setConfig({ ...config, mode: 'demo' })}
-                className={`p-4 rounded-xl border text-left transition cursor-pointer ${
+                className={`p-3.5 rounded-md border text-left transition cursor-pointer focus-ring ${
                   config.mode === 'demo'
-                    ? 'border-emerald-600 bg-emerald-50/60 ring-2 ring-emerald-500/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                    ? 'border-[#0A5C36] bg-[#EBF4EF]/40 dark:bg-[#0D2D1E]/40 ring-1 ring-[#0A5C36]'
+                    : 'border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 bg-white dark:bg-neutral-900'
                 }`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-emerald-700" />
-                    <span className="font-bold text-sm text-slate-900">Demo Mode</span>
+                <div className="flex items-center justify-between mb-1.5">
+                  <div className="flex items-center gap-1.5">
+                    <Zap className="w-4 h-4 text-[#0A5C36] dark:text-emerald-400" />
+                    <span className="font-semibold text-sm text-neutral-900 dark:text-neutral-100">Demo Mode</span>
                   </div>
                   {config.mode === 'demo' && (
-                    <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-900">
-                      Active
-                    </span>
+                    <Badge variant="brand" size="sm">Active</Badge>
                   )}
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Deterministic, zero-latency sample dataset with 6 clusters, 326 synthetic messages, and grounded official NCDC/FCCPC/NHIA citations. Works without backend deployment.
+                <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                  Deterministic benchmark data (6 clusters, 326 messages, verified NCDC/FCCPC circulars). No backend needed.
                 </p>
               </button>
 
               <button
                 type="button"
                 onClick={() => setConfig({ ...config, mode: 'live' })}
-                className={`p-4 rounded-xl border text-left transition cursor-pointer ${
+                className={`p-3.5 rounded-md border text-left transition cursor-pointer focus-ring ${
                   config.mode === 'live'
-                    ? 'border-emerald-600 bg-emerald-50/60 ring-2 ring-emerald-500/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                    ? 'border-[#0A5C36] bg-[#EBF4EF]/40 dark:bg-[#0D2D1E]/40 ring-1 ring-[#0A5C36]'
+                    : 'border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 bg-white dark:bg-neutral-900'
                 }`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <Activity className="w-4 h-4 text-emerald-700" />
-                    <span className="font-bold text-sm text-slate-900">Live API Mode</span>
+                <div className="flex items-center justify-between mb-1.5">
+                  <div className="flex items-center gap-1.5">
+                    <Activity className="w-4 h-4 text-[#0A5C36] dark:text-emerald-400" />
+                    <span className="font-semibold text-sm text-neutral-900 dark:text-neutral-100">Live Mode</span>
                   </div>
                   {config.mode === 'live' && (
-                    <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-900">
-                      Active
-                    </span>
+                    <Badge variant="brand" size="sm">Active</Badge>
                   )}
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Connects to companion FastAPI / Express microservice exposing <code className="font-mono text-[11px] bg-slate-100 px-1 py-0.5 rounded">/api/v1</code> contract with real RAG retrieval and open-weight model inference.
+                <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                  Connects to FastAPI/Express microservice. Live Mode strictly fails on error without silent demo fallback.
                 </p>
               </button>
             </div>
           </div>
 
-          {/* Backend URL input */}
+          {/* Endpoint input */}
           <div className="space-y-2">
-            <label htmlFor="api-base-url" className="block text-xs font-bold uppercase tracking-wider text-slate-600">
+            <label htmlFor="api-base-url" className="block text-xs font-mono uppercase tracking-wider text-neutral-600 dark:text-neutral-400">
               API Base URL
             </label>
             <div className="flex gap-2">
@@ -165,76 +161,56 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
                 value={config.baseUrl}
                 onChange={(e) => setConfig({ ...config, baseUrl: e.target.value })}
                 placeholder="http://localhost:8000/api/v1"
-                className="flex-1 px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white font-mono text-slate-800"
+                className="flex-1 px-3 py-2 text-xs rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950 font-mono text-neutral-900 dark:text-neutral-100 focus-ring"
               />
-              <button
-                type="button"
+              <Button
+                variant="secondary"
+                size="sm"
                 onClick={handleTestConnection}
                 disabled={testResult.status === 'checking'}
-                className="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 transition cursor-pointer disabled:opacity-50 shrink-0"
               >
                 {testResult.status === 'checking' ? 'Testing...' : 'Test Connection'}
-              </button>
+              </Button>
             </div>
-            <p className="text-[11px] text-slate-500">
-              Configured endpoint for <code className="font-mono">POST /ask</code>, <code className="font-mono">GET /rumours/clusters</code>, and <code className="font-mono">GET /rumours/brief</code>.
-            </p>
 
-            {/* Test result status */}
             {testResult.status === 'success' && (
-              <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+              <div className="p-2.5 rounded-md bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>{testResult.message}</span>
               </div>
             )}
             {testResult.status === 'error' && (
-              <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+              <div className="p-2.5 rounded-md bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
                 <span>{testResult.message}</span>
               </div>
             )}
           </div>
 
-          {/* Open-Weight AI Architecture Details */}
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-3">
-            <div className="flex items-center gap-2 text-slate-800 font-bold text-xs uppercase tracking-wide">
-              <Cpu className="w-4 h-4 text-emerald-700" />
-              <span>Hackathon AI Architecture & Contract</span>
+          {/* Architecture note */}
+          <div className="p-3.5 rounded-md bg-neutral-50 dark:bg-neutral-950/60 border border-neutral-200 dark:border-neutral-800 text-xs space-y-1.5 text-neutral-600 dark:text-neutral-400">
+            <div className="flex items-center gap-1.5 font-semibold text-neutral-800 dark:text-neutral-200 font-mono">
+              <Cpu className="w-3.5 h-3.5 text-[#0A5C36] dark:text-emerald-400" />
+              <span>Model & Retrieval Grounding Contract</span>
             </div>
-            <div className="space-y-1.5 text-xs text-slate-600 leading-relaxed">
-              <p>
-                <strong>Planned Model:</strong> Mistral-7B-Instruct-v0.3 / Gemma-2-9B-IT (Open-Weight Apache 2.0 / Gemma Terms) quantized via vLLM or Hugging Face TGI.
-              </p>
-              <p>
-                <strong>Grounding Strategy:</strong> Dense vector embeddings over scraped official Nigerian gazettes (<code className="font-mono text-[11px]">ncdc.gov.ng</code>, <code className="font-mono text-[11px]">fccpc.gov.ng</code>, <code className="font-mono text-[11px]">nhia.gov.ng</code>).
-              </p>
-              <p>
-                <strong>Strict Abstention Policy:</strong> When retrieved passage similarity is below cosine threshold 0.72, the model generates an explicit abstention notice with verified agency emergency contact numbers.
-              </p>
-            </div>
+            <p>
+              Targeting Mistral-7B-Instruct / Gemma-2-9B-IT over scraped NCDC, FCCPC, NHIA, FMOH, and INEC gazettes. Strict cosine similarity gating triggers formal abstention.
+            </p>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3.5 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
-          <span className="text-xs text-slate-500">
-            Current mode: <strong className="text-slate-800 capitalize">{config.mode}</strong>
+        <div className="px-5 py-3 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-950/40 flex items-center justify-between">
+          <span className="text-xs text-neutral-500 font-mono">
+            Mode: <strong className="text-neutral-800 dark:text-neutral-200 capitalize">{config.mode}</strong>
           </span>
           <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition cursor-pointer"
-            >
+            <Button variant="ghost" size="sm" onClick={onClose}>
               Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleSave}
-              className="px-4 py-1.5 text-xs font-bold rounded-lg bg-emerald-800 hover:bg-emerald-700 text-white shadow-sm transition cursor-pointer"
-            >
-              Apply Settings
-            </button>
+            </Button>
+            <Button variant="primary" size="sm" onClick={handleSave}>
+              Save Settings
+            </Button>
           </div>
         </div>
       </div>

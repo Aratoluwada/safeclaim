@@ -3,23 +3,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   X,
   MessageSquare,
   BookOpen,
-  Share2,
   Copy,
   Check,
-  Calendar,
-  Languages,
   Flame,
   ExternalLink,
-  ShieldCheck,
   Send,
 } from 'lucide-react';
 import { ClaimCluster } from '../../types/api';
 import { VerdictBadge } from '../common/VerdictBadge';
+import { Button } from '../ui/Button';
 
 interface ClusterDrawerProps {
   cluster: ClaimCluster | null;
@@ -28,6 +25,16 @@ interface ClusterDrawerProps {
 
 export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }) => {
   const [copiedReply, setCopiedReply] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && cluster) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [cluster, onClose]);
 
   if (!cluster) return null;
 
@@ -48,31 +55,31 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-slate-900/50 backdrop-blur-xs transition-opacity"
+        className="absolute inset-0 bg-black/50 transition-opacity"
         onClick={onClose}
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <aside className="w-screen max-w-xl bg-white shadow-2xl flex flex-col h-full border-l border-slate-200">
-          {/* Top Bar */}
-          <header className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-8">
+        <aside className="w-screen max-w-lg bg-white dark:bg-neutral-900 shadow-xl flex flex-col h-full border-l border-neutral-200 dark:border-neutral-800">
+          {/* Header */}
+          <header className="px-5 py-3.5 border-b border-neutral-200 dark:border-neutral-800 flex items-center justify-between bg-neutral-50/70 dark:bg-neutral-950/40">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-bold text-slate-500 uppercase px-2 py-0.5 rounded bg-slate-200/80">
+              <span className="font-mono text-xs font-semibold text-neutral-600 dark:text-neutral-400 px-1.5 py-0.5 rounded-[2px] bg-neutral-200 dark:bg-neutral-800">
                 {cluster.cluster_id}
               </span>
-              <span className="text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-700 capitalize">
+              <span className="text-xs font-mono px-1.5 py-0.5 rounded-[2px] bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 capitalize">
                 {cluster.domain.replace('_', ' ')}
               </span>
               {cluster.is_guidance_gap && (
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 flex items-center gap-1">
-                  <Flame className="w-3 h-3 text-amber-600" />
+                <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded-[2px] bg-amber-100 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 flex items-center gap-1">
+                  <Flame className="w-3 h-3 text-amber-600" aria-hidden="true" />
                   Guidance Gap
                 </span>
               )}
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition cursor-pointer"
+              className="p-1 rounded-md text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 transition cursor-pointer focus-ring"
               aria-label="Close drawer"
             >
               <X className="w-5 h-5" />
@@ -80,13 +87,13 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
           </header>
 
           {/* Scrollable Body */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          <div className="flex-1 overflow-y-auto p-5 space-y-5">
             {/* Representative Claim Header */}
-            <div className="space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            <div className="space-y-1.5">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-500">
                 Representative Claim
               </span>
-              <h2 id="drawer-title" className="text-lg font-bold text-slate-900 leading-snug">
+              <h2 id="drawer-title" className="font-serif text-lg sm:text-xl font-semibold text-neutral-900 dark:text-neutral-100 leading-snug">
                 {cluster.representative_claim}
               </h2>
               <div className="pt-1">
@@ -94,139 +101,137 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
               </div>
             </div>
 
-            {/* Velocity & Timestamp Metadata */}
-            <div className="grid grid-cols-2 gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs">
+            {/* Velocity & Timestamps Metadata Tile */}
+            <div className="grid grid-cols-2 gap-2.5 p-3 rounded-md bg-neutral-50 dark:bg-neutral-950/60 border border-neutral-200 dark:border-neutral-800 text-xs font-mono">
               <div>
-                <span className="text-slate-400 block font-medium">Volume & Velocity:</span>
-                <span className="font-bold text-slate-900">
-                  {cluster.message_count} messages ({cluster.growth_rate_24h || '0%'} 24h)
+                <span className="text-neutral-500 block text-[11px]">Volume & Velocity:</span>
+                <span className="font-semibold text-neutral-900 dark:text-neutral-100">
+                  {cluster.message_count} msgs ({cluster.growth_rate_24h || '0%'} 24h)
                 </span>
               </div>
               <div>
-                <span className="text-slate-400 block font-medium">Languages Monitored:</span>
-                <span className="font-bold text-slate-900 capitalize">
+                <span className="text-neutral-500 block text-[11px]">Languages:</span>
+                <span className="font-semibold text-neutral-900 dark:text-neutral-100 capitalize">
                   {cluster.languages_seen.map((l) => (l === 'pcm' ? 'Naijá Pidgin' : 'English')).join(', ')}
                 </span>
               </div>
-              <div className="col-span-2 pt-2 border-t border-slate-200/60 flex items-center justify-between text-slate-500 font-mono text-[11px]">
-                <span>First Seen: {new Date(cluster.first_seen).toLocaleString()}</span>
+              <div className="col-span-2 pt-2 border-t border-neutral-200 dark:border-neutral-800/80 flex items-center justify-between text-neutral-500 text-[10px]">
+                <span>First: {new Date(cluster.first_seen).toLocaleString()}</span>
                 <span>Latest: {new Date(cluster.last_seen).toLocaleString()}</span>
               </div>
             </div>
 
-            {/* Official Verdict & Explanation */}
-            <div className="space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            {/* Analytical Verdict Explanation */}
+            <div className="space-y-1.5">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-500">
                 Analytical Verdict Explanation
               </span>
-              <div className="p-4 rounded-xl border border-slate-200 bg-white shadow-2xs text-xs sm:text-sm text-slate-800 leading-relaxed">
+              <div className="p-3.5 rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-xs sm:text-sm text-neutral-800 dark:text-neutral-200 leading-relaxed">
                 {cluster.verdict.short_explanation}
               </div>
             </div>
 
-            {/* Suggested Broadcast Response */}
+            {/* Suggested Broadcast Response with left accent rule */}
             {cluster.verdict.suggested_reply && (
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
-                    <Send className="w-3.5 h-3.5" />
-                    Suggested Public Response
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#0A5C36] dark:text-emerald-400 font-semibold flex items-center gap-1.5">
+                    <Send className="w-3 h-3" />
+                    Suggested Broadcast Response
                   </span>
                   <button
                     type="button"
                     onClick={handleCopyReply}
-                    className="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 hover:text-emerald-950 cursor-pointer"
+                    className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-[#0A5C36] dark:text-emerald-400 hover:underline cursor-pointer focus-ring"
                   >
                     {copiedReply ? (
                       <>
-                        <Check className="w-3.5 h-3.5 text-emerald-600" />
-                        <span>Copied!</span>
+                        <Check className="w-3 h-3 text-emerald-600" />
+                        <span>Copied</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="w-3.5 h-3.5" />
+                        <Copy className="w-3 h-3" />
                         <span>Copy Response</span>
                       </>
                     )}
                   </button>
                 </div>
-                <div className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200/80 text-xs sm:text-sm text-emerald-950 font-medium leading-relaxed italic relative">
+                <div className="p-3.5 rounded-md bg-[#EBF4EF]/60 dark:bg-[#0D2D1E]/40 border-l-3 border-l-[#0A5C36] dark:border-l-emerald-500 border border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm text-neutral-900 dark:text-neutral-100 font-serif leading-relaxed italic">
                   &ldquo;{cluster.verdict.suggested_reply}&rdquo;
                 </div>
               </div>
             )}
 
-            {/* 3 Street Sample Messages */}
-            <div className="space-y-2.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                <MessageSquare className="w-3.5 h-3.5 text-slate-500" />
-                Circulating Street Phrasing (Sample Messages)
+            {/* Semantic list of 3 Street Sample Messages */}
+            <div className="space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-500 flex items-center gap-1.5">
+                <MessageSquare className="w-3 h-3 text-neutral-400" />
+                Circulating Street Phrasing (3 Sample Quotes)
               </span>
-              <div className="space-y-2">
+              <ul className="space-y-2 m-0 p-0 list-none">
                 {cluster.sample_messages.map((msg, idx) => (
-                  <div
+                  <li
                     key={idx}
-                    className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-700 leading-relaxed font-mono"
+                    className="p-3 rounded-md bg-neutral-50 dark:bg-neutral-950/60 border border-neutral-200 dark:border-neutral-800 text-xs text-neutral-700 dark:text-neutral-300 font-mono leading-relaxed"
                   >
-                    <span className="text-slate-400 font-bold mr-2 text-[10px]">#{idx + 1}</span>
+                    <span className="text-neutral-400 font-bold mr-2 text-[10px]">#{idx + 1}</span>
                     &ldquo;{msg}&rdquo;
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
 
             {/* Official Evidence Passages */}
-            <div className="space-y-2.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                <BookOpen className="w-3.5 h-3.5 text-slate-500" />
+            <div className="space-y-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-500 flex items-center gap-1.5">
+                <BookOpen className="w-3 h-3 text-neutral-400" />
                 Official Verified Evidence Passages
               </span>
               {cluster.verdict.evidence_passages && cluster.verdict.evidence_passages.length > 0 ? (
-                <div className="space-y-2.5">
+                <ul className="space-y-2.5 m-0 p-0 list-none">
                   {cluster.verdict.evidence_passages.map((ev, i) => (
-                    <div
+                    <li
                       key={i}
-                      className="p-3.5 rounded-xl border border-slate-200 bg-white shadow-2xs space-y-1.5 text-xs"
+                      className="p-3.5 rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-xs space-y-1.5"
                     >
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-emerald-900">{ev.publisher}</span>
+                      <div className="flex items-center justify-between font-mono">
+                        <span className="font-semibold text-neutral-900 dark:text-neutral-100 text-[11px] uppercase">
+                          {ev.publisher}
+                        </span>
                         <a
                           href={ev.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[11px] font-semibold text-emerald-800 hover:underline inline-flex items-center gap-1"
+                          className="text-[11px] font-medium text-[#0A5C36] dark:text-emerald-400 hover:underline inline-flex items-center gap-1"
                         >
                           <span>Circular</span>
                           <ExternalLink className="w-3 h-3" />
                         </a>
                       </div>
-                      <p className="font-semibold text-slate-900">{ev.doc_title}</p>
-                      <p className="text-slate-600 italic bg-slate-50 p-2 rounded-lg border border-slate-100">
+                      <p className="font-medium text-neutral-900 dark:text-neutral-100">{ev.doc_title}</p>
+                      <blockquote className="border-l-2 border-[#0A5C36] pl-2.5 py-1 text-neutral-600 dark:text-neutral-400 font-serif italic text-xs">
                         &ldquo;{ev.excerpt}&rdquo;
-                      </p>
-                    </div>
+                      </blockquote>
+                    </li>
                   ))}
-                </div>
+                </ul>
               ) : (
-                <div className="p-4 rounded-xl border border-amber-200 bg-amber-50 text-xs text-amber-900 leading-relaxed">
-                  <strong>Zero Official Guidance on File:</strong> No verified government circulars or clinical bulletins match this specific rumour yet. Recommended for agency clarification notice.
+                <div className="p-3.5 rounded-md border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 text-xs text-amber-900 dark:text-amber-200 font-mono">
+                  <strong>Zero Official Guidance on File:</strong> No verified government circulars or clinical bulletins match this rumour yet. Recommended for agency risk communication press release.
                 </div>
               )}
             </div>
           </div>
 
-          {/* Footer Action */}
-          <footer className="p-4 border-t border-slate-100 bg-slate-50/70 flex items-center justify-between">
-            <span className="text-[11px] text-slate-400">
+          {/* Footer */}
+          <footer className="p-3.5 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-950/40 flex items-center justify-between">
+            <span className="text-[10px] font-mono text-neutral-400">
               SafeClaim Institutional Desk
             </span>
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-900 text-white transition cursor-pointer"
-            >
+            <Button variant="secondary" size="sm" onClick={onClose}>
               Close Drawer
-            </button>
+            </Button>
           </footer>
         </aside>
       </div>

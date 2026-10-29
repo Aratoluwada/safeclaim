@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   X,
   Download,
@@ -11,13 +11,12 @@ import {
   Check,
   FileText,
   Calendar,
-  AlertTriangle,
   Flame,
-  CheckCircle2,
 } from 'lucide-react';
 import { DailyBrief } from '../../types/api';
 import { downloadMarkdownFile } from '../../utils/briefGenerator';
 import { getApiConfig } from '../../api/client';
+import { Button } from '../ui/Button';
 
 interface DailyBriefModalProps {
   brief: DailyBrief | null;
@@ -27,6 +26,16 @@ interface DailyBriefModalProps {
 
 export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen || !brief) return null;
 
@@ -50,59 +59,51 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
       role="dialog"
       aria-modal="true"
       aria-labelledby="brief-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60"
     >
-      <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div className="bg-white dark:bg-neutral-900 rounded-md max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-neutral-300 dark:border-neutral-700 overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/70">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-800 text-white flex items-center justify-center">
-              <FileText className="w-5 h-5 text-emerald-300" />
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-950/40">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-[4px] bg-[#0A5C36] text-white flex items-center justify-center">
+              <FileText className="w-4 h-4 text-emerald-200" />
             </div>
             <div>
-              <h2 id="brief-modal-title" className="text-base font-bold text-slate-900">
-                Daily Institutional Intelligence Brief
+              <h2 id="brief-modal-title" className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                Institutional Intelligence Brief
               </h2>
-              <div className="flex items-center gap-2 text-xs text-slate-500">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>Published: {brief.date}</span>
+              <div className="flex items-center gap-2 text-xs font-mono text-neutral-500">
+                <Calendar className="w-3 h-3" />
+                <span>Date: {brief.date}</span>
                 <span>&bull;</span>
-                <span>Broadcast-Ready Intelligence</span>
+                <span>Broadcast Intelligence</span>
               </div>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handleCopy}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200 shadow-2xs transition cursor-pointer"
-            >
+            <Button variant="secondary" size="sm" onClick={handleCopy}>
               {copied ? (
                 <>
                   <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="text-emerald-700 font-bold">Copied!</span>
+                  <span>Copied</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5 text-slate-500" />
+                  <Copy className="w-3.5 h-3.5 text-neutral-500" />
                   <span>Copy Markdown</span>
                 </>
               )}
-            </button>
+            </Button>
 
-            <button
-              type="button"
-              onClick={handleDownload}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold shadow-2xs transition cursor-pointer"
-            >
+            <Button variant="primary" size="sm" onClick={handleDownload}>
               <Download className="w-3.5 h-3.5" />
               <span>Download (.md)</span>
-            </button>
+            </Button>
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer ml-1"
+              className="p-1 rounded-md text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 transition cursor-pointer focus-ring ml-1"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -111,47 +112,47 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
         </div>
 
         {/* Scrollable Document Body */}
-        <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6 text-slate-800">
+        <div className="flex-1 overflow-y-auto p-5 sm:p-7 space-y-6 text-neutral-800 dark:text-neutral-200 text-sm">
           {/* Executive Summary */}
-          <section className="space-y-2">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+          <section className="space-y-1.5">
+            <h3 className="text-xs font-mono uppercase tracking-wider text-[#0A5C36] dark:text-emerald-400 font-semibold">
               1. Executive Summary
             </h3>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-sm leading-relaxed text-slate-700">
+            <p className="p-4 rounded-md bg-neutral-50 dark:bg-neutral-950/60 border border-neutral-200 dark:border-neutral-800 leading-relaxed font-sans text-xs sm:text-sm">
               {brief.summary}
-            </div>
+            </p>
           </section>
 
-          {/* Top Clusters */}
-          <section className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+          {/* Top Clusters List */}
+          <section className="space-y-2.5">
+            <h3 className="text-xs font-mono uppercase tracking-wider text-neutral-500 font-semibold">
               2. Top Circulating Misinformation Clusters
             </h3>
-            <div className="space-y-2.5">
+            <ul className="space-y-2 m-0 p-0 list-none">
               {brief.top_clusters.map((c) => (
-                <div
+                <li
                   key={c.cluster_id}
-                  className="p-3.5 rounded-xl border border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
+                  className="p-3 rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
                 >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-slate-900 capitalize px-2 py-0.5 rounded bg-slate-100">
-                        {c.domain}
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-1.5 font-mono text-[10px]">
+                      <span className="font-semibold text-neutral-800 dark:text-neutral-200 capitalize">
+                        [{c.domain}]
                       </span>
-                      <span className="font-mono text-slate-400">{c.cluster_id}</span>
+                      <span className="text-neutral-400">{c.cluster_id}</span>
                     </div>
-                    <p className="font-semibold text-slate-800">{c.claim}</p>
+                    <p className="font-medium text-neutral-900 dark:text-neutral-100">{c.claim}</p>
                   </div>
 
-                  <div className="flex items-center gap-3 shrink-0">
-                    <span className="font-extrabold text-slate-900">{c.count} msgs</span>
+                  <div className="flex items-center gap-2.5 shrink-0 font-mono text-xs">
+                    <span className="font-bold text-neutral-900 dark:text-neutral-100">{c.count} msgs</span>
                     <span
-                      className={`px-2 py-0.5 rounded-full font-bold text-[11px] ${
+                      className={`px-1.5 py-0.5 rounded-[2px] font-semibold text-[10px] ${
                         c.verdict === 'CONTRADICTED_BY_OFFICIAL_SOURCE'
-                          ? 'bg-red-100 text-red-800'
+                          ? 'bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800'
                           : c.verdict === 'SUPPORTED_BY_OFFICIAL_SOURCE'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-amber-100 text-amber-800'
+                          ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
+                          : 'bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700'
                       }`}
                     >
                       {c.verdict === 'CONTRADICTED_BY_OFFICIAL_SOURCE'
@@ -161,61 +162,56 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
                         : 'No Source'}
                     </span>
                   </div>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </section>
 
           {/* High Priority Guidance Gaps */}
-          <section className="space-y-3">
-            <div className="flex items-center gap-1.5">
-              <Flame className="w-4 h-4 text-amber-600" />
-              <h3 className="text-xs font-bold uppercase tracking-wider text-amber-900">
-                3. High-Priority Guidance Gaps (Recommended Actions)
-              </h3>
+          <section className="space-y-2.5">
+            <div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-amber-800 dark:text-amber-300 uppercase">
+              <Flame className="w-3.5 h-3.5 text-amber-600" />
+              <h3>3. High-Priority Guidance Gaps (Recommended Actions)</h3>
             </div>
-            <div className="space-y-3">
+            <ul className="space-y-2.5 m-0 p-0 list-none">
               {brief.guidance_gaps.map((g, idx) => (
-                <div
+                <li
                   key={g.cluster_id}
-                  className="p-4 rounded-xl border-2 border-amber-300 bg-amber-50/50 space-y-2 text-xs"
+                  className="p-3.5 rounded-md border border-amber-300 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/30 space-y-1.5 text-xs"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-amber-950 uppercase">
+                  <div className="flex items-center justify-between font-mono text-[11px]">
+                    <span className="font-bold text-amber-950 dark:text-amber-200 uppercase">
                       Gap #{idx + 1}: {g.domain}
                     </span>
-                    <span className="font-mono text-amber-800">{g.count} messages</span>
+                    <span className="text-amber-800 dark:text-amber-300">{g.count} messages</span>
                   </div>
-                  <p className="font-bold text-slate-900 text-sm">{g.claim}</p>
-                  <div className="pt-2 border-t border-amber-200/80 text-amber-950 leading-relaxed">
-                    <strong>Suggested Agency Action:</strong> {g.suggested_action}
+                  <p className="font-semibold text-neutral-900 dark:text-neutral-100 text-sm">{g.claim}</p>
+                  <div className="pt-1.5 border-t border-amber-200/80 dark:border-amber-800/60 text-neutral-800 dark:text-neutral-200 leading-relaxed font-sans">
+                    <strong className="font-mono text-amber-900 dark:text-amber-200 text-xs">Recommended Action:</strong>{' '}
+                    {g.suggested_action}
                   </div>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </section>
 
-          {/* Raw Markdown Preview Tab */}
+          {/* Raw Markdown Accordion */}
           <details className="pt-2">
-            <summary className="text-xs font-semibold text-slate-500 cursor-pointer hover:text-slate-800">
-              View Raw Markdown Output
+            <summary className="text-xs font-mono text-neutral-500 cursor-pointer hover:text-neutral-800 dark:hover:text-neutral-200">
+              [+] View Raw Markdown Output
             </summary>
-            <pre className="mt-2 p-4 rounded-xl bg-slate-900 text-emerald-300 font-mono text-xs overflow-x-auto whitespace-pre-wrap leading-relaxed max-h-60">
+            <pre className="mt-2 p-3 rounded-md bg-neutral-900 text-neutral-200 font-mono text-xs overflow-x-auto whitespace-pre-wrap leading-relaxed max-h-52">
               {brief.markdown}
             </pre>
           </details>
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-slate-100 bg-slate-50/70 flex items-center justify-between text-xs text-slate-500">
-          <span>SafeClaim Institutional Intelligence Export</span>
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white font-semibold transition cursor-pointer"
-          >
+        <div className="px-5 py-3 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-950/40 flex items-center justify-between text-xs font-mono text-neutral-500">
+          <span>SafeClaim Institutional Output</span>
+          <Button variant="secondary" size="sm" onClick={onClose}>
             Close
-          </button>
+          </Button>
         </div>
       </div>
     </div>

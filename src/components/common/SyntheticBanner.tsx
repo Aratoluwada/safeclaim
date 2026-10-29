@@ -4,9 +4,10 @@
  */
 
 import React from 'react';
-import { Database, Sparkles, RefreshCw } from 'lucide-react';
+import { RefreshCw, Database } from 'lucide-react';
 import { TRANSLATIONS } from '../../utils/translations';
 import { LanguageCode } from '../../types/api';
+import { Button } from '../ui/Button';
 
 interface SyntheticBannerProps {
   language: LanguageCode;
@@ -25,33 +26,34 @@ export const SyntheticBanner: React.FC<SyntheticBannerProps> = ({
     <div
       role="region"
       aria-label="Synthetic dataset alert"
-      className="bg-slate-900 text-slate-200 border-b border-slate-800 px-4 py-2.5 text-xs sm:text-sm"
+      className="bg-neutral-900 text-neutral-200 border-b border-neutral-800 px-4 py-2 text-xs"
     >
       <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 font-semibold text-xs uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-            Synthetic Testbed
+          <span className="font-mono text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-[2px] bg-amber-500/20 text-amber-300 border border-amber-500/40">
+            Synthetic Benchmark
           </span>
-          <p className="font-medium text-slate-200">
+          <p className="font-medium text-neutral-200">
             {t.syntheticDemoBanner}
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="hidden lg:inline text-xs text-slate-400">
-            Zero PII &bull; Deterministic Benchmark Clusters &bull; Grounded Official Citations
+          <span className="hidden lg:inline text-xs font-mono text-neutral-400">
+            Zero PII &bull; 6 Benchmark Clusters &bull; Grounded Citations
           </span>
           {onReloadDemo && (
-            <button
+            <Button
+              variant="secondary"
+              size="sm"
               onClick={onReloadDemo}
               disabled={isReloading}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 transition cursor-pointer disabled:opacity-50"
+              className="text-xs h-7 py-0 px-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 border-neutral-700"
               title="Reset sample records to initial pristine state"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${isReloading ? 'animate-spin text-emerald-400' : ''}`} />
+              <RefreshCw className={`w-3 h-3 ${isReloading ? 'animate-spin text-emerald-400' : ''}`} />
               <span>{isReloading ? 'Resetting...' : 'Reload Synthetic Demo'}</span>
-            </button>
+            </Button>
           )}
         </div>
       </div>

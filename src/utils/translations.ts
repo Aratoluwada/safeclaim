@@ -35,6 +35,16 @@ export interface TranslationStrings {
   emptyQuestionError: string;
   backendErrorPrefix: string;
   openSourceLink: string;
+  navHome: string;
+  navHowItWorks: string;
+  navVerdicts: string;
+  navFaq: string;
+  homeHeroTitle: string;
+  homeHeroLead: string;
+  homeSearchAction: string;
+  homeDeskTeaserTitle: string;
+  homeDeskTeaserLead: string;
+  homeViewDeskAction: string;
 }
 
 export const TRANSLATIONS: Record<LanguageCode, TranslationStrings> = {
@@ -98,6 +108,18 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationStrings> = {
     emptyQuestionError: 'Please enter a question or claim to verify.',
     backendErrorPrefix: 'Backend Service Notice',
     openSourceLink: 'Hackathon Architecture',
+    navHome: 'Home',
+    navHowItWorks: 'How It Works',
+    navVerdicts: 'Verdicts',
+    navFaq: 'FAQ',
+    homeHeroTitle: 'Public Evidence Grounding for Circulating Rumours',
+    homeHeroLead:
+      'SafeClaim AI evaluates public-health alerts, digital loan app harassment, and government benefits using official Nigerian circulars and gazettes (NCDC, FCCPC, NHIA, FMOH, INEC). When no official source exists, it abstains explicitly.',
+    homeSearchAction: 'Search & Verify',
+    homeDeskTeaserTitle: 'Rumour Desk for Newsrooms & Agencies',
+    homeDeskTeaserLead:
+      'Institutional dashboard tracking circulating claim clusters, monitoring viral guidance gaps, and generating broadcast-ready intelligence briefs.',
+    homeViewDeskAction: 'Open Rumour Desk',
   },
 
   pcm: {
@@ -160,5 +182,17 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationStrings> = {
     emptyQuestionError: 'Abeg enter di claim or question wey you wan verify.',
     backendErrorPrefix: 'Backend Service Notice',
     openSourceLink: 'Hackathon Architecture',
+    navHome: 'Home',
+    navHowItWorks: 'How E Dey Work',
+    navVerdicts: 'Verdicts',
+    navFaq: 'FAQ',
+    homeHeroTitle: 'Official Proof for Claims Wey Dey Spread',
+    homeHeroLead:
+      'SafeClaim AI dey match health alerts, loan app wahala, and government grant circulars with real official publications (NCDC, FCCPC, NHIA, FMOH, INEC). If government never talk about am, di system dey tell you clearly say no official proof dey.',
+    homeSearchAction: 'Search & Verify',
+    homeDeskTeaserTitle: 'Rumour Desk for Fact-Checkers & Agencies',
+    homeDeskTeaserLead:
+      'Dashboard wey agencies dey use inspect circulating claim clusters, spot viral guidance gaps, and download ready-to-broadcast intelligence briefs.',
+    homeViewDeskAction: 'Open Rumour Desk',
   },
 };

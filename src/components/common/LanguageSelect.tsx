@@ -5,7 +5,6 @@
 
 import React from 'react';
 import { LanguageCode } from '../../types/api';
-import { Globe } from 'lucide-react';
 
 interface LanguageSelectProps {
   currentLanguage: LanguageCode;
@@ -24,12 +23,11 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
         <label htmlFor="language-select-compact" className="sr-only">
           Select language
         </label>
-        <Globe className="w-4 h-4 text-slate-500 absolute left-2 pointer-events-none" />
         <select
           id="language-select-compact"
           value={currentLanguage}
           onChange={(e) => onChange(e.target.value as LanguageCode)}
-          className="pl-8 pr-3 py-1 text-xs font-semibold rounded-md border border-slate-300 bg-white text-slate-700 hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
+          className="px-2.5 py-1 text-xs font-medium rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 focus-ring cursor-pointer"
         >
           <option value="en">English (EN)</option>
           <option value="pcm">Naijá Pidgin (PCM)</option>
@@ -42,15 +40,15 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
     <div
       role="group"
       aria-label="Language selection"
-      className="inline-flex rounded-lg p-0.5 bg-slate-100 border border-slate-200 text-xs font-semibold shadow-inner"
+      className="inline-flex rounded-md p-0.5 bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-xs font-medium"
     >
       <button
         type="button"
         onClick={() => onChange('en')}
-        className={`px-2.5 py-1 rounded-md transition-all cursor-pointer ${
+        className={`px-2.5 py-1 rounded-[4px] transition cursor-pointer min-h-[32px] sm:min-h-[28px] focus-ring ${
           currentLanguage === 'en'
-            ? 'bg-white text-emerald-800 shadow-sm font-bold border border-slate-200/60'
-            : 'text-slate-600 hover:text-slate-900'
+            ? 'bg-white dark:bg-neutral-900 text-[#0A5C36] dark:text-emerald-400 font-semibold shadow-2xs border border-neutral-200 dark:border-neutral-700'
+            : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
         }`}
         aria-pressed={currentLanguage === 'en'}
       >
@@ -59,10 +57,10 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
       <button
         type="button"
         onClick={() => onChange('pcm')}
-        className={`px-2.5 py-1 rounded-md transition-all cursor-pointer ${
+        className={`px-2.5 py-1 rounded-[4px] transition cursor-pointer min-h-[32px] sm:min-h-[28px] focus-ring ${
           currentLanguage === 'pcm'
-            ? 'bg-white text-emerald-800 shadow-sm font-bold border border-slate-200/60'
-            : 'text-slate-600 hover:text-slate-900'
+            ? 'bg-white dark:bg-neutral-900 text-[#0A5C36] dark:text-emerald-400 font-semibold shadow-2xs border border-neutral-200 dark:border-neutral-700'
+            : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
         }`}
         aria-pressed={currentLanguage === 'pcm'}
       >

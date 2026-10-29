@@ -6,19 +6,17 @@
 import React, { useState } from 'react';
 import {
   CheckCircle2,
-  Share2,
   Copy,
   Check,
   BookOpen,
   ArrowRight,
   ShieldCheck,
-  RefreshCw,
 } from 'lucide-react';
 import { AskResponse, LanguageCode } from '../../types/api';
 import { TRANSLATIONS } from '../../utils/translations';
-import { VerdictBadge } from '../common/VerdictBadge';
 import { HotlineAlert } from './HotlineAlert';
 import { SourceCard } from './SourceCard';
+import { Button } from '../ui/Button';
 
 interface AnswerCardProps {
   response: AskResponse;
@@ -62,10 +60,10 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
             key={i}
             type="button"
             onClick={() => handleCitationClick(passageId)}
-            className={`inline-flex items-center font-mono font-bold text-xs mx-1 px-1.5 py-0.5 rounded-md transition cursor-pointer ${
+            className={`inline-flex items-center font-mono font-semibold text-xs mx-1 px-1.5 py-0.5 rounded-[3px] transition cursor-pointer focus-ring ${
               isSelected
-                ? 'bg-emerald-800 text-white ring-2 ring-emerald-500 ring-offset-1'
-                : 'bg-emerald-100 hover:bg-emerald-200 text-emerald-900 border border-emerald-300'
+                ? 'bg-[#0A5C36] text-white ring-2 ring-[#0A5C36]/50'
+                : 'bg-[#EBF4EF] dark:bg-[#0D2D1E] hover:bg-[#d5ebd9] text-[#0A5C36] dark:text-emerald-300 border border-[#C2DEC9] dark:border-[#1F4A33]'
             }`}
             title={`View official citation for ${passageId}`}
           >
@@ -81,56 +79,49 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
     <div
       role="region"
       aria-label="Verified grounded response"
-      className="rounded-2xl border-2 border-emerald-600/30 bg-white shadow-xl overflow-hidden"
+      className="rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-2xs overflow-hidden"
     >
-      {/* Top Header */}
-      <div className="bg-emerald-50/80 border-b border-emerald-100 px-6 py-4 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-800 text-white font-bold text-xs shadow-xs">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+      {/* Header bar */}
+      <div className="bg-[#EBF4EF]/70 dark:bg-[#0D2D1E]/40 border-b border-[#C2DEC9]/80 dark:border-neutral-800 px-5 py-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[3px] bg-[#0A5C36] text-white font-medium text-xs font-mono">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" aria-hidden="true" />
             {t.groundedHeading}
           </span>
-          <span className="text-xs text-emerald-900 font-semibold hidden sm:inline">
-            Grounded in Federal Advisories
+          <span className="text-xs font-mono text-neutral-600 dark:text-neutral-400 hidden sm:inline">
+            Official Public Record
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={handleCopy}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-xs font-semibold border border-slate-200 shadow-2xs transition cursor-pointer"
-            title="Copy answer to clipboard"
-          >
-            {copied ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="text-emerald-700 font-bold">Copied!</span>
-              </>
-            ) : (
-              <>
-                <Copy className="w-3.5 h-3.5 text-slate-500" />
-                <span>Copy Answer</span>
-              </>
-            )}
-          </button>
-        </div>
+        <Button variant="secondary" size="sm" onClick={handleCopy}>
+          {copied ? (
+            <>
+              <Check className="w-3.5 h-3.5 text-emerald-600" aria-hidden="true" />
+              <span>Copied</span>
+            </>
+          ) : (
+            <>
+              <Copy className="w-3.5 h-3.5 text-neutral-500" aria-hidden="true" />
+              <span>Copy Answer</span>
+            </>
+          )}
+        </Button>
       </div>
 
-      <div className="p-6 sm:p-8 space-y-7">
-        {/* User Question Echo */}
+      <div className="p-5 sm:p-7 space-y-6">
+        {/* User Question */}
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+          <span className="text-xs font-mono uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
             User Question:
           </span>
-          <h2 className="text-lg sm:text-xl font-bold text-slate-900 mt-1">
+          <h2 className="font-serif text-xl sm:text-2xl font-semibold text-neutral-900 dark:text-neutral-50 mt-1 text-left">
             {response.question}
           </h2>
         </div>
 
-        {/* Model Answer Body */}
-        <div className="rounded-2xl bg-slate-50/80 border border-slate-200/80 p-5 sm:p-6 shadow-inner">
-          <div className="text-base sm:text-lg text-slate-800 leading-relaxed space-y-3 font-normal">
+        {/* Answer body in Newsreader serif for editorial clarity */}
+        <div className="rounded-md bg-neutral-50/70 dark:bg-neutral-950/50 border border-neutral-200 dark:border-neutral-800 p-5">
+          <div className="font-serif text-base sm:text-lg text-neutral-900 dark:text-neutral-100 leading-relaxed space-y-3 font-normal text-left">
             <p>{renderFormattedAnswer(response.answer)}</p>
           </div>
         </div>
@@ -140,49 +131,46 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
           <HotlineAlert hotline={response.hotline_info} language={language} />
         )}
 
-        {/* Verified Sources Accordion */}
+        {/* Semantic list of citations */}
         {response.citations && response.citations.length > 0 && (
-          <section aria-labelledby="citations-section-heading" className="space-y-4 pt-2">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+          <section aria-labelledby="citations-section-heading" className="space-y-3 pt-2">
+            <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 pb-2.5">
               <div className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-emerald-800" aria-hidden="true" />
-                <h3 id="citations-section-heading" className="text-sm font-bold text-slate-900 uppercase tracking-wide">
+                <BookOpen className="w-4 h-4 text-[#0A5C36] dark:text-emerald-400" aria-hidden="true" />
+                <h3 id="citations-section-heading" className="font-mono text-xs font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-wider">
                   {t.citationsHeading} ({response.citations.length})
                 </h3>
               </div>
-              <span className="text-xs text-slate-500 font-medium">
-                Click any citation tag above to jump to evidence
+              <span className="text-xs font-mono text-neutral-500">
+                Click [citation] tags above to jump to evidence
               </span>
             </div>
 
-            <div className="space-y-3">
+            <ul className="space-y-3 m-0 p-0 list-none">
               {response.citations.map((citation, index) => (
-                <SourceCard
-                  key={citation.passage_id || index}
-                  citation={citation}
-                  index={index}
-                  isHighlighted={highlightedPassageId === citation.passage_id}
-                />
+                <li key={citation.passage_id || index} className="m-0 p-0">
+                  <SourceCard
+                    citation={citation}
+                    index={index}
+                    isHighlighted={highlightedPassageId === citation.passage_id}
+                  />
+                </li>
               ))}
-            </div>
+            </ul>
           </section>
         )}
 
-        {/* Footer Actions */}
-        <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
-            <ShieldCheck className="w-4 h-4 text-emerald-700" />
-            <span>Strict zero-hallucination constraint enforced against official repository.</span>
+        {/* Bottom bar */}
+        <div className="pt-4 border-t border-neutral-200 dark:border-neutral-800 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-1.5 text-xs text-neutral-500 font-mono">
+            <ShieldCheck className="w-4 h-4 text-[#0A5C36] dark:text-emerald-400" aria-hidden="true" />
+            <span>Strict zero-hallucination constraint applied against official repository.</span>
           </div>
 
-          <button
-            type="button"
-            onClick={onAskAnother}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-sm shadow-md transition cursor-pointer"
-          >
+          <Button variant="primary" size="md" onClick={onAskAnother}>
             <span>{t.askAnotherButton}</span>
             <ArrowRight className="w-4 h-4" />
-          </button>
+          </Button>
         </div>
       </div>
     </div>

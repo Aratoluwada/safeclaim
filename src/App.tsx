@@ -4,37 +4,129 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  Outlet,
+} from 'react-router-dom';
 import { Navbar } from './components/common/Navbar';
+import { Footer } from './components/common/Footer';
 import { BackendModeModal } from './components/common/BackendModeModal';
+import { HomePage } from './pages/HomePage';
 import { AskPage } from './pages/AskPage';
 import { RumourDeskPage } from './pages/RumourDeskPage';
+import { HowItWorksPage } from './pages/HowItWorksPage';
+import { VerdictsPage } from './pages/VerdictsPage';
+import { FaqPage } from './pages/FaqPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 import { ApiConfig, getApiConfig } from './api/client';
 import { LanguageCode } from './types/api';
+import { initTheme, setTheme } from './utils/theme';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+function HashRedirect() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash.includes('ask')) {
+        navigate('/ask', { replace: true });
+      } else if (hash.includes('desk') || hash.includes('rumour')) {
+        navigate('/desk', { replace: true });
+      }
+    };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, [navigate]);
+  return null;
+}
+
+function Layout({
+  language,
+  setLanguage,
+  apiConfig,
+  setApiConfig,
+  isSettingsOpen,
+  setIsSettingsOpen,
+  isDark,
+  setIsDark,
+}: {
+  language: LanguageCode;
+  setLanguage: (lang: LanguageCode) => void;
+  apiConfig: ApiConfig;
+  setApiConfig: (cfg: ApiConfig) => void;
+  isSettingsOpen: boolean;
+  setIsSettingsOpen: (open: boolean) => void;
+  isDark: boolean;
+  setIsDark: (dark: boolean) => void;
+}) {
+  const handleToggleTheme = () => {
+    const next = !isDark;
+    setIsDark(next);
+    setTheme(next);
+  };
+
+  return (
+    <div className="flex flex-col min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 selection:bg-[#0A5C36] selection:text-white">
+      {/* Skip to Content for WCAG keyboard accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-white dark:focus:bg-neutral-900 focus:text-neutral-900 dark:focus:text-neutral-100 focus:border-2 focus:border-[#0A5C36] focus:rounded-md focus:shadow-lg focus:font-mono focus:text-xs"
+      >
+        Skip to main content
+      </a>
+
+      {/* Sticky Newsroom Navbar */}
+      <Navbar
+        language={language}
+        onLanguageChange={setLanguage}
+        apiConfig={apiConfig}
+        onOpenSettings={() => setIsSettingsOpen(true)}
+        isDark={isDark}
+        onToggleTheme={handleToggleTheme}
+      />
+
+      {/* Main Content Area */}
+      <main id="main-content" className="flex-1 py-6 sm:py-8">
+        <Outlet />
+      </main>
+
+      {/* Grouped Link List Footer */}
+      <Footer
+        language={language}
+        onOpenSettings={() => setIsSettingsOpen(true)}
+      />
+
+      {/* Backend & Model Settings Dialog */}
+      <BackendModeModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        onConfigUpdated={setApiConfig}
+      />
+    </div>
+  );
+}
 
 export default function App() {
-  const [currentTab, setCurrentTab] = useState<'ask' | 'rumour-desk'>('ask');
   const [language, setLanguage] = useState<LanguageCode>('en');
   const [apiConfig, setApiConfig] = useState<ApiConfig>(getApiConfig());
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
 
-  // Sync with browser URL / hash
   useEffect(() => {
-    const handleLocationChange = () => {
-      const hash = window.location.hash.toLowerCase();
-      const pathname = window.location.pathname.toLowerCase();
+    setIsDark(initTheme());
 
-      if (hash.includes('desk') || hash.includes('rumour') || pathname.includes('desk') || pathname.includes('rumour')) {
-        setCurrentTab('rumour-desk');
-      } else {
-        setCurrentTab('ask');
-      }
-    };
-
-    handleLocationChange();
-    window.addEventListener('hashchange', handleLocationChange);
-    window.addEventListener('popstate', handleLocationChange);
-
-    // Listen to config events
     const handleConfigChange = (e: Event) => {
       const customEvent = e as CustomEvent<ApiConfig>;
       if (customEvent.detail) {
@@ -42,86 +134,61 @@ export default function App() {
       }
     };
     window.addEventListener('safeclaim_config_changed', handleConfigChange);
-
-    return () => {
-      window.removeEventListener('hashchange', handleLocationChange);
-      window.removeEventListener('popstate', handleLocationChange);
-      window.removeEventListener('safeclaim_config_changed', handleConfigChange);
-    };
+    return () => window.removeEventListener('safeclaim_config_changed', handleConfigChange);
   }, []);
 
-  const handleTabChange = (tab: 'ask' | 'rumour-desk') => {
-    setCurrentTab(tab);
-    window.location.hash = tab === 'rumour-desk' ? '#desk' : '#ask';
-  };
-
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-emerald-100 selection:text-emerald-900">
-      {/* Top Navigation */}
-      <Navbar
-        currentTab={currentTab}
-        onSelectTab={handleTabChange}
-        language={language}
-        onLanguageChange={setLanguage}
-        apiConfig={apiConfig}
-        onOpenSettings={() => setIsSettingsOpen(true)}
-      />
-
-      {/* Primary Page Router */}
-      <div className="flex-1">
-        {currentTab === 'ask' ? (
-          <AskPage
-            language={language}
-            apiConfig={apiConfig}
-            onOpenSettings={() => setIsSettingsOpen(true)}
-            onSwitchToDesk={() => handleTabChange('rumour-desk')}
+    <BrowserRouter>
+      <ScrollToTop />
+      <HashRedirect />
+      <Routes>
+        <Route
+          element={
+            <Layout
+              language={language}
+              setLanguage={setLanguage}
+              apiConfig={apiConfig}
+              setApiConfig={setApiConfig}
+              isSettingsOpen={isSettingsOpen}
+              setIsSettingsOpen={setIsSettingsOpen}
+              isDark={isDark}
+              setIsDark={setIsDark}
+            />
+          }
+        >
+          <Route index element={<HomePage language={language} />} />
+          <Route
+            path="ask"
+            element={
+              <AskPage
+                language={language}
+                apiConfig={apiConfig}
+                onOpenSettings={() => setIsSettingsOpen(true)}
+              />
+            }
           />
-        ) : (
-          <RumourDeskPage
-            language={language}
-            apiConfig={apiConfig}
-            onOpenSettings={() => setIsSettingsOpen(true)}
+          <Route
+            path="desk"
+            element={
+              <RumourDeskPage
+                language={language}
+                apiConfig={apiConfig}
+                onOpenSettings={() => setIsSettingsOpen(true)}
+              />
+            }
           />
-        )}
-      </div>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white py-6 px-4 text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-          <p>
-            &copy; 2026 SafeClaim AI &bull; Built for open-weight intelligence & evidence grounding in Nigeria.
-          </p>
-          <div className="flex items-center gap-4 text-slate-600 font-medium">
-            <button
-              onClick={() => handleTabChange('ask')}
-              className="hover:text-emerald-800 cursor-pointer"
-            >
-              Public Ask
-            </button>
-            <span>&bull;</span>
-            <button
-              onClick={() => handleTabChange('rumour-desk')}
-              className="hover:text-emerald-800 cursor-pointer"
-            >
-              Rumour Desk
-            </button>
-            <span>&bull;</span>
-            <button
-              onClick={() => setIsSettingsOpen(true)}
-              className="hover:text-emerald-800 cursor-pointer"
-            >
-              API Config ({apiConfig.mode})
-            </button>
-          </div>
-        </div>
-      </footer>
-
-      {/* Backend / Model Configuration Modal */}
-      <BackendModeModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        onConfigUpdated={setApiConfig}
-      />
-    </div>
+          <Route
+            path="how-it-works"
+            element={<HowItWorksPage language={language} />}
+          />
+          <Route
+            path="verdicts"
+            element={<VerdictsPage language={language} />}
+          />
+          <Route path="faq" element={<FaqPage language={language} />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }

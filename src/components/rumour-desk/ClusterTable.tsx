@@ -12,10 +12,10 @@ import {
   Layers,
   ChevronRight,
   Clock,
-  Sparkles,
 } from 'lucide-react';
 import { ClaimCluster } from '../../types/api';
 import { VerdictBadge } from '../common/VerdictBadge';
+import { Button } from '../ui/Button';
 
 interface ClusterTableProps {
   clusters: ClaimCluster[];
@@ -30,76 +30,84 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
-        <div className="w-8 h-8 border-3 border-emerald-700 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-        <p className="text-sm font-semibold text-slate-600">Loading circulating claim clusters...</p>
+      <div className="bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800 p-12 text-center">
+        <div className="w-6 h-6 border-2 border-[#0A5C36] dark:border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+        <p className="text-xs font-mono text-neutral-600 dark:text-neutral-400">
+          Loading circulating claim clusters...
+        </p>
       </div>
     );
   }
 
   if (clusters.length === 0) {
     return (
-      <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center space-y-3">
-        <div className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
-          <Layers className="w-6 h-6" />
+      <div className="bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800 p-10 text-center space-y-2">
+        <div className="w-9 h-9 rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-400 flex items-center justify-center mx-auto">
+          <Layers className="w-4 h-4" />
         </div>
-        <h3 className="text-base font-bold text-slate-900">No clusters match your filters</h3>
-        <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
-          Try resetting the domain or verdict filter, or uncheck "Show Only Guidance Gaps".
+        <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+          No clusters match your active filters
+        </h3>
+        <p className="text-xs text-neutral-500 max-w-sm mx-auto">
+          Adjust the domain, verdict, or guidance gap toggle to inspect other records.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      {/* Desktop Table View */}
-      <div className="hidden md:block bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+    <div className="space-y-3">
+      {/* Desktop Dense Table View */}
+      <div className="hidden md:block bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800 shadow-2xs overflow-hidden">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-500">
-              <th scope="col" className="py-3.5 px-4 w-32">
+            <tr className="bg-neutral-50/80 dark:bg-neutral-950/60 border-b border-neutral-200 dark:border-neutral-800 text-[11px] font-mono uppercase font-semibold text-neutral-500 dark:text-neutral-400">
+              <th scope="col" className="py-2.5 px-3.5 w-32">
                 Volume & Velocity
               </th>
-              <th scope="col" className="py-3.5 px-4 w-28">
+              <th scope="col" className="py-2.5 px-3.5 w-28">
                 Domain
               </th>
-              <th scope="col" className="py-3.5 px-4">
+              <th scope="col" className="py-2.5 px-3.5">
                 Representative Claim
               </th>
-              <th scope="col" className="py-3.5 px-4 w-52">
+              <th scope="col" className="py-2.5 px-3.5 w-48">
                 Official Verdict
               </th>
-              <th scope="col" className="py-3.5 px-4 w-36 text-right">
+              <th scope="col" className="py-2.5 px-3.5 w-32 text-right">
                 Action
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 text-sm">
+          <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800/80 text-xs font-sans">
             {clusters.map((cluster) => {
               const isPositiveGrowth = cluster.growth_rate_24h?.startsWith('+');
               return (
                 <tr
                   key={cluster.cluster_id}
-                  className={`hover:bg-slate-50/80 transition-colors ${
-                    cluster.is_guidance_gap ? 'bg-amber-50/20' : ''
+                  className={`hover:bg-neutral-50/70 dark:hover:bg-neutral-800/40 transition-colors ${
+                    cluster.is_guidance_gap
+                      ? 'bg-amber-50/30 dark:bg-amber-950/20'
+                      : ''
                   }`}
                 >
                   {/* Volume & Velocity */}
-                  <td className="py-4 px-4 align-top">
-                    <div className="font-extrabold text-slate-900 text-sm">
+                  <td className="py-3 px-3.5 align-top">
+                    <div className="font-mono font-semibold text-neutral-900 dark:text-neutral-100 text-xs">
                       {cluster.message_count} msgs
                     </div>
                     {cluster.growth_rate_24h && (
                       <div
-                        className={`inline-flex items-center gap-0.5 text-xs font-semibold mt-0.5 ${
-                          isPositiveGrowth ? 'text-red-600' : 'text-slate-500'
+                        className={`inline-flex items-center gap-0.5 text-[11px] font-mono mt-0.5 ${
+                          isPositiveGrowth
+                            ? 'text-red-700 dark:text-red-400 font-semibold'
+                            : 'text-neutral-500'
                         }`}
                       >
                         {isPositiveGrowth ? (
-                          <TrendingUp className="w-3 h-3" />
+                          <TrendingUp className="w-3 h-3" aria-hidden="true" />
                         ) : (
-                          <TrendingDown className="w-3 h-3" />
+                          <TrendingDown className="w-3 h-3" aria-hidden="true" />
                         )}
                         <span>{cluster.growth_rate_24h} (24h)</span>
                       </div>
@@ -107,51 +115,52 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
                   </td>
 
                   {/* Domain */}
-                  <td className="py-4 px-4 align-top">
-                    <span className="inline-block px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold capitalize border border-slate-200/60">
+                  <td className="py-3 px-3.5 align-top">
+                    <span className="inline-block px-1.5 py-0.5 rounded-[3px] bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-[11px] font-mono font-medium capitalize border border-neutral-200/80 dark:border-neutral-700/80">
                       {cluster.domain.replace('_', ' ')}
                     </span>
                     {cluster.is_guidance_gap && (
-                      <span className="block mt-1 text-[10px] font-bold text-amber-700 uppercase tracking-tight flex items-center gap-0.5">
-                        <Flame className="w-3 h-3 text-amber-600" />
+                      <span className="block mt-1 text-[10px] font-mono font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-tight flex items-center gap-0.5">
+                        <Flame className="w-3 h-3 text-amber-600" aria-hidden="true" />
                         Guidance Gap
                       </span>
                     )}
                   </td>
 
                   {/* Representative Claim */}
-                  <td className="py-4 px-4 align-top">
-                    <p className="font-bold text-slate-900 leading-snug">
+                  <td className="py-3 px-3.5 align-top">
+                    <p className="font-medium text-neutral-900 dark:text-neutral-100 leading-snug">
                       {cluster.representative_claim}
                     </p>
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-2">
+                    <p className="text-[11px] text-neutral-500 dark:text-neutral-400 mt-1 line-clamp-2">
                       {cluster.verdict.short_explanation}
                     </p>
-                    <div className="mt-2 flex items-center gap-3 text-[11px] text-slate-400">
-                      <span className="flex items-center gap-1 font-mono">
-                        <Clock className="w-3 h-3" />
-                        Last active: {new Date(cluster.last_seen).toLocaleDateString()}
+                    <div className="mt-1.5 flex items-center gap-2 text-[10px] font-mono text-neutral-400">
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-2.5 h-2.5" />
+                        Active: {new Date(cluster.last_seen).toLocaleDateString()}
                       </span>
                       <span>&bull;</span>
-                      <span>Languages: {cluster.languages_seen.join(', ').toUpperCase()}</span>
+                      <span>{cluster.languages_seen.join(', ').toUpperCase()}</span>
                     </div>
                   </td>
 
                   {/* Verdict Badge */}
-                  <td className="py-4 px-4 align-top">
+                  <td className="py-3 px-3.5 align-top">
                     <VerdictBadge verdict={cluster.verdict.label} size="sm" />
                   </td>
 
                   {/* Action */}
-                  <td className="py-4 px-4 align-top text-right">
-                    <button
-                      type="button"
+                  <td className="py-3 px-3.5 align-top text-right">
+                    <Button
+                      variant="secondary"
+                      size="sm"
                       onClick={() => onInspectCluster(cluster)}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-800 hover:bg-emerald-900 text-white font-semibold text-xs shadow-2xs transition cursor-pointer"
+                      className="text-xs h-7 py-0 px-2"
                     >
-                      <span>Inspect Cluster</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
+                      <span>Inspect</span>
+                      <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
+                    </Button>
                   </td>
                 </tr>
               );
@@ -160,40 +169,42 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
         </table>
       </div>
 
-      {/* Mobile Cards Alternative */}
-      <div className="md:hidden space-y-3">
+      {/* Mobile Card List (semantic <ul> with <li>) */}
+      <ul className="md:hidden space-y-2.5 m-0 p-0 list-none">
         {clusters.map((cluster) => (
-          <div
+          <li
             key={cluster.cluster_id}
-            className={`bg-white rounded-2xl border p-4 shadow-xs space-y-3 ${
-              cluster.is_guidance_gap ? 'border-amber-300 bg-amber-50/10' : 'border-slate-200'
+            className={`bg-white dark:bg-neutral-900 rounded-md border p-3.5 shadow-2xs space-y-2.5 ${
+              cluster.is_guidance_gap
+                ? 'border-amber-300 dark:border-amber-700 bg-amber-50/20 dark:bg-amber-950/20'
+                : 'border-neutral-200 dark:border-neutral-800'
             }`}
           >
             <div className="flex items-start justify-between gap-2">
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold capitalize">
+                <span className="px-1.5 py-0.5 rounded-[3px] bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-[11px] font-mono capitalize">
                   {cluster.domain.replace('_', ' ')}
                 </span>
                 {cluster.is_guidance_gap && (
-                  <span className="px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider flex items-center gap-0.5">
-                    <Flame className="w-3 h-3" />
+                  <span className="px-1.5 py-0.5 rounded-[3px] bg-amber-100 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 text-[10px] font-mono font-semibold uppercase flex items-center gap-0.5">
+                    <Flame className="w-3 h-3" aria-hidden="true" />
                     Guidance Gap
                   </span>
                 )}
               </div>
-              <div className="text-right">
-                <span className="font-extrabold text-slate-900 text-xs">
+              <div className="text-right font-mono">
+                <span className="font-semibold text-neutral-900 dark:text-neutral-100 text-xs">
                   {cluster.message_count} msgs
                 </span>
                 {cluster.growth_rate_24h && (
-                  <span className="block text-[11px] font-semibold text-red-600">
+                  <span className="block text-[10px] text-red-600 font-medium">
                     {cluster.growth_rate_24h}
                   </span>
                 )}
               </div>
             </div>
 
-            <h4 className="font-bold text-sm text-slate-900 leading-snug">
+            <h4 className="font-medium text-xs sm:text-sm text-neutral-900 dark:text-neutral-100 leading-snug">
               {cluster.representative_claim}
             </h4>
 
@@ -201,26 +212,27 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
               <VerdictBadge verdict={cluster.verdict.label} size="sm" />
             </div>
 
-            <p className="text-xs text-slate-600 line-clamp-2">
+            <p className="text-xs text-neutral-600 dark:text-neutral-400 line-clamp-2">
               {cluster.verdict.short_explanation}
             </p>
 
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-              <span className="text-[11px] text-slate-400 font-mono">
+            <div className="pt-2 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between">
+              <span className="text-[10px] font-mono text-neutral-400">
                 {cluster.languages_seen.join(', ').toUpperCase()}
               </span>
-              <button
-                type="button"
+              <Button
+                variant="secondary"
+                size="sm"
                 onClick={() => onInspectCluster(cluster)}
-                className="inline-flex items-center gap-1 text-xs font-bold text-emerald-800 hover:text-emerald-950"
+                className="text-xs h-8 min-h-[36px]"
               >
                 <span>Inspect Cluster</span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
+                <ChevronRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </Button>
             </div>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

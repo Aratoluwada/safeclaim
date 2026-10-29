@@ -3,212 +3,223 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
   ShieldAlert,
-  Search,
-  LayoutDashboard,
-  Settings2,
+  Moon,
+  Sun,
   Menu,
   X,
   Radio,
-  ExternalLink,
+  Settings2,
 } from 'lucide-react';
 import { LanguageCode } from '../../types/api';
 import { TRANSLATIONS } from '../../utils/translations';
 import { LanguageSelect } from './LanguageSelect';
 import { ApiConfig } from '../../api/client';
+import { setTheme } from '../../utils/theme';
 
 interface NavbarProps {
-  currentTab: 'ask' | 'rumour-desk';
-  onSelectTab: (tab: 'ask' | 'rumour-desk') => void;
   language: LanguageCode;
   onLanguageChange: (lang: LanguageCode) => void;
   apiConfig: ApiConfig;
   onOpenSettings: () => void;
+  isDark: boolean;
+  onToggleTheme: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
-  currentTab,
-  onSelectTab,
   language,
   onLanguageChange,
   apiConfig,
   onOpenSettings,
+  isDark,
+  onToggleTheme,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
   const t = TRANSLATIONS[language];
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  // Handle Escape key to close mobile menu
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+        hamburgerRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
+  const navItems = [
+    { to: '/', label: t.navHome },
+    { to: '/ask', label: t.navAsk },
+    { to: '/desk', label: t.navRumourDesk },
+    { to: '/how-it-works', label: t.navHowItWorks },
+    { to: '/verdicts', label: t.navVerdicts },
+    { to: '/faq', label: t.navFaq },
+  ];
+
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+    <header className="sticky top-0 z-40 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo & Brand */}
+        <div className="flex items-center justify-between h-14">
+          {/* Logo & Civic Seal */}
           <div className="flex items-center gap-6">
-            <button
-              onClick={() => {
-                onSelectTab('ask');
-                setMobileMenuOpen(false);
-              }}
-              className="flex items-center gap-2.5 text-left group cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-lg p-1"
+            <NavLink
+              to="/"
+              className="flex items-center gap-2 group focus-ring rounded-md py-1"
+              aria-label="SafeClaim AI Homepage"
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-800 to-emerald-950 text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-                <ShieldAlert className="w-6 h-6 text-emerald-300" />
+              <div className="w-7 h-7 rounded-[4px] bg-[#0A5C36] text-white flex items-center justify-center font-serif font-bold text-sm">
+                S
               </div>
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900">
-                    Safe<span className="text-emerald-800">Claim</span>
-                  </span>
-                  <span className="px-1.5 py-0.2 rounded text-[10px] font-extrabold uppercase bg-emerald-100 text-emerald-800 border border-emerald-300">
-                    AI
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-500 font-medium hidden sm:block">
-                  {t.tagline}
-                </p>
-              </div>
-            </button>
-
-            {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center space-x-1" aria-label="Main Navigation">
-              <button
-                type="button"
-                onClick={() => onSelectTab('ask')}
-                className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition cursor-pointer ${
-                  currentTab === 'ask'
-                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-200/80 shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                }`}
-                aria-current={currentTab === 'ask' ? 'page' : undefined}
-              >
-                <Search className="w-4 h-4 text-emerald-700" />
-                <span>{t.navAsk}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => onSelectTab('rumour-desk')}
-                className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition cursor-pointer ${
-                  currentTab === 'rumour-desk'
-                    ? 'bg-emerald-50 text-emerald-900 border border-emerald-200/80 shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                }`}
-                aria-current={currentTab === 'rumour-desk' ? 'page' : undefined}
-              >
-                <LayoutDashboard className="w-4 h-4 text-emerald-700" />
-                <span>{t.navRumourDesk}</span>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-slate-200 text-slate-700">
+              <div className="flex items-baseline gap-1.5">
+                <span className="font-serif font-bold text-base tracking-tight text-neutral-900 dark:text-neutral-50">
+                  SafeClaim
+                </span>
+                <span className="font-mono text-[10px] uppercase font-semibold text-neutral-500 dark:text-neutral-400">
                   Desk
                 </span>
-              </button>
+              </div>
+            </NavLink>
+
+            {/* Desktop Navigation Links List */}
+            <nav className="hidden lg:block" aria-label="Main Navigation">
+              <ul className="flex items-center space-x-1 m-0 p-0 list-none">
+                {navItems.map((item) => (
+                  <li key={item.to} className="m-0 p-0">
+                    <NavLink
+                      to={item.to}
+                      end={item.to === '/'}
+                      className={({ isActive }) =>
+                        `inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md transition-colors focus-ring ${
+                          isActive
+                            ? 'bg-neutral-100 dark:bg-neutral-800 text-[#0A5C36] dark:text-emerald-400 font-semibold border-b-2 border-[#0A5C36] dark:border-emerald-400'
+                            : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-neutral-800/50'
+                        }`
+                      }
+                    >
+                      {item.label}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
             </nav>
           </div>
 
-          {/* Right Controls */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Right Action Controls */}
+          <div className="hidden sm:flex items-center gap-2.5">
             {/* Language Switcher */}
             <LanguageSelect currentLanguage={language} onChange={onLanguageChange} />
 
-            {/* Operating Mode Indicator & Trigger */}
+            {/* Operating Mode Indicator */}
             <button
               type="button"
               onClick={onOpenSettings}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition cursor-pointer ${
-                apiConfig.mode === 'live'
-                  ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
-                  : 'bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200'
-              }`}
-              title="Configure API Mode and Model Settings"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-medium rounded-md border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition cursor-pointer focus-ring"
+              title="Configure API Mode & Model"
             >
               <Radio
-                className={`w-3.5 h-3.5 ${
-                  apiConfig.mode === 'live' ? 'text-emerald-600 animate-pulse' : 'text-slate-500'
+                className={`w-3 h-3 ${
+                  apiConfig.mode === 'live' ? 'text-emerald-600 animate-pulse' : 'text-neutral-400'
                 }`}
               />
               <span className="capitalize">{apiConfig.mode} Mode</span>
-              <Settings2 className="w-3.5 h-3.5 text-slate-400 ml-0.5" />
+              <Settings2 className="w-3 h-3 text-neutral-400 ml-0.5" />
+            </button>
+
+            {/* Dark Mode Toggle */}
+            <button
+              type="button"
+              onClick={onToggleTheme}
+              className="p-1.5 rounded-md text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 border border-neutral-200 dark:border-neutral-800 transition cursor-pointer focus-ring"
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
             </button>
           </div>
 
-          {/* Mobile menu trigger */}
+          {/* Mobile hamburger & controls */}
           <div className="flex sm:hidden items-center gap-2">
             <button
               type="button"
-              onClick={onOpenSettings}
-              className="p-2 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100"
-              aria-label="Settings"
+              onClick={onToggleTheme}
+              className="p-1.5 rounded-md text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+              aria-label="Toggle theme"
             >
-              <Settings2 className="w-5 h-5" />
+              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
             </button>
 
             <button
+              ref={hamburgerRef}
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
-              aria-label="Toggle menu"
+              className="p-2 rounded-md text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-ring"
+              aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav-menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Slide-down Menu with Trap and semantic list */}
       {mobileMenuOpen && (
-        <div className="sm:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-3 shadow-lg">
-          <div className="space-y-1">
-            <button
-              onClick={() => {
-                onSelectTab('ask');
-                setMobileMenuOpen(false);
-              }}
-              className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-semibold text-left ${
-                currentTab === 'ask'
-                  ? 'bg-emerald-50 text-emerald-900'
-                  : 'text-slate-700 hover:bg-slate-50'
-              }`}
-            >
-              <Search className="w-4 h-4 text-emerald-700" />
-              <span>{t.navAsk}</span>
-            </button>
+        <div
+          id="mobile-nav-menu"
+          ref={menuRef}
+          className="lg:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-4 pt-3 pb-5 space-y-4 shadow-lg"
+        >
+          <nav aria-label="Mobile Navigation">
+            <ul className="space-y-1 m-0 p-0 list-none">
+              {navItems.map((item) => (
+                <li key={item.to} className="m-0 p-0">
+                  <NavLink
+                    to={item.to}
+                    end={item.to === '/'}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={({ isActive }) =>
+                      `block px-3 py-2 rounded-md text-sm font-medium transition ${
+                        isActive
+                          ? 'bg-[#EBF4EF] dark:bg-[#0D2D1E] text-[#0A5C36] dark:text-emerald-400 font-semibold'
+                          : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                      }`
+                    }
+                  >
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-            <button
-              onClick={() => {
-                onSelectTab('rumour-desk');
-                setMobileMenuOpen(false);
-              }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-semibold text-left ${
-                currentTab === 'rumour-desk'
-                  ? 'bg-emerald-50 text-emerald-900'
-                  : 'text-slate-700 hover:bg-slate-50'
-              }`}
-            >
-              <div className="flex items-center gap-2.5">
-                <LayoutDashboard className="w-4 h-4 text-emerald-700" />
-                <span>{t.navRumourDesk}</span>
-              </div>
-              <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700">
-                Institutional
-              </span>
-            </button>
-          </div>
-
-          <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Language:</span>
+          <div className="pt-3 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
+            <span className="text-xs font-mono text-neutral-500">Language:</span>
             <LanguageSelect currentLanguage={language} onChange={onLanguageChange} />
           </div>
 
-          <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500">Mode:</span>
+          <div className="pt-2 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
+            <span className="text-xs font-mono text-neutral-500">Operating Mode:</span>
             <button
               type="button"
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenSettings();
               }}
-              className="text-xs font-bold text-emerald-800 underline flex items-center gap-1"
+              className="text-xs font-mono font-medium text-[#0A5C36] dark:text-emerald-400 underline flex items-center gap-1"
             >
               <span className="capitalize">{apiConfig.mode} Mode</span>
               <Settings2 className="w-3.5 h-3.5" />
