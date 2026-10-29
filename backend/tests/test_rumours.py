@@ -17,6 +17,11 @@ def test_rumour_stats_endpoint():
     assert "total_clusters" in data
     assert data["total_clusters"] >= 6
     assert data["guidance_gaps_count"] >= 1
+    assert "verdict_counts" in data
+    assert "NOT_VALIDATED" in data["verdict_counts"]
+    assert "CONTRADICTED_BY_OFFICIAL_SOURCE" in data["verdict_counts"]
+    assert "SUPPORTED_BY_OFFICIAL_SOURCE" in data["verdict_counts"]
+    assert "NO_OFFICIAL_SOURCE_FOUND" in data["verdict_counts"]
 
 
 def test_rumour_clusters_endpoint_and_filtering():
@@ -37,6 +42,16 @@ def test_rumour_clusters_endpoint_and_filtering():
     assert res_gap.status_code == 200
     for c in res_gap.json():
         assert c["is_guidance_gap"] is True
+
+    # Test search filtering with search_query
+    res_search1 = client.get("/api/v1/rumours/clusters?search_query=air")
+    assert res_search1.status_code == 200
+    assert len(res_search1.json()) >= 1
+
+    # Test search filtering with q alias
+    res_search2 = client.get("/api/v1/rumours/clusters?q=air")
+    assert res_search2.status_code == 200
+    assert len(res_search2.json()) == len(res_search1.json())
 
 
 def test_submit_rumour_requires_admin_token():

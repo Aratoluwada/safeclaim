@@ -76,7 +76,10 @@ export async function getClusters(params?: FilterParams): Promise<ClaimCluster[]
       if (params?.domain && params.domain !== 'all') query.set('domain', params.domain);
       if (params?.label && params.label !== 'all') query.set('label', params.label);
       if (params?.guidance_gap_only) query.set('guidance_gap_only', 'true');
-      if (params?.search_query) query.set('q', params.search_query);
+      if (params?.search_query) {
+        query.set('search_query', params.search_query);
+        query.set('q', params.search_query);
+      }
 
       const qs = query.toString();
       const res = await fetch(`${baseUrl}/rumours/clusters${qs ? `?${qs}` : ''}`, {
@@ -148,6 +151,51 @@ export function getDailyBriefDownloadUrl(): string {
 }
 
 export async function reloadSyntheticDemo(): Promise<{ success: boolean; message: string; count: number }> {
+  const { mode, baseUrl, adminToken } = getApiConfig();
+
+  if (mode === 'live') {
+    try {
+      const headers: Record<string, string> = {
+        Accept: 'application/json',
+      };
+      if (adminToken) {
+        headers['X-SafeClaim-Admin-Token'] = adminToken;
+      }
+
+      const res = await fetch(`${baseUrl}/rumours/load-synthetic`, {
+        method: 'POST',
+        headers,
+      });
+
+      if (!res.ok) {
+        if (res.status === 401) {
+          throw new ApiError(
+            'Admin authorization required (401). Please enter your SAFECLAIM_ADMIN_TOKEN in Settings to reload live clusters.',
+            401
+          );
+        }
+        if (res.status === 503) {
+          throw new ApiError(
+            'Admin token not configured on live backend (503). Ensure SAFECLAIM_ADMIN_TOKEN is defined in backend .env.',
+            503
+          );
+        }
+        throw new ApiError(`Failed to reload synthetic clusters on live backend: HTTP ${res.status}`, res.status);
+      }
+
+      const data = await res.json();
+      return {
+        success: true,
+        message: `Live backend reloaded: ${data.clusters_loaded} synthetic clusters (${data.messages_loaded} messages) in ${data.load_time_seconds}s.`,
+        count: data.clusters_loaded,
+      };
+    } catch (err: unknown) {
+      if (err instanceof ApiError) throw err;
+      const msg = err instanceof Error ? err.message : 'Unknown network error';
+      throw new ApiError(`Cannot reload synthetic clusters on live backend: ${msg}`, undefined, true);
+    }
+  }
+
   // Reset demo clusters to pristine seed state
   activeDemoClusters = [...DEMO_CLAIM_CLUSTERS];
   await new Promise((resolve) => setTimeout(resolve, 300));

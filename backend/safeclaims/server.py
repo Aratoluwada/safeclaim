@@ -168,12 +168,14 @@ def rumour_clusters(
     label: Optional[str] = Query(None),
     guidance_gap_only: bool = Query(False),
     search_query: Optional[str] = Query(None),
+    q: Optional[str] = Query(None),
 ) -> List[Dict[str, Any]]:
+    effective_query = search_query or q
     clusters = cluster_engine.get_clusters(
         domain=domain,
         label=label,
         guidance_gap_only=guidance_gap_only,
-        search_query=search_query,
+        search_query=effective_query,
     )
     return [c.to_dict() for c in clusters]
 
