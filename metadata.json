@@ -1,0 +1,6 @@
+{
+  "name": "SafeClaim AI",
+  "description": "Understand the claim. Verify the facts. Public-health, financial scams, and public-service information verification powered by official government evidence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
