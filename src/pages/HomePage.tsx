@@ -43,6 +43,10 @@ export const HomePage: React.FC<HomePageProps> = ({ language }) => {
   const [quickQuery, setQuickQuery] = useState('');
   const t = TRANSLATIONS[language];
 
+  React.useEffect(() => {
+    document.title = `${t.appName} — ${t.tagline}`;
+  }, [t.appName, t.tagline]);
+
   const handleQuickSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (quickQuery.trim()) {

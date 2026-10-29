@@ -44,6 +44,8 @@ function HashRedirect() {
         navigate('/ask', { replace: true });
       } else if (hash.includes('desk') || hash.includes('rumour')) {
         navigate('/desk', { replace: true });
+      } else if (hash.includes('overview') || hash.includes('home')) {
+        navigate('/', { replace: true });
       }
     };
     handleHash();
@@ -176,17 +178,9 @@ export default function App() {
             />
           }
         >
-          {/* Default entry point is the Public Ask verification assistant */}
-          <Route
-            index
-            element={
-              <AskPage
-                language={language}
-                apiConfig={apiConfig}
-                onOpenSettings={() => setIsSettingsOpen(true)}
-              />
-            }
-          />
+          {/* Default landing page is the Homepage */}
+          <Route index element={<HomePage language={language} />} />
+          <Route path="overview" element={<HomePage language={language} />} />
           <Route
             path="ask"
             element={
@@ -216,10 +210,6 @@ export default function App() {
                 onOpenSettings={() => setIsSettingsOpen(true)}
               />
             }
-          />
-          <Route
-            path="overview"
-            element={<HomePage language={language} />}
           />
           <Route
             path="how-it-works"

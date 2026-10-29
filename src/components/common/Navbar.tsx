@@ -61,12 +61,14 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [mobileMenuOpen]);
 
-  const isAskActive = location.pathname === '/' || location.pathname === '/ask';
+  const isHomeActive = location.pathname === '/' || location.pathname === '/overview';
+  const isAskActive = location.pathname === '/ask';
+  const isDeskActive = location.pathname === '/desk' || location.pathname === '/rumours';
 
   const navItems = [
-    { to: '/', label: t.navAsk, isActive: isAskActive },
-    { to: '/desk', label: t.navRumourDesk, isActive: location.pathname === '/desk' || location.pathname === '/rumours' },
-    { to: '/overview', label: t.navHome, isActive: location.pathname === '/overview' },
+    { to: '/', label: t.navHome, isActive: isHomeActive },
+    { to: '/ask', label: t.navAsk, isActive: isAskActive },
+    { to: '/desk', label: t.navRumourDesk, isActive: isDeskActive },
     { to: '/how-it-works', label: t.navHowItWorks, isActive: location.pathname === '/how-it-works' },
     { to: '/verdicts', label: t.navVerdicts, isActive: location.pathname === '/verdicts' },
     { to: '/faq', label: t.navFaq, isActive: location.pathname === '/faq' },

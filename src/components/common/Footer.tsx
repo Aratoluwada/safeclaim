@@ -45,6 +45,11 @@ export const Footer: React.FC<FooterProps> = ({ language, onOpenSettings }) => {
               </h3>
               <ul className="space-y-2.5 m-0 p-0 list-none">
                 <li>
+                  <NavLink to="/" className="hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium">
+                    {t.navHome}
+                  </NavLink>
+                </li>
+                <li>
                   <NavLink to="/ask" className="hover:text-[#0A5C36] dark:hover:text-[#34D399] transition font-medium">
                     {t.navAsk}
                   </NavLink>
