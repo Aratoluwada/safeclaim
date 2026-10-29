@@ -38,7 +38,7 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({ stats, isDemoMode 
         }
         hint={
           <div className="text-[11px] text-[#B91C1C] dark:text-[#FCA5A5] font-mono">
-            Directly refuted by NCDC/FCCPC circulars
+            Classifier output; not independently validated
           </div>
         }
         accent="contradicted"
@@ -54,7 +54,7 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({ stats, isDemoMode 
         }
         hint={
           <div className="text-[11px] text-[#B45309] dark:text-[#FCD34D] font-bold">
-            Viral rumours with zero official guidance
+            No matching passage in the current index
           </div>
         }
         accent="gap"

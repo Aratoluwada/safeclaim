@@ -147,7 +147,7 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
 
                   {/* Verdict Badge */}
                   <td className="py-3.5 px-4 align-top">
-                    <VerdictStamp verdict={cluster.verdict.label} size="sm" rotate={false} />
+                    <VerdictStamp verdict="NOT_VALIDATED" size="sm" rotate={false} customLabel="Synthetic demo label" />
                   </td>
 
                   {/* Action */}
@@ -209,7 +209,7 @@ export const ClusterTable: React.FC<ClusterTableProps> = ({
             </h4>
 
             <div>
-              <VerdictStamp verdict={cluster.verdict.label} size="sm" rotate={false} />
+              <VerdictStamp verdict="NOT_VALIDATED" size="sm" rotate={false} customLabel="Synthetic demo label" />
             </div>
 
             <p className="text-xs text-[#63584C] dark:text-[#A89E90] line-clamp-2 font-body">

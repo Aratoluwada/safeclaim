@@ -109,7 +109,7 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                     {cluster.representative_claim}
                   </h2>
                   <div className="pt-1">
-                    <VerdictStamp verdict={cluster.verdict.label} size="md" rotate={false} />
+                    <VerdictStamp verdict="NOT_VALIDATED" size="md" rotate={false} customLabel="Synthetic demo label" />
                   </div>
                 </div>
 
@@ -149,12 +149,13 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-mono uppercase tracking-wider text-accent font-bold flex items-center gap-1.5">
                         <Send className="w-3.5 h-3.5" />
-                        Suggested Broadcast Response
+                        Illustrative Demo Text (Not Validated)
                       </span>
                       <button
                         type="button"
                         onClick={handleCopyReply}
-                        className="cursor-pointer inline-flex items-center gap-1 text-xs font-mono font-bold text-accent hover:underline focus-ring"
+                        disabled
+                        className="inline-flex items-center gap-1 text-xs font-mono font-bold text-accent opacity-60"
                       >
                         {copiedReply ? (
                           <>
@@ -164,7 +165,7 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                         ) : (
                           <>
                             <Copy className="w-3.5 h-3.5" />
-                            <span>Copy Response</span>
+                            <span>Copy disabled</span>
                           </>
                         )}
                       </button>
@@ -198,7 +199,7 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                 <div className="space-y-2.5">
                   <span className="text-[10px] font-mono uppercase tracking-wider text-[#63584C] dark:text-[#A89E90] font-bold flex items-center gap-1.5">
                     <BookOpen className="w-3.5 h-3.5 text-[#8E8273]" />
-                    Official Verified Evidence Passages
+                    Indexed Passages (source status must be checked)
                   </span>
                   {cluster.verdict.evidence_passages && cluster.verdict.evidence_passages.length > 0 ? (
                     <ul className="space-y-3 m-0 p-0 list-none">
@@ -230,7 +231,7 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
                     </ul>
                   ) : (
                     <div className="p-4 rounded-xl border-2 border-[#FDE68A] dark:border-[#B45309]/50 bg-[#FFFBEB] dark:bg-[#251A0E] text-xs text-[#92400E] dark:text-[#FCD34D] font-mono leading-relaxed">
-                      <strong>Zero Official Guidance on File:</strong> No verified government circulars or clinical bulletins match this rumour yet. Recommended for agency risk communication press release.
+                      <strong>No indexed passage found:</strong> This does not establish that no official guidance exists. Review the corpus and source coverage before drawing conclusions.
                     </div>
                   )}
                 </div>
