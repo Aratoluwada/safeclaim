@@ -20,11 +20,12 @@ export function generateDailyBriefMarkdown(
   md += `**Date:** ${dateStr}  \n`;
   md += `**Dataset:** ${stats.total_messages_analyzed} circulating messages analyzed across ${stats.total_clusters} claim clusters  \n`;
   md += `**Target Agencies:** NCDC, FCCPC, NHIA, and Fact-Checking Desks (Dubawa, Africa Check, FactCheckHub)\n\n`;
+  md += `> **Synthetic Demo Notice:** All monitored claim clusters and suggested responses below reflect synthetic demonstration fixtures with unverified source provenance. Analytical verdicts are tagged as demo projections and must not be published as official government advisory.\n\n`;
   md += `---\n\n`;
 
   md += `## 1. Executive Summary\n`;
   md += `SafeClaim automated intelligence monitoring tracked ${stats.total_messages_analyzed} message signals. `;
-  md += `Of these, **${stats.verdict_counts.CONTRADICTED_BY_OFFICIAL_SOURCE || 0} clusters** have been conclusively refuted by official public advisories, `;
+  md += `Of these, **${stats.verdict_counts.CONTRADICTED_BY_OFFICIAL_SOURCE || 0} clusters** have been analyzed against official circulars, `;
   md += `**${stats.verdict_counts.SUPPORTED_BY_OFFICIAL_SOURCE || 0} cluster** matches established regulatory standards, `;
   md += `and **${guidanceGaps.length} critical guidance gaps** require urgent institutional clarification.\n\n`;
 

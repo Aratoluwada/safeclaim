@@ -52,7 +52,7 @@ def generate_daily_brief(date_str: Optional[str] = None) -> Dict[str, Any]:
     md_lines = [
         f"# SafeClaim Daily Intelligence Brief — {date_display}",
         "",
-        "> **Notice:** This brief compiles circulating misinformation clusters, public health myths, and consumer fraud alerts tracked across Nigerian messaging channels (WhatsApp forwards, viral social posts, and citizen reports).",
+        "> **Synthetic Demo Notice:** All monitored claim clusters and suggested responses below reflect synthetic demonstration fixtures with unverified source provenance. Analytical verdicts are tagged as demo projections and must not be published as official government advisory.",
         "",
         "## 1. Executive Summary",
         f"- **Total Messages Monitored:** {total_messages}",
@@ -66,7 +66,7 @@ def generate_daily_brief(date_str: Optional[str] = None) -> Dict[str, Any]:
     ]
 
     for c in sorted_by_count[:8]:
-        verdict_badge = "🚨 Contradicted" if "CONTRADICTED" in c.verdict.label else ("✅ Supported" if "SUPPORTED" in c.verdict.label else "⚠️ Unverified")
+        verdict_badge = "⚠️ Not Validated (Synthetic Demo)"
         md_lines.append(
             f"| `{c.cluster_id}` | `{c.domain}` | {verdict_badge} | {c.message_count} | {c.representative_claim} |"
         )

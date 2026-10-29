@@ -12,6 +12,7 @@ import {
   FileText,
   Calendar,
   Flame,
+  AlertTriangle,
 } from 'lucide-react';
 import { DailyBrief } from '../../types/api';
 import { downloadMarkdownFile } from '../../utils/briefGenerator';
@@ -135,6 +136,17 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
 
             {/* Scrollable Document Body */}
             <div className="flex-1 overflow-y-auto p-5 sm:p-7 space-y-6 text-[#1F1B16] dark:text-[#F4EEE4] text-sm">
+              {/* Synthetic Demo Intelligence Notice */}
+              <div className="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-xs font-mono space-y-1">
+                <div className="font-bold flex items-center gap-1.5">
+                  <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span>Synthetic Demo Intelligence Notice</span>
+                </div>
+                <p className="font-body text-xs leading-relaxed">
+                  Clusters in this brief reflect synthetic seed benchmarking and unverified source provenance. Analytical verdicts are tagged as demo projections and must not be published as official government advisories without authorized gazette verification.
+                </p>
+              </div>
+
               {/* Executive Summary */}
               <section className="space-y-2">
                 <h3 className="text-xs font-mono uppercase tracking-wider text-accent font-bold">
@@ -168,7 +180,7 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
 
                       <div className="flex items-center gap-3 shrink-0 font-mono text-xs">
                         <span className="font-bold text-[#1F1B16] dark:text-[#F4EEE4]">{c.count} msgs</span>
-                        <VerdictStamp verdict={c.verdict} size="sm" rotate={false} />
+                        <VerdictStamp verdict="NOT_VALIDATED" size="sm" rotate={false} customLabel="Synthetic demo label" />
                       </div>
                     </li>
                   ))}
