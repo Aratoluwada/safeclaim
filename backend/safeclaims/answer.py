@@ -37,6 +37,7 @@ def answer_question(
             "url": passage.url,
             "domain": passage.domain,
             "excerpt": passage.excerpt,
+            "verification_status": _verification_status(passage.passage_id.split("#", 1)[0]),
         }
         for passage in result.passages
     ]
@@ -53,6 +54,7 @@ def answer_question(
                         "url": hotline_passage.url,
                         "domain": hotline_passage.domain,
                         "excerpt": hotline_passage.text,
+                        "verification_status": _verification_status(hotline_passage.doc_id),
                     }
                 )
 
@@ -80,3 +82,13 @@ def answer_question(
         "hotline_info": result.hotline,
         "citations": citations,
     }
+
+
+def _verification_status(doc_id: str) -> str:
+    import csv
+
+    with config.MANIFEST_PATH.open(mode="r", encoding="utf-8", newline="") as manifest:
+        for row in csv.DictReader(manifest):
+            if row.get("id") == doc_id:
+                return row.get("verification_status", "unverified")
+    return "unverified"
