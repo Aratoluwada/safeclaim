@@ -6,7 +6,7 @@
 import React from 'react';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'subtle' | 'outline' | 'bordered';
+  variant?: 'default' | 'subtle' | 'outline' | 'bordered' | 'document';
   padding?: 'none' | 'sm' | 'md' | 'lg';
 }
 
@@ -21,22 +21,24 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     },
     ref
   ) => {
-    const base = 'rounded-md transition-colors';
+    const base = 'rounded-2xl transition-colors';
 
     const variants = {
       default:
-        'bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-neutral-100 shadow-2xs',
+        'bg-white dark:bg-[#201C17] border border-[#D4C5B3] dark:border-[#3D352C] text-[#1F1B16] dark:text-[#EDE7DF] shadow-xs',
       subtle:
-        'bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 text-neutral-900 dark:text-neutral-100',
+        'bg-[#F5EFEB] dark:bg-[#1C1814] border border-[#E8DFD5] dark:border-[#332B23] text-[#1F1B16] dark:text-[#EDE7DF]',
       outline:
-        'bg-transparent border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-neutral-100',
+        'bg-transparent border border-[#D4C5B3] dark:border-[#3D352C] text-[#1F1B16] dark:text-[#EDE7DF]',
       bordered:
-        'bg-white dark:bg-neutral-900 border-2 border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100',
+        'bg-white dark:bg-[#201C17] border-2 border-[#D4C5B3] dark:border-[#3D352C] text-[#1F1B16] dark:text-[#EDE7DF] shadow-xs',
+      document:
+        'official-document-sheet text-[#1F1B16] dark:text-[#EDE7DF]',
     }[variant];
 
     const paddings = {
       none: '',
-      sm: 'p-3',
+      sm: 'p-3 sm:p-4',
       md: 'p-4 sm:p-5',
       lg: 'p-6 sm:p-7',
     }[padding];

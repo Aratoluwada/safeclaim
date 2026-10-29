@@ -6,10 +6,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
-  ShieldAlert,
   AlertOctagon,
-  ArrowRight,
-  ShieldCheck,
+  Sparkles,
 } from 'lucide-react';
 import { AskResponse, LanguageCode } from '../types/api';
 import { askQuestion } from '../api/ask';
@@ -19,7 +17,8 @@ import { QuestionInput } from '../components/ask/QuestionInput';
 import { AnswerCard } from '../components/ask/AnswerCard';
 import { AbstentionCard } from '../components/ask/AbstentionCard';
 import { ApiConfig } from '../api/client';
-import { PageHeader } from '../components/ui/PageHeader';
+import { WobblyUnderline } from '../components/hand/WobblyUnderline';
+import { HandArrow } from '../components/hand/HandArrow';
 import { Button } from '../components/ui/Button';
 
 interface AskPageProps {
@@ -83,17 +82,48 @@ export const AskPage: React.FC<AskPageProps> = ({
       <DisclaimerBanner language={language} />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-8">
-        {/* Page Header */}
+        {/* Warm Editorial Header */}
         {!response && !isLoading && (
-          <PageHeader
-            eyebrow="Public Grounded Verification"
-            title={language === 'pcm' ? 'Understand di claim. Check di real fact.' : 'Understand the claim. Verify the facts.'}
-            description={
-              language === 'pcm'
-                ? 'Check whether public health alerts, loan app wahala, or government grant announcements get official backing from NCDC, FCCPC, and NHIA circulars.'
-                : 'Evaluate public-health rumours, suspicious loan applications, and federal benefit announcements using direct citations from approved official publications.'
-            }
-          />
+          <header className="text-center sm:text-left space-y-3 pt-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#EBF4EF] dark:bg-[#1B2F23] text-[#0A5C36] dark:text-[#34D399] font-mono font-bold text-xs">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>
+                {language === 'pcm' ? 'Official Receipts Assistant' : 'Public Verification Assistant'}
+              </span>
+            </div>
+
+            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1F1B16] dark:text-[#EDE7DF] leading-tight">
+              {language === 'pcm' ? (
+                <>
+                  Understand di claim.{' '}
+                  <span className="relative inline-block">
+                    Check di real facts.
+                    <WobblyUnderline className="absolute -bottom-2 left-0 w-full" color="#0A5C36" />
+                  </span>
+                </>
+              ) : (
+                <>
+                  Understand the claim.{' '}
+                  <span className="relative inline-block">
+                    Verify the facts.
+                    <WobblyUnderline className="absolute -bottom-2 left-0 w-full" color="#0A5C36" />
+                  </span>
+                </>
+              )}
+            </h1>
+
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1">
+              <p className="text-base sm:text-lg text-[#63584C] dark:text-[#A89E90] font-body max-w-2xl leading-relaxed">
+                {language === 'pcm'
+                  ? 'Dem forward you something wey dey scare you or promise free money? Paste am enter here. SafeClaim dey check NCDC, FCCPC, and NHIA circulars to show you real proof.'
+                  : 'Forwarded a suspicious health rumour, loan app claim, or grant announcement? Paste it below to evaluate with official Nigerian publications and exact receipts.'}
+              </p>
+              <div className="hidden lg:flex items-center text-[#24306E] dark:text-[#8BA0E8] font-hand text-lg shrink-0">
+                <span>Paste forward here</span>
+                <HandArrow direction="curve-down" color="#24306E" className="ml-1 -mb-2" />
+              </div>
+            </div>
+          </header>
         )}
 
         {/* Search Input Section */}
@@ -113,14 +143,14 @@ export const AskPage: React.FC<AskPageProps> = ({
           <div
             role="status"
             aria-live="polite"
-            className="rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-8 text-center shadow-2xs space-y-3 max-w-xl mx-auto"
+            className="rounded-2xl border-2 border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] p-8 sm:p-10 text-center shadow-sm space-y-4 max-w-xl mx-auto"
           >
-            <div className="w-8 h-8 border-2 border-[#0A5C36] dark:border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto" />
-            <div className="space-y-1">
-              <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+            <div className="w-10 h-10 border-3 border-[#0A5C36] dark:border-[#34D399] border-t-transparent rounded-full animate-spin mx-auto" />
+            <div className="space-y-1.5">
+              <h3 className="font-display font-bold text-lg text-[#1F1B16] dark:text-[#EDE7DF]">
                 {t.verifyingButton}
               </h3>
-              <p className="text-xs text-neutral-500 font-mono">
+              <p className="text-xs sm:text-sm text-[#63584C] dark:text-[#A89E90] font-mono">
                 Matching against official NCDC, FCCPC, NHIA, and FMOH gazettes...
               </p>
             </div>
@@ -131,24 +161,24 @@ export const AskPage: React.FC<AskPageProps> = ({
         {error && !isLoading && (
           <div
             role="alert"
-            className="rounded-md border border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-950/40 p-5 space-y-3"
+            className="rounded-2xl border-2 border-[#FECACA] dark:border-[#7F1D1D] bg-[#FEF2F2] dark:bg-[#251515] p-5 sm:p-6 space-y-4"
           >
-            <div className="flex items-start gap-2.5">
-              <AlertOctagon className="w-4 h-4 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
-              <div className="space-y-1.5 flex-1 text-xs">
-                <h3 className="font-semibold text-red-900 dark:text-red-200 font-mono uppercase">
+            <div className="flex items-start gap-3">
+              <AlertOctagon className="w-5 h-5 text-[#B91C1C] dark:text-[#F87171] shrink-0 mt-0.5" />
+              <div className="space-y-2 flex-1 text-xs">
+                <h3 className="font-bold text-[#B91C1C] dark:text-[#FCA5A5] font-mono uppercase text-sm">
                   {t.backendErrorPrefix}
                 </h3>
-                <p className="font-mono text-red-800 dark:text-red-300 bg-white dark:bg-neutral-900 p-2.5 rounded border border-red-200 dark:border-red-800">
+                <p className="font-mono text-[#B91C1C] dark:text-[#FCA5A5] bg-white dark:bg-[#1A1010] p-3 rounded-xl border border-red-200 dark:border-red-900">
                   {error}
                 </p>
-                <p className="text-neutral-600 dark:text-neutral-400">
-                  Live Mode never silently substitutes synthetic answers. If your backend is offline, configure the API endpoint or switch to Demo Mode.
+                <p className="text-[#63584C] dark:text-[#A89E90] font-body text-xs leading-relaxed">
+                  Live Mode never silently substitutes synthetic answers. If your backend service is offline, configure the API endpoint or switch to Demo Mode.
                 </p>
               </div>
             </div>
 
-            <div className="pt-2 flex flex-wrap gap-2">
+            <div className="pt-2 flex flex-wrap gap-2.5">
               <Button variant="primary" size="sm" onClick={() => handleAsk(submittedQuery)}>
                 Retry Query
               </Button>

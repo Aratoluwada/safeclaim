@@ -11,11 +11,14 @@ import {
   BookOpen,
   ArrowRight,
   ShieldCheck,
+  Share2,
 } from 'lucide-react';
-import { AskResponse, LanguageCode } from '../../types/api';
+import { AskResponse, LanguageCode, VerdictLabel } from '../../types/api';
 import { TRANSLATIONS } from '../../utils/translations';
 import { HotlineAlert } from './HotlineAlert';
 import { SourceCard } from './SourceCard';
+import { VerdictStamp } from '../common/VerdictStamp';
+import { ShareVerdictModal } from './ShareVerdictModal';
 import { Button } from '../ui/Button';
 
 interface AnswerCardProps {
@@ -30,6 +33,7 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
   onAskAnother,
 }) => {
   const [copied, setCopied] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const [highlightedPassageId, setHighlightedPassageId] = useState<string | null>(null);
   const t = TRANSLATIONS[language];
 
@@ -47,6 +51,18 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
     }
   };
 
+  // Determine verdict label
+  const lowerAnswer = (response.answer || '').toLowerCase();
+  const verdictLabel: VerdictLabel =
+    lowerAnswer.includes('not prevent') ||
+    lowerAnswer.includes('does not') ||
+    lowerAnswer.includes('refut') ||
+    lowerAnswer.includes('debunk') ||
+    lowerAnswer.includes('zero confirmed') ||
+    lowerAnswer.includes('no ebola')
+      ? 'CONTRADICTED_BY_OFFICIAL_SOURCE'
+      : 'SUPPORTED_BY_OFFICIAL_SOURCE';
+
   // Render text with clickable citation badges, e.g. [ncdc#1]
   const renderFormattedAnswer = (text: string) => {
     const parts = text.split(/(\[[a-zA-Z0-9#_\-]+\])/g);
@@ -60,10 +76,10 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
             key={i}
             type="button"
             onClick={() => handleCitationClick(passageId)}
-            className={`inline-flex items-center font-mono font-semibold text-xs mx-1 px-1.5 py-0.5 rounded-[3px] transition cursor-pointer focus-ring ${
+            className={`cursor-pointer inline-flex items-center font-mono font-bold text-xs mx-1 px-2 py-0.5 rounded-md transition-all focus-ring ${
               isSelected
-                ? 'bg-[#0A5C36] text-white ring-2 ring-[#0A5C36]/50'
-                : 'bg-[#EBF4EF] dark:bg-[#0D2D1E] hover:bg-[#d5ebd9] text-[#0A5C36] dark:text-emerald-300 border border-[#C2DEC9] dark:border-[#1F4A33]'
+                ? 'bg-[#0A5C36] text-white ring-2 ring-[#0A5C36]/50 shadow-xs'
+                : 'bg-[#EBF4EF] dark:bg-[#1C3225] text-[#0A5C36] dark:text-[#34D399] border border-[#BBD8C3] dark:border-[#2A523A] hover:bg-[#D4E8DC]'
             }`}
             title={`View official citation for ${passageId}`}
           >
@@ -79,49 +95,64 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
     <div
       role="region"
       aria-label="Verified grounded response"
-      className="rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-2xs overflow-hidden"
+      className="rounded-2xl border-2 border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] shadow-sm overflow-hidden"
     >
       {/* Header bar */}
-      <div className="bg-[#EBF4EF]/70 dark:bg-[#0D2D1E]/40 border-b border-[#C2DEC9]/80 dark:border-neutral-800 px-5 py-3 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[3px] bg-[#0A5C36] text-white font-medium text-xs font-mono">
+      <div className="bg-[#FAF7F2] dark:bg-[#1A1612] border-b border-[#E8DFD5] dark:border-[#2D261F] px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#0A5C36] text-white font-mono font-bold text-xs">
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" aria-hidden="true" />
-            {t.groundedHeading}
+            <span>{t.groundedHeading}</span>
           </span>
-          <span className="text-xs font-mono text-neutral-600 dark:text-neutral-400 hidden sm:inline">
-            Official Public Record
-          </span>
+          <VerdictStamp
+            verdict={verdictLabel}
+            size="sm"
+            rotate={false}
+          />
         </div>
 
-        <Button variant="secondary" size="sm" onClick={handleCopy}>
-          {copied ? (
-            <>
-              <Check className="w-3.5 h-3.5 text-emerald-600" aria-hidden="true" />
-              <span>Copied</span>
-            </>
-          ) : (
-            <>
-              <Copy className="w-3.5 h-3.5 text-neutral-500" aria-hidden="true" />
-              <span>Copy Answer</span>
-            </>
-          )}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="secondary" size="sm" onClick={() => setIsShareOpen(true)} className="font-bold">
+            <Share2 className="w-3.5 h-3.5 text-[#0A5C36] dark:text-[#34D399]" />
+            <span>Share Receipt</span>
+          </Button>
+
+          <Button variant="outline" size="sm" onClick={handleCopy} className="font-bold">
+            {copied ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-600" aria-hidden="true" />
+                <span>Copied</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-3.5 h-3.5 text-stone-500" aria-hidden="true" />
+                <span>Copy</span>
+              </>
+            )}
+          </Button>
+        </div>
       </div>
 
       <div className="p-5 sm:p-7 space-y-6">
         {/* User Question */}
         <div>
-          <span className="text-xs font-mono uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-            User Question:
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#63584C] dark:text-[#A89E90]">
+            Claim / Question Evaluated:
           </span>
-          <h2 className="font-serif text-xl sm:text-2xl font-semibold text-neutral-900 dark:text-neutral-50 mt-1 text-left">
+          <h2 className="font-display text-xl sm:text-2xl font-bold text-[#1F1B16] dark:text-[#EDE7DF] mt-1 text-left leading-snug">
             {response.question}
           </h2>
         </div>
 
-        {/* Answer body in Newsreader serif for editorial clarity */}
-        <div className="rounded-md bg-neutral-50/70 dark:bg-neutral-950/50 border border-neutral-200 dark:border-neutral-800 p-5">
-          <div className="font-serif text-base sm:text-lg text-neutral-900 dark:text-neutral-100 leading-relaxed space-y-3 font-normal text-left">
+        {/* Model's Neighbourly Explanation */}
+        <div className="rounded-xl bg-[#FAF7F2] dark:bg-[#1A1612] border border-[#E8DFD5] dark:border-[#2D261F] p-5 sm:p-6 relative">
+          <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#0A5C36] dark:text-[#34D399] mb-2 flex items-center justify-between">
+            <span>Official Grounded Summary</span>
+            <span className="font-hand text-sm text-[#24306E] dark:text-[#8BA0E8]">
+              {language === 'pcm' ? 'As di official paper talk am:' : 'Neighbourly explanation with receipts:'}
+            </span>
+          </div>
+          <div className="font-body text-base sm:text-lg text-[#1F1B16] dark:text-[#EDE7DF] leading-relaxed space-y-3 font-normal text-left">
             <p>{renderFormattedAnswer(response.answer)}</p>
           </div>
         </div>
@@ -133,20 +164,20 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
 
         {/* Semantic list of citations */}
         {response.citations && response.citations.length > 0 && (
-          <section aria-labelledby="citations-section-heading" className="space-y-3 pt-2">
-            <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 pb-2.5">
+          <section aria-labelledby="citations-section-heading" className="space-y-3.5 pt-2">
+            <div className="flex flex-wrap items-center justify-between border-b border-[#E8DFD5] dark:border-[#2D261F] pb-2.5 gap-2">
               <div className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-[#0A5C36] dark:text-emerald-400" aria-hidden="true" />
-                <h3 id="citations-section-heading" className="font-mono text-xs font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-wider">
+                <BookOpen className="w-4 h-4 text-[#0A5C36] dark:text-[#34D399]" aria-hidden="true" />
+                <h3 id="citations-section-heading" className="font-mono text-xs font-bold text-[#1F1B16] dark:text-[#EDE7DF] uppercase tracking-wider">
                   {t.citationsHeading} ({response.citations.length})
                 </h3>
               </div>
-              <span className="text-xs font-mono text-neutral-500">
-                Click [citation] tags above to jump to evidence
+              <span className="text-xs font-mono text-[#63584C] dark:text-[#A89E90]">
+                Click any [passage] tag above to inspect document
               </span>
             </div>
 
-            <ul className="space-y-3 m-0 p-0 list-none">
+            <ul className="space-y-3.5 m-0 p-0 list-none">
               {response.citations.map((citation, index) => (
                 <li key={citation.passage_id || index} className="m-0 p-0">
                   <SourceCard
@@ -161,18 +192,27 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
         )}
 
         {/* Bottom bar */}
-        <div className="pt-4 border-t border-neutral-200 dark:border-neutral-800 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-1.5 text-xs text-neutral-500 font-mono">
-            <ShieldCheck className="w-4 h-4 text-[#0A5C36] dark:text-emerald-400" aria-hidden="true" />
-            <span>Strict zero-hallucination constraint applied against official repository.</span>
+        <div className="pt-4 border-t border-[#E8DFD5] dark:border-[#2D261F] flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-2 text-xs text-[#63584C] dark:text-[#A89E90] font-mono">
+            <ShieldCheck className="w-4 h-4 text-[#0A5C36] dark:text-[#34D399]" aria-hidden="true" />
+            <span>Answers strictly derived from approved Nigerian government publications.</span>
           </div>
 
-          <Button variant="primary" size="md" onClick={onAskAnother}>
+          <Button variant="primary" size="md" onClick={onAskAnother} className="font-bold">
             <span>{t.askAnotherButton}</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 ml-1" />
           </Button>
         </div>
       </div>
+
+      {/* Share to WhatsApp modal */}
+      <ShareVerdictModal
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        query={response.question}
+        response={response}
+        language={language}
+      />
     </div>
   );
 };

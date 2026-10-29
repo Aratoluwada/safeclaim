@@ -45,6 +45,11 @@ export interface TranslationStrings {
   homeDeskTeaserTitle: string;
   homeDeskTeaserLead: string;
   homeViewDeskAction: string;
+  shareVerdict: string;
+  shareOnWhatsApp: string;
+  copiedToClipboard: string;
+  neighbourTagline: string;
+  officialReceiptsBadge: string;
 }
 
 export const TRANSLATIONS: Record<LanguageCode, TranslationStrings> = {
@@ -120,6 +125,11 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationStrings> = {
     homeDeskTeaserLead:
       'Institutional dashboard tracking circulating claim clusters, monitoring viral guidance gaps, and generating broadcast-ready intelligence briefs.',
     homeViewDeskAction: 'Open Rumour Desk',
+    shareVerdict: 'Share Official Verification Card',
+    shareOnWhatsApp: 'Forward Receipt to WhatsApp',
+    copiedToClipboard: 'Verification text copied with receipts!',
+    neighbourTagline: 'The trusted neighbour with the receipts',
+    officialReceiptsBadge: 'Official Pulled Circular',
   },
 
   pcm: {
@@ -194,5 +204,10 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationStrings> = {
     homeDeskTeaserLead:
       'Dashboard wey agencies dey use inspect circulating claim clusters, spot viral guidance gaps, and download ready-to-broadcast intelligence briefs.',
     homeViewDeskAction: 'Open Rumour Desk',
+    shareVerdict: 'Share Official Verification Card',
+    shareOnWhatsApp: 'Forward Receipt Enter WhatsApp',
+    copiedToClipboard: 'We don copy di verification text with official proof!',
+    neighbourTagline: 'Di trusted neighbour wey hold di official receipts',
+    officialReceiptsBadge: 'Official Government Circular',
   },
 };

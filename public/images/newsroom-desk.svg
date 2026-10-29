@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="deskGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A1713" />
+      <stop offset="100%" stop-color="#241F1A" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" rx="16" fill="url(#deskGrad)" />
+  <rect x="10" y="10" width="780" height="430" rx="12" fill="none" stroke="#3D352C" stroke-width="2" />
+
+  <!-- Rumour Desk screen outline -->
+  <g transform="translate(60, 40)">
+    <rect width="680" height="370" rx="12" fill="#201C17" stroke="#52473B" stroke-width="2" />
+    
+    <!-- Top toolbar -->
+    <rect width="680" height="44" rx="12" fill="#2B2520" />
+    <circle cx="24" cy="22" r="5" fill="#EF4444" />
+    <circle cx="40" cy="22" r="5" fill="#F59E0B" />
+    <circle cx="56" cy="22" r="5" fill="#10B981" />
+    <text x="80" y="27" font-family="monospace" font-size="12" font-weight="bold" fill="#EDE7DF">
+      RUMOUR DESK INTELLIGENCE — OSCA OPEN//BUILD 2026
+    </text>
+
+    <!-- KPI widgets -->
+    <g transform="translate(30, 64)">
+      <!-- KPI 1 -->
+      <rect width="140" height="70" rx="8" fill="#171410" stroke="#3D352C" />
+      <text x="16" y="26" font-family="monospace" font-size="9" fill="#A89E90">MESSAGES</text>
+      <text x="16" y="54" font-family="Georgia, serif" font-size="24" font-weight="bold" fill="#EDE7DF">1,420</text>
+
+      <!-- KPI 2 -->
+      <g transform="translate(155, 0)">
+        <rect width="140" height="70" rx="8" fill="#171410" stroke="#7F1D1D" />
+        <text x="16" y="26" font-family="monospace" font-size="9" fill="#F87171">CONTRADICTED</text>
+        <text x="16" y="54" font-family="Georgia, serif" font-size="24" font-weight="bold" fill="#F87171">84</text>
+      </g>
+
+      <!-- KPI 3 Guidance Gaps -->
+      <g transform="translate(310, 0)">
+        <rect width="140" height="70" rx="8" fill="#2D2010" stroke="#B45309" stroke-width="2" />
+        <text x="16" y="26" font-family="monospace" font-size="9" font-weight="bold" fill="#FBBF24">GUIDANCE GAPS</text>
+        <text x="16" y="54" font-family="Georgia, serif" font-size="24" font-weight="bold" fill="#FBBF24">31</text>
+      </g>
+
+      <!-- KPI 4 Outbreaks -->
+      <g transform="translate(465, 0)">
+        <rect width="140" height="70" rx="8" fill="#171410" stroke="#14532D" />
+        <text x="16" y="26" font-family="monospace" font-size="9" fill="#34D399">OUTBREAKS</text>
+        <text x="16" y="54" font-family="Georgia, serif" font-size="24" font-weight="bold" fill="#34D399">5</text>
+      </g>
+    </g>
+
+    <!-- Priority cluster row -->
+    <g transform="translate(30, 160)">
+      <rect width="620" height="50" rx="8" fill="#2A241F" stroke="#D97706" />
+      <rect x="16" y="14" width="100" height="22" rx="4" fill="#78350F" />
+      <text x="66" y="29" font-family="monospace" font-size="9" font-weight="bold" fill="#FDE68A" text-anchor="middle">
+        GUIDANCE GAP
+      </text>
+      <text x="130" y="32" font-family="sans-serif" font-size="13" font-weight="bold" fill="#EDE7DF">
+        Civil Service Batch D Replacement Portal rumour trending on Telegram
+      </text>
+      <text x="560" y="32" font-family="monospace" font-size="11" fill="#FBBF24">
+        340 msgs
+      </text>
+    </g>
+
+    <g transform="translate(30, 224)">
+      <rect width="620" height="50" rx="8" fill="#25201A" stroke="#3D352C" />
+      <rect x="16" y="14" width="100" height="22" rx="4" fill="#450A0A" />
+      <text x="66" y="29" font-family="monospace" font-size="9" font-weight="bold" fill="#FCA5A5" text-anchor="middle">
+        CONTRADICTED
+      </text>
+      <text x="130" y="32" font-family="sans-serif" font-size="13" font-weight="bold" fill="#EDE7DF">
+        Salt water cure for cholera outbreak in urban informal settlements
+      </text>
+      <text x="560" y="32" font-family="monospace" font-size="11" fill="#F87171">
+        620 msgs
+      </text>
+    </g>
+
+    <g transform="translate(30, 288)">
+      <rect width="620" height="50" rx="8" fill="#25201A" stroke="#3D352C" />
+      <rect x="16" y="14" width="100" height="22" rx="4" fill="#052E16" />
+      <text x="66" y="29" font-family="monospace" font-size="9" font-weight="bold" fill="#86EFAC" text-anchor="middle">
+        SUPPORTED
+      </text>
+      <text x="130" y="32" font-family="sans-serif" font-size="13" font-weight="bold" fill="#EDE7DF">
+        NHIS enrolment portal verified step-by-step citizen guideline
+      </text>
+      <text x="560" y="32" font-family="monospace" font-size="11" fill="#34D399">
+        180 msgs
+      </text>
+    </g>
+  </g>
+</svg>

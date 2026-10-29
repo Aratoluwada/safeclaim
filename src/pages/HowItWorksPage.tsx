@@ -9,6 +9,7 @@ import { Card } from '../components/ui/Card';
 import { LanguageCode } from '../types/api';
 import { TRANSLATIONS } from '../utils/translations';
 import { Database, Search, ShieldCheck, Layers, FileText } from 'lucide-react';
+import { WobblyUnderline } from '../components/hand/WobblyUnderline';
 
 interface HowItWorksPageProps {
   language: LanguageCode;
@@ -40,7 +41,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ language }) => {
       number: '03',
       title: 'Strict Grounding & Cosine Threshold Gating',
       description:
-        'The open-weight model (Mistral-7B-Instruct / Gemma-2-9B-IT) is prompted under zero-hallucination constraints: every assertion must cite a retrieved passage ID (e.g. [ncdc#1]). If candidate passages do not reach the required similarity threshold, SafeClaim triggers an explicit abstention (NO_OFFICIAL_SOURCE_FOUND) rather than guessing.',
+        'The language model is prompted under strict zero-hallucination constraints: every assertion must cite a retrieved passage ID (e.g. [ncdc#1]). If candidate passages do not reach the required similarity threshold, SafeClaim triggers an explicit abstention (NO_OFFICIAL_SOURCE_FOUND) rather than guessing.',
       icon: ShieldCheck,
     },
     {
@@ -54,7 +55,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ language }) => {
       number: '05',
       title: 'Broadcast-Ready Replies & Institutional Briefs',
       description:
-        'For refuted or supported claims, SafeClaim provides plain-language public replies in English and Naijá Pidgin for instant dissemination on WhatsApp and radio. Analysts can download compiled Daily Intelligence Briefs (.md) with suggested agency interventions.',
+        'For refuted or supported claims, SafeClaim provides plain-language public replies in English and Naija Pidgin for instant dissemination on WhatsApp and radio. Analysts can download compiled Daily Intelligence Briefs (.md) with suggested agency interventions.',
       icon: FileText,
     },
   ];
@@ -63,7 +64,15 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ language }) => {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-8">
       <PageHeader
         eyebrow="Architecture & Methodology"
-        title="How SafeClaim AI Works"
+        title={
+          <>
+            How SafeClaim AI{' '}
+            <span className="relative inline-block">
+              Works
+              <WobblyUnderline className="absolute -bottom-2 left-0 w-full" color="#0A5C36" />
+            </span>
+          </>
+        }
         description="A transparent, verifiable pipeline designed to halt public-health panics and predatory scams in Nigeria through official evidence grounding."
       />
 
@@ -73,19 +82,19 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ language }) => {
           const Icon = step.icon;
           return (
             <li key={step.number} className="m-0 p-0">
-              <Card variant="default" padding="md" className="space-y-2">
-                <div className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-800 pb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-[#0A5C36] dark:text-emerald-400 bg-[#EBF4EF] dark:bg-[#0D2D1E] px-2 py-0.5 rounded-[2px] border border-[#C2DEC9] dark:border-[#1F4A33]">
+              <Card variant="bordered" padding="md" className="space-y-3">
+                <div className="flex items-center justify-between border-b border-[#E8DFD5] dark:border-[#2D261F] pb-2.5">
+                  <div className="flex items-center gap-2.5">
+                    <span className="font-mono text-xs font-bold text-[#0A5C36] dark:text-[#34D399] bg-[#EBF4EF] dark:bg-[#1B2F23] px-2.5 py-0.5 rounded-md border border-[#BBD8C3] dark:border-[#2A5239]">
                       Step {step.number}
                     </span>
-                    <h3 className="font-semibold text-sm sm:text-base text-neutral-900 dark:text-neutral-100">
+                    <h3 className="font-display font-bold text-base text-[#1F1B16] dark:text-[#EDE7DF]">
                       {step.title}
                     </h3>
                   </div>
-                  <Icon className="w-4 h-4 text-neutral-400" aria-hidden="true" />
+                  <Icon className="w-4 h-4 text-[#8E8273]" aria-hidden="true" />
                 </div>
-                <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 font-sans leading-relaxed pt-1">
+                <p className="text-xs sm:text-sm text-[#63584C] dark:text-[#A89E90] font-body leading-relaxed pt-0.5">
                   {step.description}
                 </p>
               </Card>
@@ -95,21 +104,21 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ language }) => {
       </ol>
 
       {/* Principles list */}
-      <div className="rounded-md border border-neutral-200 dark:border-neutral-800 p-5 bg-neutral-50 dark:bg-neutral-900/60 space-y-3">
-        <h3 className="font-mono text-xs font-semibold uppercase text-neutral-600 dark:text-neutral-400">
-          Core Safety Commitments
+      <div className="rounded-2xl border-2 border-[#D4C5B3] dark:border-[#3D352C] p-6 bg-[#FAF7F2] dark:bg-[#1A1612] space-y-3">
+        <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-[#0A5C36] dark:text-[#34D399]">
+          Core Civic Commitments
         </h3>
-        <ul className="space-y-2 m-0 p-0 list-none text-xs text-neutral-700 dark:text-neutral-300 font-sans">
-          <li className="flex items-start gap-2">
-            <span className="text-[#0A5C36] dark:text-emerald-400 font-bold">&bull;</span>
+        <ul className="space-y-2.5 m-0 p-0 list-none text-xs sm:text-sm text-[#1F1B16] dark:text-[#EDE7DF] font-body">
+          <li className="flex items-start gap-2.5">
+            <span className="text-[#0A5C36] dark:text-[#34D399] font-bold text-base leading-none">•</span>
             <span><strong>Never Invent Citations:</strong> Passages must map to an actual gazette or circular URL.</span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-[#0A5C36] dark:text-emerald-400 font-bold">&bull;</span>
+          <li className="flex items-start gap-2.5">
+            <span className="text-[#0A5C36] dark:text-[#34D399] font-bold text-base leading-none">•</span>
             <span><strong>Absence != Falsity:</strong> If an agency has not spoken on an emerging rumour, it is an unverified guidance gap, not a disproven claim.</span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-[#0A5C36] dark:text-emerald-400 font-bold">&bull;</span>
+          <li className="flex items-start gap-2.5">
+            <span className="text-[#0A5C36] dark:text-[#34D399] font-bold text-base leading-none">•</span>
             <span><strong>Verified Hotlines Only:</strong> Helplines like NCDC 6232 are shown only when documented by verified records.</span>
           </li>
         </ul>

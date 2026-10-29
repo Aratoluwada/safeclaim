@@ -46,7 +46,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   ];
 
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800 p-3.5 sm:p-4 space-y-3 shadow-2xs">
+    <div className="bg-white dark:bg-[#201C17] rounded-2xl border border-[#D4C5B3] dark:border-[#3D352C] p-4 sm:p-5 space-y-4 shadow-xs">
       {/* Top Row: Search Input + Action Buttons */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         {/* Search */}
@@ -54,24 +54,24 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <label htmlFor="cluster-search" className="sr-only">
             Search claim clusters
           </label>
-          <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+          <Search className="w-4 h-4 text-[#8E8273] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
           <input
             id="cluster-search"
             type="text"
             value={filters.search_query || ''}
             onChange={(e) => onFilterChange({ ...filters, search_query: e.target.value })}
             placeholder="Search rumours, explanations, or messages..."
-            className="w-full pl-9 pr-3 py-1.5 text-xs sm:text-sm rounded-md border border-neutral-300 dark:border-neutral-700 bg-neutral-50/60 dark:bg-neutral-950/60 text-neutral-900 dark:text-neutral-100 focus-ring min-h-[38px]"
+            className="w-full pl-10 pr-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-[#FAF7F2] dark:bg-[#1A1612] text-[#1F1B16] dark:text-[#EDE7DF] placeholder:text-[#8E8273] focus-ring min-h-[42px]"
           />
         </div>
 
         {/* Action Buttons: Generate Daily Brief + Reload Demo */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <Button
             variant="primary"
             size="sm"
             onClick={onOpenBriefModal}
-            className="font-medium text-xs h-9 min-h-[38px]"
+            className="font-bold text-xs h-10 min-h-[40px] px-4"
           >
             <FileText className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Generate Daily Brief</span>
@@ -82,28 +82,28 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             size="sm"
             onClick={onReloadDemo}
             disabled={isReloading}
-            className="text-xs h-9 min-h-[38px]"
+            className="text-xs h-10 min-h-[40px] px-3.5"
             title="Reload synthetic benchmark clusters"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isReloading ? 'animate-spin text-emerald-600' : 'text-neutral-500'}`} aria-hidden="true" />
+            <RefreshCw className={`w-3.5 h-3.5 ${isReloading ? 'animate-spin text-[#0A5C36] dark:text-[#34D399]' : 'text-[#8E8273]'}`} aria-hidden="true" />
             <span>{isReloading ? 'Reloading...' : 'Reload Demo'}</span>
           </Button>
         </div>
       </div>
 
       {/* Second Row: Filters, Guidance Gap Switch & Count */}
-      <div className="pt-2.5 border-t border-neutral-100 dark:border-neutral-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div className="pt-3 border-t border-[#E8DFD5] dark:border-[#2D261F] flex flex-wrap items-center justify-between gap-3 text-xs">
         {/* Dropdown Filters */}
         <div className="flex flex-wrap items-center gap-3">
           {/* Domain Dropdown */}
-          <div className="flex items-center gap-1.5">
-            <span className="font-mono text-[11px] font-semibold text-neutral-500 dark:text-neutral-400 uppercase">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[11px] font-bold text-[#63584C] dark:text-[#A89E90] uppercase tracking-wider">
               Domain:
             </span>
             <select
               value={filters.domain || 'all'}
               onChange={(e) => onFilterChange({ ...filters, domain: e.target.value as DomainType | 'all' })}
-              className="px-2.5 py-1 text-xs font-medium rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 focus-ring cursor-pointer"
+              className="px-3 py-1.5 text-xs font-semibold rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] text-[#1F1B16] dark:text-[#EDE7DF] focus-ring cursor-pointer"
               aria-label="Filter by domain"
             >
               {domains.map((d) => (
@@ -115,14 +115,14 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           </div>
 
           {/* Verdict Dropdown */}
-          <div className="flex items-center gap-1.5">
-            <span className="font-mono text-[11px] font-semibold text-neutral-500 dark:text-neutral-400 uppercase">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[11px] font-bold text-[#63584C] dark:text-[#A89E90] uppercase tracking-wider">
               Verdict:
             </span>
             <select
               value={filters.label || 'all'}
               onChange={(e) => onFilterChange({ ...filters, label: e.target.value as VerdictLabel | 'all' })}
-              className="px-2.5 py-1 text-xs font-medium rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 focus-ring cursor-pointer"
+              className="px-3 py-1.5 text-xs font-semibold rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] text-[#1F1B16] dark:text-[#EDE7DF] focus-ring cursor-pointer"
               aria-label="Filter by official verdict"
             >
               {verdicts.map((v) => (
@@ -141,30 +141,30 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             role="switch"
             aria-checked={!!filters.guidance_gap_only}
             onClick={() => onFilterChange({ ...filters, guidance_gap_only: !filters.guidance_gap_only })}
-            className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-md border text-xs font-medium transition cursor-pointer focus-ring min-h-[36px] ${
+            className={`cursor-pointer inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition focus-ring min-h-[38px] ${
               filters.guidance_gap_only
-                ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border-amber-400 dark:border-amber-700 font-semibold'
-                : 'bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border-neutral-300 dark:border-neutral-700 hover:border-neutral-400'
+                ? 'bg-[#FFFBEB] dark:bg-[#2A1E0E] text-[#B45309] dark:text-[#FBBF24] border-[#B45309] font-bold'
+                : 'bg-white dark:bg-[#201C17] text-[#1F1B16] dark:text-[#EDE7DF] border-[#D4C5B3] dark:border-[#3D352C] hover:border-[#8E8273]'
             }`}
           >
             <div
-              className={`w-6 h-3.5 rounded-full transition-colors relative flex items-center p-0.5 ${
-                filters.guidance_gap_only ? 'bg-amber-600' : 'bg-neutral-300 dark:bg-neutral-700'
+              className={`w-7 h-4 rounded-full transition-colors relative flex items-center p-0.5 ${
+                filters.guidance_gap_only ? 'bg-[#B45309]' : 'bg-stone-300 dark:bg-stone-700'
               }`}
             >
               <div
-                className={`w-2.5 h-2.5 rounded-full bg-white transition-transform ${
-                  filters.guidance_gap_only ? 'translate-x-2.5' : 'translate-x-0'
+                className={`w-3 h-3 rounded-full bg-white transition-transform ${
+                  filters.guidance_gap_only ? 'translate-x-3' : 'translate-x-0'
                 }`}
               />
             </div>
             <span className="flex items-center gap-1 font-mono text-[11px]">
-              <Flame className={`w-3.5 h-3.5 ${filters.guidance_gap_only ? 'text-amber-600 dark:text-amber-400' : 'text-neutral-400'}`} aria-hidden="true" />
+              <Flame className={`w-3.5 h-3.5 ${filters.guidance_gap_only ? 'text-[#B45309] dark:text-[#FBBF24]' : 'text-stone-400'}`} aria-hidden="true" />
               <span>Show Only Guidance Gaps</span>
             </span>
           </button>
 
-          <span className="font-mono text-[11px] text-neutral-500 hidden sm:inline">
+          <span className="font-mono text-[11px] text-[#8E8273] hidden sm:inline">
             ({totalResultsCount} clusters)
           </span>
         </div>

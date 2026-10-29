@@ -23,10 +23,10 @@ export const StatTile: React.FC<StatTileProps> = ({
 }) => {
   const shouldReduceMotion = useReducedMotion();
   const accentTopBorder = {
-    neutral: 'border-t-neutral-300 dark:border-t-neutral-700',
-    brand: 'border-t-[#0A5C36] dark:border-t-emerald-500',
-    contradicted: 'border-t-red-600 dark:border-t-red-500',
-    gap: 'border-t-amber-500 dark:border-t-amber-400',
+    neutral: 'border-t-[#D4C5B3] dark:border-t-[#3D352C]',
+    brand: 'border-t-[#0A5C36] dark:border-t-[#34D399]',
+    contradicted: 'border-t-[#B91C1C] dark:border-t-[#EF4444]',
+    gap: 'border-t-[#B45309] dark:border-t-[#F59E0B]',
   }[accent];
 
   const numericVal = typeof value === 'number' ? value : null;
@@ -54,22 +54,21 @@ export const StatTile: React.FC<StatTileProps> = ({
 
   return (
     <div
-      className={`bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 border-t-2 ${accentTopBorder} rounded-md p-4 transition-colors ${className}`}
+      className={`bg-white dark:bg-[#201C17] border border-[#D4C5B3] dark:border-[#3D352C] border-t-4 ${accentTopBorder} rounded-2xl p-4 sm:p-5 shadow-xs transition-colors ${className}`}
     >
-      <div className="text-xs font-medium text-neutral-500 dark:text-neutral-400">
+      <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#63584C] dark:text-[#A89E90]">
         {label}
       </div>
-      <div className="mt-1.5 flex items-baseline gap-2">
-        <span className="font-mono text-2xl sm:text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50 tabular-nums">
+      <div className="mt-2 flex items-baseline gap-2">
+        <span className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#1F1B16] dark:text-[#EDE7DF] tabular-nums">
           {numericVal !== null ? (shouldReduceMotion ? numericVal : displayNum) : value}
         </span>
       </div>
       {hint && (
-        <div className="mt-2 pt-2 border-t border-neutral-100 dark:border-neutral-800/80 text-xs text-neutral-600 dark:text-neutral-400">
+        <div className="mt-2.5 pt-2 border-t border-[#E8DFD5] dark:border-[#2D261F] text-xs text-[#63584C] dark:text-[#A89E90] font-body">
           {hint}
         </div>
       )}
     </div>
   );
 };
-

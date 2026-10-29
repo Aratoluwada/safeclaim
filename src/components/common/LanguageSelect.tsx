@@ -27,10 +27,10 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
           id="language-select-compact"
           value={currentLanguage}
           onChange={(e) => onChange(e.target.value as LanguageCode)}
-          className="px-2.5 py-1 text-xs font-medium rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 focus-ring cursor-pointer"
+          className="px-3 py-1.5 text-xs font-bold rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] text-[#1F1B16] dark:text-[#EDE7DF] focus-ring cursor-pointer"
         >
           <option value="en">English (EN)</option>
-          <option value="pcm">Naijá Pidgin (PCM)</option>
+          <option value="pcm">Naija Pidgin (PCM)</option>
         </select>
       </div>
     );
@@ -40,15 +40,15 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
     <div
       role="group"
       aria-label="Language selection"
-      className="inline-flex rounded-md p-0.5 bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-xs font-medium"
+      className="inline-flex rounded-xl p-1 bg-[#F5EFEB] dark:bg-[#201C17] border border-[#D4C5B3] dark:border-[#3D352C] text-xs font-bold shadow-2xs"
     >
       <button
         type="button"
         onClick={() => onChange('en')}
-        className={`px-2.5 py-1 rounded-[4px] transition cursor-pointer min-h-[32px] sm:min-h-[28px] focus-ring ${
+        className={`px-3 py-1 rounded-lg transition-all cursor-pointer min-h-[32px] sm:min-h-[28px] focus-ring ${
           currentLanguage === 'en'
-            ? 'bg-white dark:bg-neutral-900 text-[#0A5C36] dark:text-emerald-400 font-semibold shadow-2xs border border-neutral-200 dark:border-neutral-700'
-            : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
+            ? 'bg-white dark:bg-[#2A241E] text-[#0A5C36] dark:text-[#34D399] font-bold shadow-2xs border border-[#D4C5B3] dark:border-[#3D352C]'
+            : 'text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#EDE7DF]'
         }`}
         aria-pressed={currentLanguage === 'en'}
       >
@@ -57,14 +57,14 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
       <button
         type="button"
         onClick={() => onChange('pcm')}
-        className={`px-2.5 py-1 rounded-[4px] transition cursor-pointer min-h-[32px] sm:min-h-[28px] focus-ring ${
+        className={`px-3 py-1 rounded-lg transition-all cursor-pointer min-h-[32px] sm:min-h-[28px] focus-ring ${
           currentLanguage === 'pcm'
-            ? 'bg-white dark:bg-neutral-900 text-[#0A5C36] dark:text-emerald-400 font-semibold shadow-2xs border border-neutral-200 dark:border-neutral-700'
-            : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
+            ? 'bg-white dark:bg-[#2A241E] text-[#0A5C36] dark:text-[#34D399] font-bold shadow-2xs border border-[#D4C5B3] dark:border-[#3D352C]'
+            : 'text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#EDE7DF]'
         }`}
         aria-pressed={currentLanguage === 'pcm'}
       >
-        Naijá Pidgin
+        Naija Pidgin
       </button>
     </div>
   );

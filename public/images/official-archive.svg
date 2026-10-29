@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="600" height="450">
+  <defs>
+    <linearGradient id="archiveBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF7F2" />
+      <stop offset="100%" stop-color="#F2EBE3" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="450" rx="16" fill="url(#archiveBg)" />
+  <rect x="8" y="8" width="584" height="434" rx="12" fill="none" stroke="#E8DFD5" stroke-width="2" />
+
+  <!-- Filing cabinet drawer / archival stack -->
+  <g transform="translate(60, 50)">
+    <!-- Document Stack 1 -->
+    <rect x="30" y="80" width="420" height="250" rx="6" fill="#FAF4E8" stroke="#D4C5B3" stroke-width="2" />
+    <!-- Stamped seals on files -->
+    <rect x="50" y="100" width="140" height="14" rx="2" fill="#0A5C36" />
+    <text x="56" y="111" font-family="monospace" font-size="9" font-weight="bold" fill="#FAF4E8">FEDERAL GAZETTE 2026</text>
+    
+    <line x1="50" y1="130" x2="420" y2="130" stroke="#D4C5B3" stroke-width="2" />
+    <line x1="50" y1="148" x2="380" y2="148" stroke="#E8DFD5" stroke-width="1.5" />
+    <line x1="50" y1="164" x2="400" y2="164" stroke="#E8DFD5" stroke-width="1.5" />
+
+    <!-- Document Stack 2 overlapping -->
+    <g transform="translate(40, -30) rotate(2)">
+      <rect width="380" height="230" rx="6" fill="#FFFFFF" stroke="#CAD1E8" stroke-width="2" />
+      <rect x="20" y="20" width="120" height="12" rx="2" fill="#24306E" />
+      <text x="26" y="29" font-family="monospace" font-size="8" font-weight="bold" fill="#FAF4E8">NCDC ADVISORIES</text>
+      
+      <!-- Rubber stamp on sheet -->
+      <g transform="translate(240, 120) rotate(-6)">
+        <rect width="110" height="34" rx="3" fill="#F0FDF4" stroke="#15803D" stroke-width="2" />
+        <text x="55" y="22" font-family="monospace" font-size="10" font-weight="bold" fill="#15803D" text-anchor="middle">VERIFIED RECEIPT</text>
+      </g>
+    </g>
+
+    <!-- Document Stack 3 top circular -->
+    <g transform="translate(80, 40) rotate(-3)">
+      <rect width="340" height="200" rx="6" fill="#FCFBF7" stroke="#0A5C36" stroke-width="2.5" />
+      <rect x="20" y="18" width="110" height="12" rx="2" fill="#0A5C36" />
+      <text x="26" y="27" font-family="monospace" font-size="8" font-weight="bold" fill="#FAF4E8">FCCPC CAUTION</text>
+
+      <text x="20" y="60" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#1F1B16">
+        Public Notice: Unregistered Loan Apps
+      </text>
+      <text x="20" y="80" font-family="sans-serif" font-size="11" fill="#63584C">
+        Official registry check and delisting order.
+      </text>
+
+      <line x1="20" y1="105" x2="310" y2="105" stroke="#E8DFD5" stroke-width="1.5" />
+      <line x1="20" y1="120" x2="280" y2="120" stroke="#E8DFD5" stroke-width="1.5" />
+
+      <!-- Official green checkmark badge -->
+      <circle cx="280" cy="155" r="22" fill="#EBF4EF" stroke="#0A5C36" stroke-width="2" />
+      <path d="M272 155 L278 161 L289 150" stroke="#0A5C36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    </g>
+  </g>
+</svg>

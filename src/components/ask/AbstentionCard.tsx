@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
-import { AlertTriangle, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { ExternalLink, Share2 } from 'lucide-react';
 import { HotlineInfo, LanguageCode } from '../../types/api';
 import { TRANSLATIONS } from '../../utils/translations';
-import { VerdictBadge } from '../common/VerdictBadge';
+import { VerdictStamp } from '../common/VerdictStamp';
+import { GuidanceGapIllustration } from '../illustrations';
+import { ShareVerdictModal } from './ShareVerdictModal';
 import { Button } from '../ui/Button';
 
 interface AbstentionCardProps {
@@ -27,6 +29,7 @@ export const AbstentionCard: React.FC<AbstentionCardProps> = ({
   language,
   onAskAnother,
 }) => {
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const t = TRANSLATIONS[language];
 
   const portals = [
@@ -39,72 +42,85 @@ export const AbstentionCard: React.FC<AbstentionCardProps> = ({
     <div
       role="region"
       aria-label="Abstention notice"
-      className="rounded-md border border-amber-300 dark:border-amber-800 bg-white dark:bg-neutral-900 shadow-2xs overflow-hidden"
+      className="rounded-2xl border-2 border-[#FDE68A] dark:border-[#B45309]/50 bg-white dark:bg-[#201C17] shadow-sm overflow-hidden"
     >
       {/* Header */}
-      <div className="bg-amber-50/80 dark:bg-amber-950/40 border-b border-amber-200 dark:border-amber-800/80 px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <VerdictBadge verdict="NO_OFFICIAL_SOURCE_FOUND" size="sm" />
-          <span className="text-xs font-mono font-semibold text-amber-900 dark:text-amber-200">
+      <div className="bg-[#FFFBEB] dark:bg-[#291F11] border-b border-[#FDE68A] dark:border-[#B45309]/40 px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <VerdictStamp
+            verdict="NO_OFFICIAL_SOURCE_FOUND"
+            size="sm"
+            rotate={false}
+          />
+          <span className="text-xs font-mono font-bold text-[#B45309] dark:text-[#FCD34D]">
             {t.abstentionHeading}
           </span>
         </div>
-        <span className="text-xs font-mono text-amber-800 dark:text-amber-300">
-          Database Abstention
-        </span>
+
+        <Button variant="secondary" size="sm" onClick={() => setIsShareOpen(true)} className="font-bold">
+          <Share2 className="w-3.5 h-3.5 text-[#B45309] dark:text-[#FCD34D]" />
+          <span>Share Alert</span>
+        </Button>
       </div>
 
-      <div className="p-5 sm:p-6 space-y-5">
+      <div className="p-5 sm:p-7 space-y-6">
         {/* User Question */}
         <div>
-          <span className="text-xs font-mono uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-            Query Submitted:
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#63584C] dark:text-[#A89E90]">
+            Claim Evaluated:
           </span>
-          <p className="font-serif text-lg sm:text-xl font-medium text-neutral-900 dark:text-neutral-100 mt-0.5">
+          <h2 className="font-display text-xl sm:text-2xl font-bold text-[#1F1B16] dark:text-[#EDE7DF] mt-1 text-left leading-snug">
             &ldquo;{question}&rdquo;
-          </p>
+          </h2>
         </div>
 
-        {/* Abstention Explanation Callout with left accent rule */}
-        <div className="rounded-md border border-amber-200 dark:border-amber-800/80 border-l-4 border-l-amber-500 bg-amber-50/50 dark:bg-amber-950/30 p-4 space-y-2.5">
-          <div className="flex items-start gap-2.5">
-            <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" aria-hidden="true" />
-            <div className="space-y-1.5">
-              <h4 className="text-sm font-semibold text-amber-950 dark:text-amber-100">
-                {t.abstentionLead}
-              </h4>
-              <p className="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed font-sans">
-                {explanation}
-              </p>
-            </div>
+        {/* Guidance Gap Explanation with spot illustration */}
+        <div className="rounded-xl border-2 border-[#FDE68A] dark:border-[#B45309]/50 bg-[#FFFBEB]/70 dark:bg-[#251A0E]/60 p-5 sm:p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5">
+          <div className="shrink-0">
+            <GuidanceGapIllustration size={80} />
           </div>
 
-          <div className="border-t border-amber-200/80 dark:border-amber-800/60 pt-2 text-xs text-amber-900 dark:text-amber-200 leading-relaxed font-mono">
-            <strong>Fact-Checking Policy:</strong> A missing source in our database is not proof that a claim is false. It indicates that no relevant guidance was found in the verified repository.
+          <div className="space-y-3 flex-1 text-center sm:text-left">
+            <h3 className="font-display font-bold text-lg text-[#92400E] dark:text-[#FDE68A]">
+              {t.abstentionLead}
+            </h3>
+            <p className="text-sm text-[#1F1B16] dark:text-[#EDE7DF] leading-relaxed font-body">
+              {explanation}
+            </p>
+
+            <div className="border-t border-[#FDE68A]/80 dark:border-[#B45309]/40 pt-3 text-xs text-[#92400E] dark:text-[#FCD34D] leading-relaxed font-mono">
+              <strong>Institutional Policy:</strong> A missing publication in our repository does not prove that a claim is false. It means no approved government agency has verified or addressed it.
+            </div>
           </div>
         </div>
 
         {/* Semantic list of official portals */}
-        <div className="space-y-2">
-          <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-600 dark:text-neutral-400">
-            Consult Approved Official Portals:
-          </h4>
-          <ul className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 m-0 p-0 list-none">
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#63584C] dark:text-[#A89E90]">
+              Direct Official Portals to Monitor:
+            </h4>
+            <span className="text-xs font-mono text-[#8E8273]">
+              Toll-Free Emergency: 6232
+            </span>
+          </div>
+
+          <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3 m-0 p-0 list-none">
             {portals.map((portal) => (
               <li key={portal.url} className="m-0 p-0">
                 <a
                   href={portal.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-md border border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 bg-neutral-50/70 dark:bg-neutral-950/60 transition flex items-center justify-between group focus-ring min-h-[44px]"
+                  className="p-3.5 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] hover:border-[#0A5C36] dark:hover:border-[#34D399] bg-[#FAF7F2] dark:bg-[#1A1612] hover:bg-white dark:hover:bg-[#221C16] transition flex items-center justify-between group focus-ring min-h-[48px] shadow-2xs"
                 >
                   <div>
-                    <span className="block text-xs font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-[#0A5C36] dark:group-hover:text-emerald-400">
+                    <span className="block text-xs font-bold text-[#1F1B16] dark:text-[#EDE7DF] group-hover:text-[#0A5C36] dark:group-hover:text-[#34D399]">
                       {portal.name}
                     </span>
-                    <span className="text-[11px] text-neutral-500 font-mono">{portal.domain}</span>
+                    <span className="text-[11px] text-[#8E8273] font-mono">{portal.domain}</span>
                   </div>
-                  <ExternalLink className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-300" aria-hidden="true" />
+                  <ExternalLink className="w-3.5 h-3.5 text-[#8E8273] group-hover:text-[#0A5C36] dark:group-hover:text-[#34D399]" aria-hidden="true" />
                 </a>
               </li>
             ))}
@@ -113,11 +129,28 @@ export const AbstentionCard: React.FC<AbstentionCardProps> = ({
 
         {/* Footer Actions */}
         <div className="pt-2">
-          <Button variant="secondary" size="md" onClick={onAskAnother}>
+          <Button variant="secondary" size="md" onClick={onAskAnother} className="font-bold">
             {t.askAnotherButton}
           </Button>
         </div>
       </div>
+
+      {/* Share modal */}
+      <ShareVerdictModal
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        query={question}
+        response={{
+          question,
+          language,
+          grounded: false,
+          abstention_reason: abstentionReason,
+          answer: explanation,
+          hotline_info: hotlineInfo,
+          citations: [],
+        }}
+        language={language}
+      />
     </div>
   );
 };

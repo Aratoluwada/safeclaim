@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="ogBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBF7F0" />
+      <stop offset="100%" stop-color="#F2EBE1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ogBg)" />
+  <rect x="24" y="24" width="1152" height="582" rx="20" fill="none" stroke="#E8DFD5" stroke-width="4" />
+
+  <!-- Adire accent ribbon -->
+  <g opacity="0.8" transform="translate(80, 70)">
+    <rect width="1040" height="8" rx="4" fill="#0A5C36" />
+  </g>
+
+  <!-- Brand logo mark -->
+  <g transform="translate(80, 120)">
+    <rect width="80" height="80" rx="16" fill="#0A5C36" />
+    <path d="M24 42L36 54L60 28" stroke="#FAF4E8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    <circle cx="62" cy="56" r="4" fill="#FAF4E8" />
+  </g>
+
+  <g transform="translate(180, 140)">
+    <text font-family="Georgia, serif" font-size="48" font-weight="bold" fill="#1F1B16">
+      SafeClaim AI
+    </text>
+    <text font-family="monospace" font-size="18" font-weight="bold" fill="#0A5C36" letter-spacing="2">
+      OFFICIAL EVIDENCE GROUNDING & RUMOUR DESK
+    </text>
+  </g>
+
+  <!-- Tagline headline -->
+  <text x="80" y="290" font-family="Georgia, serif" font-size="52" font-weight="bold" fill="#1F1B16">
+    The trusted neighbour with the receipts.
+  </text>
+  <text x="80" y="340" font-family="sans-serif" font-size="24" fill="#63584C">
+    Understand the claim. Verify the facts from official gazettes and health advisories.
+  </text>
+
+  <!-- 3 Verdict Stamps Display -->
+  <g transform="translate(80, 420)">
+    <!-- Contradicted -->
+    <g transform="rotate(-2)">
+      <rect width="300" height="70" rx="8" fill="#FEF2F2" stroke="#B91C1C" stroke-width="3" />
+      <text x="150" y="44" font-family="monospace" font-size="16" font-weight="bold" fill="#B91C1C" text-anchor="middle">
+        ✕ CONTRADICTED
+      </text>
+    </g>
+
+    <!-- Supported -->
+    <g transform="translate(340, 0) rotate(1)">
+      <rect width="300" height="70" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="3" />
+      <text x="150" y="44" font-family="monospace" font-size="16" font-weight="bold" fill="#15803D" text-anchor="middle">
+        ✓ SUPPORTED
+      </text>
+    </g>
+
+    <!-- Guidance Gap -->
+    <g transform="translate(680, 0) rotate(-1)">
+      <rect width="340" height="70" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="3" />
+      <text x="170" y="44" font-family="monospace" font-size="16" font-weight="bold" fill="#B45309" text-anchor="middle">
+        ▲ GUIDANCE GAP
+      </text>
+    </g>
+  </g>
+
+  <!-- Footer tagline -->
+  <text x="80" y="560" font-family="monospace" font-size="16" fill="#8E8273">
+    Built for OSCA OPEN//BUILD 2026 • English &amp; Naija Pidgin Support • NCDC Toll-Free: 6232
+  </text>
+</svg>

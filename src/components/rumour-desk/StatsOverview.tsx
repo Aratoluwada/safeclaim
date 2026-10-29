@@ -14,7 +14,7 @@ interface StatsOverviewProps {
 
 export const StatsOverview: React.FC<StatsOverviewProps> = ({ stats, isDemoMode = true }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Messages Analyzed */}
       <StatTile
         label="Messages Analyzed"
@@ -22,7 +22,7 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({ stats, isDemoMode 
         hint={
           <div className="flex items-center justify-between text-[11px] font-mono">
             <span>Across {stats.total_clusters} claim clusters</span>
-            {isDemoMode && <span className="text-neutral-400">synthetic testbed</span>}
+            {isDemoMode && <span className="text-[#8E8273]">synthetic testbed</span>}
           </div>
         }
         accent="neutral"
@@ -32,12 +32,12 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({ stats, isDemoMode 
       <StatTile
         label="Contradicted Rumours"
         value={
-          <span className="text-red-700 dark:text-red-400">
+          <span className="text-[#B91C1C] dark:text-[#F87171]">
             {stats.verdict_counts.CONTRADICTED_BY_OFFICIAL_SOURCE || 0}
           </span>
         }
         hint={
-          <div className="text-[11px] text-red-800 dark:text-red-300 font-mono">
+          <div className="text-[11px] text-[#B91C1C] dark:text-[#FCA5A5] font-mono">
             Directly refuted by NCDC/FCCPC circulars
           </div>
         }
@@ -48,12 +48,12 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({ stats, isDemoMode 
       <StatTile
         label="Guidance Gaps"
         value={
-          <span className="text-amber-700 dark:text-amber-400">
+          <span className="text-[#B45309] dark:text-[#FBBF24]">
             {stats.guidance_gaps_count}
           </span>
         }
         hint={
-          <div className="text-[11px] text-amber-900 dark:text-amber-300 font-medium">
+          <div className="text-[11px] text-[#B45309] dark:text-[#FCD34D] font-bold">
             Viral rumours with zero official guidance
           </div>
         }
@@ -61,26 +61,26 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({ stats, isDemoMode 
       />
 
       {/* Active Domains Breakdown */}
-      <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 border-t-2 border-t-[#0A5C36] dark:border-t-emerald-500 rounded-md p-4 transition-colors">
-        <div className="text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-2">
+      <div className="bg-white dark:bg-[#201C17] border border-[#D4C5B3] dark:border-[#3D352C] border-t-4 border-t-[#0A5C36] dark:border-t-[#34D399] rounded-2xl p-4 sm:p-5 shadow-xs transition-colors">
+        <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#63584C] dark:text-[#A89E90] mb-2.5">
           Active Domains Breakdown
         </div>
-        <ul className="grid grid-cols-2 gap-1.5 m-0 p-0 list-none text-xs font-mono">
-          <li className="flex items-center justify-between p-1 rounded bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200/60 dark:border-neutral-700/60">
-            <span className="text-neutral-600 dark:text-neutral-400">Outbreak</span>
-            <span className="font-bold text-neutral-900 dark:text-neutral-100">{stats.domains.outbreak || 0}</span>
+        <ul className="grid grid-cols-2 gap-2 m-0 p-0 list-none text-xs font-mono">
+          <li className="flex items-center justify-between p-1.5 rounded-lg bg-[#FAF7F2] dark:bg-[#26201A] border border-[#E8DFD5] dark:border-[#3A3228]">
+            <span className="text-[#63584C] dark:text-[#A89E90]">Outbreak</span>
+            <span className="font-bold text-[#1F1B16] dark:text-[#EDE7DF]">{stats.domains.outbreak || 0}</span>
           </li>
-          <li className="flex items-center justify-between p-1 rounded bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200/60 dark:border-neutral-700/60">
-            <span className="text-neutral-600 dark:text-neutral-400">Scams</span>
-            <span className="font-bold text-neutral-900 dark:text-neutral-100">{stats.domains.scam || 0}</span>
+          <li className="flex items-center justify-between p-1.5 rounded-lg bg-[#FAF7F2] dark:bg-[#26201A] border border-[#E8DFD5] dark:border-[#3A3228]">
+            <span className="text-[#63584C] dark:text-[#A89E90]">Scams</span>
+            <span className="font-bold text-[#1F1B16] dark:text-[#EDE7DF]">{stats.domains.scam || 0}</span>
           </li>
-          <li className="flex items-center justify-between p-1 rounded bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200/60 dark:border-neutral-700/60">
-            <span className="text-neutral-600 dark:text-neutral-400">Benefits</span>
-            <span className="font-bold text-neutral-900 dark:text-neutral-100">{stats.domains.benefit || 0}</span>
+          <li className="flex items-center justify-between p-1.5 rounded-lg bg-[#FAF7F2] dark:bg-[#26201A] border border-[#E8DFD5] dark:border-[#3A3228]">
+            <span className="text-[#63584C] dark:text-[#A89E90]">Benefits</span>
+            <span className="font-bold text-[#1F1B16] dark:text-[#EDE7DF]">{stats.domains.benefit || 0}</span>
           </li>
-          <li className="flex items-center justify-between p-1 rounded bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200/60 dark:border-neutral-700/60">
-            <span className="text-neutral-600 dark:text-neutral-400">Election</span>
-            <span className="font-bold text-neutral-900 dark:text-neutral-100">{stats.domains.election_procedure || 0}</span>
+          <li className="flex items-center justify-between p-1.5 rounded-lg bg-[#FAF7F2] dark:bg-[#26201A] border border-[#E8DFD5] dark:border-[#3A3228]">
+            <span className="text-[#63584C] dark:text-[#A89E90]">Election</span>
+            <span className="font-bold text-[#1F1B16] dark:text-[#EDE7DF]">{stats.domains.election_procedure || 0}</span>
           </li>
         </ul>
       </div>

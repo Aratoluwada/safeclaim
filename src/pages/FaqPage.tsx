@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Card } from '../components/ui/Card';
 import { ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
+import { WobblyUnderline } from '../components/hand/WobblyUnderline';
 import { LanguageCode } from '../types/api';
 
 interface FaqPageProps {
@@ -31,7 +32,7 @@ export const FaqPage: React.FC<FaqPageProps> = ({ language }) => {
     },
     {
       q: 'How does SafeClaim handle questions submitted in Nigerian Pidgin (pcm)?',
-      a: 'SafeClaim provides first-class localization in Naijá Pidgin. You can toggle the language switch at the top of any page to view both interface prompts and generated grounded explanations written in natural Nigerian Pidgin phrasing.',
+      a: 'SafeClaim provides first-class localization in Naija Pidgin. You can toggle the language switch at the top of any page to view both interface prompts and generated grounded explanations written in natural Nigerian Pidgin phrasing.',
     },
     {
       q: 'What is a "Guidance Gap" on the Rumour Desk?',
@@ -51,39 +52,47 @@ export const FaqPage: React.FC<FaqPageProps> = ({ language }) => {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-8">
       <PageHeader
         eyebrow="Frequently Asked Questions"
-        title="Questions & Operating Principles"
+        title={
+          <>
+            Questions &amp; Operating{' '}
+            <span className="relative inline-block">
+              Principles
+              <WobblyUnderline className="absolute -bottom-2 left-0 w-full" color="#0A5C36" />
+            </span>
+          </>
+        }
         description="Learn how SafeClaim grounds citizen inquiries in verified gazettes, prevents model hallucinations, and flags critical institutional guidance gaps."
       />
 
       {/* Semantic list of FAQs */}
-      <ul className="space-y-3 m-0 p-0 list-none">
+      <ul className="space-y-3.5 m-0 p-0 list-none">
         {faqs.map((faq, index) => {
           const isOpen = expandedId === index;
           return (
             <li key={index} className="m-0 p-0">
-              <Card variant="default" padding="none" className="overflow-hidden">
+              <Card variant="bordered" padding="none" className="overflow-hidden shadow-2xs">
                 <button
                   type="button"
                   onClick={() => setExpandedId(isOpen ? null : index)}
-                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 transition cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 focus-ring min-h-[48px]"
+                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 transition cursor-pointer hover:bg-[#FAF7F2] dark:hover:bg-[#25201A] focus-ring min-h-[48px]"
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${index}`}
                 >
-                  <span className="font-medium text-xs sm:text-sm text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
-                    <HelpCircle className="w-4 h-4 text-[#0A5C36] dark:text-emerald-400 shrink-0" aria-hidden="true" />
+                  <span className="font-display font-bold text-sm sm:text-base text-[#1F1B16] dark:text-[#EDE7DF] flex items-center gap-2.5">
+                    <HelpCircle className="w-4 h-4 text-[#0A5C36] dark:text-[#34D399] shrink-0" aria-hidden="true" />
                     <span>{faq.q}</span>
                   </span>
                   {isOpen ? (
-                    <ChevronUp className="w-4 h-4 text-neutral-400 shrink-0" />
+                    <ChevronUp className="w-4 h-4 text-[#8E8273] shrink-0" />
                   ) : (
-                    <ChevronDown className="w-4 h-4 text-neutral-400 shrink-0" />
+                    <ChevronDown className="w-4 h-4 text-[#8E8273] shrink-0" />
                   )}
                 </button>
 
                 {isOpen && (
                   <div
                     id={`faq-answer-${index}`}
-                    className="px-4 pb-4 sm:px-5 sm:pb-5 pt-1 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 font-sans leading-relaxed border-t border-neutral-100 dark:border-neutral-800"
+                    className="px-4 pb-5 sm:px-5 sm:pb-6 pt-2 text-xs sm:text-sm text-[#63584C] dark:text-[#A89E90] font-body leading-relaxed border-t border-[#E8DFD5] dark:border-[#2D261F] bg-[#FAF7F2]/50 dark:bg-[#1A1612]/50"
                   >
                     {faq.a}
                   </div>

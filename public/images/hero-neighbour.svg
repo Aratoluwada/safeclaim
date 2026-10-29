@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="warmBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDFBF7" />
+      <stop offset="100%" stop-color="#F5EFEB" />
+    </linearGradient>
+    <pattern id="grain" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.75" fill="#1F1B16" opacity="0.04" />
+    </pattern>
+  </defs>
+  
+  <!-- Warm paper card background -->
+  <rect width="800" height="500" rx="16" fill="url(#warmBg)" />
+  <rect width="800" height="500" rx="16" fill="url(#grain)" />
+  <rect x="12" y="12" width="776" height="476" rx="12" fill="none" stroke="#E8DFD5" stroke-width="2" />
+
+  <!-- Adire top border accent -->
+  <g opacity="0.4" transform="translate(40, 28)">
+    <path d="M0 0 L20 10 L40 0 L60 10 L80 0 L100 10 L120 0 L140 10 L160 0 L180 10 L200 0 L220 10 L240 0" stroke="#0A5C36" stroke-width="2" fill="none" />
+  </g>
+
+  <!-- Physical table surface & shadows -->
+  <ellipse cx="400" cy="420" rx="360" ry="60" fill="#EAE2D8" opacity="0.6" />
+
+  <!-- Open printed gazette & receipts dossier -->
+  <g transform="translate(180, 160) rotate(-4)">
+    <rect width="260" height="220" rx="6" fill="#FFFFFF" stroke="#D4C5B3" stroke-width="2" />
+    <rect x="16" y="20" width="80" height="8" rx="2" fill="#0A5C36" />
+    <line x1="16" y1="44" x2="220" y2="44" stroke="#D4C5B3" stroke-width="3" stroke-linecap="round" />
+    <line x1="16" y1="62" x2="240" y2="62" stroke="#E8DFD5" stroke-width="2" stroke-linecap="round" />
+    <line x1="16" y1="78" x2="230" y2="78" stroke="#E8DFD5" stroke-width="2" stroke-linecap="round" />
+    <line x1="16" y1="94" x2="200" y2="94" stroke="#E8DFD5" stroke-width="2" stroke-linecap="round" />
+    <line x1="16" y1="110" x2="220" y2="110" stroke="#E8DFD5" stroke-width="2" stroke-linecap="round" />
+    <!-- Red rubber stamp -->
+    <g transform="translate(130, 120) rotate(-8)">
+      <rect width="110" height="36" rx="4" fill="#FEF2F2" stroke="#B91C1C" stroke-width="2" />
+      <text x="55" y="23" font-family="monospace" font-size="11" font-weight="bold" fill="#B91C1C" text-anchor="middle">CONTRADICTED</text>
+    </g>
+  </g>
+
+  <!-- Overlapping second verified document -->
+  <g transform="translate(360, 130) rotate(3)">
+    <rect width="280" height="240" rx="6" fill="#FCFBF7" stroke="#CAD1E8" stroke-width="2" />
+    <rect x="20" y="24" width="100" height="10" rx="2" fill="#24306E" />
+    <line x1="20" y1="52" x2="250" y2="52" stroke="#24306E" stroke-width="2" stroke-linecap="round" opacity="0.4" />
+    <line x1="20" y1="72" x2="260" y2="72" stroke="#E8DFD5" stroke-width="2" stroke-linecap="round" />
+    <line x1="20" y1="88" x2="240" y2="88" stroke="#E8DFD5" stroke-width="2" stroke-linecap="round" />
+    <line x1="20" y1="104" x2="250" y2="104" stroke="#E8DFD5" stroke-width="2" stroke-linecap="round" />
+    <!-- Green verified wax seal -->
+    <g transform="translate(170, 130)">
+      <circle cx="45" cy="45" r="38" fill="#F0FDF4" stroke="#15803D" stroke-width="2.5" />
+      <circle cx="45" cy="45" r="32" stroke="#15803D" stroke-width="1" stroke-dasharray="3 3" />
+      <path d="M30 45 L40 55 L60 35" stroke="#15803D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      <text x="45" y="74" font-family="monospace" font-size="8" font-weight="bold" fill="#0A5C36" text-anchor="middle">OFFICIAL</text>
+    </g>
+  </g>
+
+  <!-- Cup of tea / coffee / warm neighbour touch -->
+  <g transform="translate(100, 310)">
+    <ellipse cx="40" cy="50" rx="30" ry="12" fill="#D4C5B3" opacity="0.5" />
+    <circle cx="40" cy="35" r="22" fill="#FAF4E8" stroke="#8E8273" stroke-width="2" />
+    <circle cx="40" cy="35" r="17" fill="#63584C" />
+    <path d="M58 28 C68 28 68 42 58 42" stroke="#8E8273" stroke-width="3" fill="none" />
+  </g>
+
+  <!-- Hand-drawn sticky note -->
+  <g transform="translate(120, 80) rotate(-6)">
+    <rect width="140" height="90" rx="2" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1.5" />
+    <text x="14" y="32" font-family="'Caveat', cursive, sans-serif" font-size="20" font-weight="bold" fill="#1F1B16">
+      No fear any forward.
+    </text>
+    <text x="14" y="56" font-family="'Caveat', cursive, sans-serif" font-size="18" fill="#63584C">
+      We hold the receipts!
+    </text>
+  </g>
+
+  <!-- SafeClaim caption pill -->
+  <rect x="520" y="420" width="220" height="36" rx="8" fill="#0A5C36" />
+  <text x="630" y="443" font-family="sans-serif" font-size="12" font-weight="bold" fill="#FAF4E8" text-anchor="middle">
+    Grounded in Official Circulars
+  </text>
+</svg>

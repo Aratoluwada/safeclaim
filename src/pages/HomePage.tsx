@@ -15,13 +15,24 @@ import {
   FileText,
   LayoutDashboard,
   ExternalLink,
+  PhoneCall,
+  Sparkles,
+  Layers,
+  Building2,
 } from 'lucide-react';
 import { LanguageCode } from '../types/api';
 import { TRANSLATIONS } from '../utils/translations';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
-import { PageHeader } from '../components/ui/PageHeader';
-import { VerdictBadge } from '../components/common/VerdictBadge';
+import { VerdictStamp } from '../components/common/VerdictStamp';
+import { WobblyUnderline } from '../components/hand/WobblyUnderline';
+import { HandArrow } from '../components/hand/HandArrow';
+import { HandCircle } from '../components/hand/HandCircle';
+import { SquiggleDivider } from '../components/hand/SquiggleDivider';
+import { PhoneFrame } from '../components/mockups/PhoneFrame';
+import { DashboardFrame } from '../components/mockups/DashboardFrame';
+import { CitationFrame } from '../components/mockups/CitationFrame';
+import { Photo } from '../components/common/Photo';
 
 interface HomePageProps {
   language: LanguageCode;
@@ -51,14 +62,14 @@ export const HomePage: React.FC<HomePageProps> = ({ language }) => {
       claim: 'Viral audio claiming Ebola outbreak has re-emerged in Lagos general hospitals.',
       summary: 'NCDC epidemiological surveillance confirms zero confirmed cases in Lagos or nationwide.',
       passageId: 'ncdc#1',
-      agency: 'NCDC',
+      agency: 'NCDC Advisory #24',
     },
     {
       label: 'SUPPORTED_BY_OFFICIAL_SOURCE' as const,
       claim: 'Under FCCPC directives, digital loan apps cannot blast your contact list or publish defamatory photos.',
       summary: 'FCCPC Limited Interim Framework expressly prohibits contact scraping and consumer harassment.',
       passageId: 'fccpc#3',
-      agency: 'FCCPC',
+      agency: 'FCCPC Order 127',
     },
     {
       label: 'NO_OFFICIAL_SOURCE_FOUND' as const,
@@ -70,123 +81,147 @@ export const HomePage: React.FC<HomePageProps> = ({ language }) => {
   ];
 
   return (
-    <div className="space-y-12">
-      {/* Editorial Hero Banner */}
-      <section className="border-b border-neutral-200 dark:border-neutral-800 pb-10">
-        <div className="max-w-4xl space-y-4">
-          <div className="flex items-center gap-2 font-mono text-xs font-semibold text-[#0A5C36] dark:text-emerald-400 uppercase tracking-wider">
-            <span className="w-2 h-2 rounded-full bg-[#0A5C36] dark:bg-emerald-400"></span>
-            <span>Public Evidence Grounding Engine &bull; Nigeria</span>
+    <div className="space-y-16 sm:space-y-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 1. Hero: The Neighbour with the Receipts */}
+      <section className="pt-4 sm:pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="lg:col-span-7 space-y-6 text-center sm:text-left">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#EBF4EF] dark:bg-[#1B2F23] text-[#0A5C36] dark:text-[#34D399] font-mono text-xs font-bold shadow-2xs">
+            <span className="w-2 h-2 rounded-full bg-[#0A5C36] dark:bg-[#34D399] animate-pulse" />
+            <span>Civic Fact-Checking Engine • Nigeria</span>
           </div>
 
-          <h1 className="font-serif text-3xl sm:text-5xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50 leading-[1.15] text-left">
-            {t.homeHeroTitle}
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1F1B16] dark:text-[#EDE7DF] leading-[1.1]">
+            {language === 'pcm' ? (
+              <>
+                Di trusted neighbour wey hold di{' '}
+                <span className="relative inline-block">
+                  official receipts.
+                  <WobblyUnderline className="absolute -bottom-2 left-0 w-full" color="#0A5C36" />
+                </span>
+              </>
+            ) : (
+              <>
+                The trusted neighbour with the{' '}
+                <span className="relative inline-block">
+                  receipts.
+                  <WobblyUnderline className="absolute -bottom-2 left-0 w-full" color="#0A5C36" />
+                </span>
+              </>
+            )}
           </h1>
 
-          <p className="font-sans text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-2xl text-left">
-            {t.homeHeroLead}
+          <p className="font-body text-lg sm:text-xl text-[#63584C] dark:text-[#A89E90] leading-relaxed max-w-2xl">
+            {language === 'pcm'
+              ? 'SafeClaim AI dey help you check WhatsApp forwarded rumours, loan app wahala, and fake grant links against real government gazettes (NCDC, FCCPC, NHIA). If government never talk am, we go tell you say no proof dey.'
+              : 'SafeClaim AI evaluates public-health panics, predatory digital loan apps, and suspicious benefit announcements using official circulars and gazettes. Evidence is the hero: we show the exact pulled passage, or abstain clearly.'}
           </p>
 
-          {/* Quick Query Box */}
-          <form onSubmit={handleQuickSubmit} className="pt-4 max-w-2xl">
-            <div className="flex flex-col sm:flex-row items-stretch gap-2 bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-md p-1.5 focus-within:border-[#0A5C36] focus-within:ring-2 focus-within:ring-[#0A5C36]/20 shadow-2xs">
+          {/* Search dispatch box */}
+          <form onSubmit={handleQuickSubmit} className="pt-2 max-w-xl">
+            <div className="rounded-2xl bg-white dark:bg-[#201C17] border-2 border-[#D4C5B3] dark:border-[#3D352C] focus-within:border-[#0A5C36] dark:focus-within:border-[#34D399] p-2 sm:p-2.5 flex flex-col sm:flex-row items-stretch gap-2 shadow-sm">
               <div className="relative flex-1 flex items-center">
-                <Search className="w-4 h-4 text-neutral-400 absolute left-3 pointer-events-none" />
+                <Search className="w-5 h-5 text-[#8E8273] absolute left-3.5 pointer-events-none" />
                 <input
                   type="text"
                   value={quickQuery}
                   onChange={(e) => setQuickQuery(e.target.value)}
                   placeholder={t.searchPlaceholder}
-                  className="w-full pl-9 pr-3 py-2 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 bg-transparent focus:outline-none min-h-[44px]"
+                  className="w-full pl-10 pr-3 py-2.5 text-sm sm:text-base text-[#1F1B16] dark:text-[#EDE7DF] placeholder:text-[#8E8273] bg-transparent focus:outline-none min-h-[44px]"
                 />
               </div>
-              <Button type="submit" variant="primary" size="md" className="shrink-0 min-h-[44px]">
+              <Button type="submit" variant="primary" size="md" className="shrink-0 font-bold px-6 min-h-[44px]">
                 <span>{t.homeSearchAction}</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
             </div>
 
-            {/* Semantic prompt list */}
-            <div className="mt-3 flex flex-wrap items-center gap-1.5 text-xs text-neutral-500 font-mono">
-              <span className="font-semibold text-neutral-700 dark:text-neutral-300">Quick Test:</span>
-              <ul className="flex flex-wrap gap-1.5 m-0 p-0 list-none">
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => handlePromptClick('Is Ebola confirmed in Lagos right now?')}
-                    className="underline hover:text-[#0A5C36] dark:hover:text-emerald-400 cursor-pointer"
-                  >
-                    Ebola in Lagos
-                  </button>
-                  <span className="mx-1 text-neutral-300">&bull;</span>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => handlePromptClick('How can I check if a loan app is registered by FCCPC?')}
-                    className="underline hover:text-[#0A5C36] dark:hover:text-emerald-400 cursor-pointer"
-                  >
-                    FCCPC Loan Apps
-                  </button>
-                  <span className="mx-1 text-neutral-300">&bull;</span>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => handlePromptClick('How do I register for the National Health Insurance Scheme?')}
-                    className="underline hover:text-[#0A5C36] dark:hover:text-emerald-400 cursor-pointer"
-                  >
-                    NHIA Registration
-                  </button>
-                </li>
-              </ul>
+            {/* Quick test prompt row */}
+            <div className="mt-3.5 flex flex-wrap items-center gap-2 text-xs text-[#63584C] dark:text-[#A89E90] font-mono">
+              <span className="font-bold text-[#1F1B16] dark:text-[#EDE7DF]">Test a Rumour:</span>
+              <button
+                type="button"
+                onClick={() => handlePromptClick('Is Ebola confirmed in Lagos right now?')}
+                className="cursor-pointer underline hover:text-[#0A5C36] dark:hover:text-[#34D399]"
+              >
+                Ebola in Lagos
+              </button>
+              <span>•</span>
+              <button
+                type="button"
+                onClick={() => handlePromptClick('Does drinking salt water prevent Ebola?')}
+                className="cursor-pointer underline hover:text-[#0A5C36] dark:hover:text-[#34D399]"
+              >
+                Salt Water Myth
+              </button>
+              <span>•</span>
+              <button
+                type="button"
+                onClick={() => handlePromptClick('How can I check if a loan app is registered by FCCPC?')}
+                className="cursor-pointer underline hover:text-[#0A5C36] dark:hover:text-[#34D399]"
+              >
+                FCCPC Loan Apps
+              </button>
             </div>
           </form>
         </div>
+
+        {/* Code-built WhatsApp phone preview mockup */}
+        <div className="lg:col-span-5 flex justify-center relative">
+          <div className="absolute -top-6 -right-2 hidden sm:block font-hand text-xl text-[#24306E] dark:text-[#8BA0E8] transform rotate-3 z-10">
+            <span>Direct WhatsApp receipts ↓</span>
+          </div>
+          <PhoneFrame className="transform sm:rotate-1 hover:rotate-0 transition-transform" />
+        </div>
       </section>
 
-      {/* The Three Official Verdicts in Action */}
-      <section className="space-y-4">
-        <div>
-          <span className="font-mono text-xs font-semibold uppercase text-neutral-500 dark:text-neutral-400 tracking-wider">
+      <SquiggleDivider color="#D4C5B3" />
+
+      {/* 2. Three Transparent Verdict Stamps */}
+      <section className="space-y-6">
+        <div className="text-center sm:text-left space-y-2">
+          <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#0A5C36] dark:text-[#34D399]">
             Verification Taxonomy
-          </span>
-          <h2 className="font-serif text-xl sm:text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mt-0.5">
-            How SafeClaim Evaluates Circulating Claims
+          </div>
+          <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1F1B16] dark:text-[#EDE7DF]">
+            Three Transparent Verdicts. Never AI Hallucinations.
           </h2>
-          <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl font-sans mt-1">
-            SafeClaim never relies on intuition or language model tone. Every conclusion maps strictly to one of three transparent verdicts backed by official records.
+          <p className="text-sm sm:text-base text-[#63584C] dark:text-[#A89E90] max-w-2xl font-body">
+            SafeClaim AI never guesses or makes things up. If a claim contradicts official guidance, it gets stamped Contradicted. If confirmed, Supported. If no agency has published guidance, it abstains honestly.
           </p>
         </div>
 
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 m-0 p-0 list-none">
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-5 m-0 p-0 list-none">
           {sampleVerdicts.map((item, idx) => (
             <li key={idx} className="m-0 p-0">
-              <Card variant="default" padding="md" className="h-full flex flex-col justify-between space-y-3">
-                <div className="space-y-2">
+              <Card
+                variant="bordered"
+                padding="md"
+                className="h-full flex flex-col justify-between space-y-4 hover:shadow-md transition-shadow"
+              >
+                <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <VerdictBadge verdict={item.label} size="sm" />
-                    <span className="font-mono text-[10px] text-neutral-400 font-semibold uppercase">
+                    <VerdictStamp verdict={item.label} size="sm" rotate={true} />
+                    <span className="font-mono text-[11px] text-[#63584C] dark:text-[#A89E90] font-bold">
                       {item.agency}
                     </span>
                   </div>
-                  <h3 className="font-medium text-xs sm:text-sm text-neutral-900 dark:text-neutral-100 leading-snug">
+                  <h3 className="font-display font-bold text-sm sm:text-base text-[#1F1B16] dark:text-[#EDE7DF] leading-snug">
                     &ldquo;{item.claim}&rdquo;
                   </h3>
-                  <p className="text-xs text-neutral-600 dark:text-neutral-400 font-sans leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#63584C] dark:text-[#A89E90] font-body leading-relaxed">
                     {item.summary}
                   </p>
                 </div>
 
-                <div className="pt-2 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between text-[11px] font-mono text-neutral-500">
-                  <span>Passage: [{item.passageId}]</span>
+                <div className="pt-3 border-t border-[#E8DFD5] dark:border-[#2D261F] flex items-center justify-between text-xs font-mono">
+                  <span className="text-[#8E8273]">Passage: [{item.passageId}]</span>
                   <button
                     type="button"
                     onClick={() => handlePromptClick(item.claim)}
-                    className="text-[#0A5C36] dark:text-emerald-400 hover:underline flex items-center gap-1 font-semibold"
+                    className="cursor-pointer text-[#0A5C36] dark:text-[#34D399] hover:underline flex items-center gap-1 font-bold"
                   >
                     <span>Inspect</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </Card>
@@ -195,40 +230,192 @@ export const HomePage: React.FC<HomePageProps> = ({ language }) => {
         </ul>
       </section>
 
-      {/* Institutional Teaser Card */}
-      <section className="bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md p-6 sm:p-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-neutral-500 dark:text-neutral-400 uppercase">
-              <LayoutDashboard className="w-4 h-4 text-[#0A5C36] dark:text-emerald-400" />
-              <span>For Public Health & Fact-Checking Desks</span>
+      {/* 3. Evidence Grounding Mockup: CitationFrame */}
+      <section className="space-y-4">
+        <div className="text-center sm:text-left space-y-2">
+          <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#24306E] dark:text-[#8BA0E8]">
+            Evidence As Hero
+          </div>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-[#1F1B16] dark:text-[#EDE7DF]">
+            How Official Passages Are Pulled & Cited
+          </h2>
+          <p className="text-sm sm:text-base text-[#63584C] dark:text-[#A89E90] max-w-2xl font-body">
+            Every sentence in a SafeClaim answer maps to a verifiable government passage ID. Click any badge to view the pulled excerpt and open the official gazette.
+          </p>
+        </div>
+
+        <CitationFrame />
+      </section>
+
+      {/* 4. Community Pillars & Hotline (Photo + Helpline) */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+        {/* Civic photo asset */}
+        <div className="rounded-2xl border-2 border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] p-5 sm:p-6 shadow-sm flex flex-col justify-between space-y-4">
+          <div className="space-y-2">
+            <div className="text-xs font-mono font-bold uppercase text-[#0A5C36] dark:text-[#34D399]">
+              Community Civic Archives
             </div>
-            <h2 className="font-serif text-xl sm:text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
-              {t.homeDeskTeaserTitle}
-            </h2>
-            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed font-sans">
-              {t.homeDeskTeaserLead}
+            <h3 className="font-display font-bold text-xl text-[#1F1B16] dark:text-[#EDE7DF]">
+              Rooted in Nigerian Community Reality
+            </h3>
+            <p className="text-xs sm:text-sm text-[#63584C] dark:text-[#A89E90] font-body leading-relaxed">
+              From market radio broadcasts to WhatsApp church and school groups, rumours spread fast. SafeClaim equips citizens with authoritative receipts in both clear English and authentic Naija Pidgin.
             </p>
           </div>
 
-          <div className="shrink-0 flex flex-col sm:flex-row gap-2.5">
-            <Button
-              variant="primary"
-              size="md"
-              onClick={() => navigate('/desk')}
-              className="font-semibold"
-            >
-              <LayoutDashboard className="w-4 h-4" />
-              <span>{t.homeViewDeskAction}</span>
-            </Button>
-            <Button
-              variant="secondary"
-              size="md"
-              onClick={() => navigate('/how-it-works')}
-            >
-              <span>Methodology & Architecture</span>
-            </Button>
+          <Photo id="heroNeighbour" language={language} className="rounded-xl shadow-xs" />
+        </div>
+
+        {/* Toll-Free Hotline Tile */}
+        <div className="rounded-2xl border-2 border-[#0A5C36] dark:border-[#2A563D] bg-[#EBF4EF] dark:bg-[#12281B] p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-6">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-[#0A5C36] text-white">
+                Emergency Hotline
+              </span>
+              <span className="text-xs font-mono text-[#0A5C36] dark:text-[#34D399] font-bold">
+                Toll-Free Across Nigeria
+              </span>
+            </div>
+            <h3 className="font-display font-bold text-2xl sm:text-3xl text-[#1F1B16] dark:text-[#EDE7DF]">
+              Need Immediate Disease or Public Health Verification?
+            </h3>
+            <p className="text-sm text-[#1F1B16] dark:text-[#EDE7DF] font-body leading-relaxed">
+              When symptoms arise or an outbreak rumour spikes in your area, contact the Nigeria Centre for Disease Control (NCDC) directly. No airtime needed.
+            </p>
           </div>
+
+          <div className="space-y-3 pt-2">
+            <div className="p-4 rounded-xl bg-white dark:bg-[#1C3325] border border-[#BBD8C3] dark:border-[#2D583F] flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <span className="block text-xs font-mono text-[#63584C] dark:text-[#A89E90] font-bold">
+                  NCDC Toll-Free Call Centre
+                </span>
+                <span className="font-mono text-2xl font-bold text-[#0A5C36] dark:text-[#34D399]">
+                  6232
+                </span>
+              </div>
+              <a
+                href="tel:6232"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0A5C36] hover:bg-[#074528] text-white font-mono font-bold text-xs shadow-xs transition"
+              >
+                <PhoneCall className="w-4 h-4" />
+                <span>Call 6232 Now</span>
+              </a>
+            </div>
+
+            <div className="p-4 rounded-xl bg-white dark:bg-[#1C3325] border border-[#BBD8C3] dark:border-[#2D583F] flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <span className="block text-xs font-mono text-[#63584C] dark:text-[#A89E90] font-bold">
+                  Official WhatsApp Verification
+                </span>
+                <span className="font-mono text-base font-bold text-[#1F1B16] dark:text-[#EDE7DF]">
+                  0809 955 5577
+                </span>
+              </div>
+              <a
+                href="https://wa.me/2348099555577"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] hover:bg-[#F5EFEB] text-xs font-mono font-bold transition"
+              >
+                <span>Chat on WhatsApp</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Rumour Desk for Institutions: DashboardFrame */}
+      <section className="space-y-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="space-y-2 max-w-2xl">
+            <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#24306E] dark:text-[#8BA0E8] uppercase tracking-wider">
+              <LayoutDashboard className="w-4 h-4" />
+              <span>Institutional Intelligence Desk</span>
+            </div>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-[#1F1B16] dark:text-[#EDE7DF]">
+              Built for Newsrooms, Fact-Checkers &amp; Public Agencies
+            </h2>
+            <p className="text-sm sm:text-base text-[#63584C] dark:text-[#A89E90] font-body">
+              Monitor viral clusters in real-time. Detect Guidance Gaps where citizens are desperate for clarity but zero government circulars exist. Generate broadcast-ready daily briefs in seconds.
+            </p>
+          </div>
+
+          <Button
+            variant="primary"
+            size="md"
+            onClick={() => navigate('/desk')}
+            className="shrink-0 font-bold"
+          >
+            <LayoutDashboard className="w-4 h-4" />
+            <span>Open Rumour Desk</span>
+          </Button>
+        </div>
+
+        <DashboardFrame />
+      </section>
+
+      {/* 6. Approved Portals Registry */}
+      <section className="rounded-2xl border-2 border-[#D4C5B3] dark:border-[#3D352C] bg-[#FAF7F2] dark:bg-[#1A1612] p-6 sm:p-8 space-y-5">
+        <div className="space-y-1.5">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0A5C36] dark:text-[#34D399]">
+            Source Integrity
+          </span>
+          <h3 className="font-display font-bold text-xl sm:text-2xl text-[#1F1B16] dark:text-[#EDE7DF]">
+            Official Grounding Repositories
+          </h3>
+          <p className="text-xs sm:text-sm text-[#63584C] dark:text-[#A89E90] font-body">
+            SafeClaim indexes verified circulars, advisories, and gazettes published by accredited federal authorities:
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="bg-white dark:bg-[#201C17] p-4 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] space-y-1">
+            <div className="font-mono font-bold text-xs text-[#0A5C36] dark:text-[#34D399]">NCDC</div>
+            <div className="font-semibold text-xs text-[#1F1B16] dark:text-[#EDE7DF]">Disease Control &amp; Prevention</div>
+            <div className="text-[11px] font-mono text-[#8E8273]">Toll-Free 6232 • ncdc.gov.ng</div>
+          </div>
+
+          <div className="bg-white dark:bg-[#201C17] p-4 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] space-y-1">
+            <div className="font-mono font-bold text-xs text-[#24306E] dark:text-[#8BA0E8]">FCCPC</div>
+            <div className="font-semibold text-xs text-[#1F1B16] dark:text-[#EDE7DF]">Consumer Protection &amp; Lending</div>
+            <div className="text-[11px] font-mono text-[#8E8273]">Loan App Registry • fccpc.gov.ng</div>
+          </div>
+
+          <div className="bg-white dark:bg-[#201C17] p-4 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] space-y-1">
+            <div className="font-mono font-bold text-xs text-[#0A5C36] dark:text-[#34D399]">NHIA / NHIS</div>
+            <div className="font-semibold text-xs text-[#1F1B16] dark:text-[#EDE7DF]">National Health Insurance</div>
+            <div className="text-[11px] font-mono text-[#8E8273]">Enrolment Guidelines • nhia.gov.ng</div>
+          </div>
+
+          <div className="bg-white dark:bg-[#201C17] p-4 rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] space-y-1">
+            <div className="font-mono font-bold text-xs text-[#24306E] dark:text-[#8BA0E8]">INEC</div>
+            <div className="font-semibold text-xs text-[#1F1B16] dark:text-[#EDE7DF]">Electoral Commission</div>
+            <div className="text-[11px] font-mono text-[#8E8273]">Official Gazettes • inecnigeria.org</div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Closing CTA */}
+      <section className="text-center py-6 sm:py-10 space-y-4">
+        <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#1F1B16] dark:text-[#EDE7DF]">
+          Got a rumour forwarding in your family group?
+        </h2>
+        <p className="text-base text-[#63584C] dark:text-[#A89E90] max-w-xl mx-auto font-body">
+          Do not guess or forward blindly. Get the verified official guidance in seconds.
+        </p>
+        <div className="pt-2 flex justify-center">
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={() => navigate('/ask')}
+            className="font-bold px-8 shadow-sm"
+          >
+            <span>Verify a Claim Now</span>
+            <ArrowRight className="w-5 h-5 ml-1" />
+          </Button>
         </div>
       </section>
     </div>

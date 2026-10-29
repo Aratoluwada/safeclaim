@@ -26,27 +26,27 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const base =
-      'inline-flex items-center justify-center font-medium transition-colors select-none cursor-pointer focus-ring disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none rounded-md';
+      'inline-flex items-center justify-center font-medium transition-all select-none cursor-pointer focus-ring disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none rounded-xl active:scale-[0.98]';
 
     const sizes = {
-      sm: 'text-xs h-8 px-2.5 gap-1.5 min-h-[36px] sm:min-h-[32px]',
-      md: 'text-sm h-10 px-3.5 gap-2 min-h-[44px] sm:min-h-[40px]',
-      lg: 'text-base h-11 px-4.5 gap-2.5 min-h-[44px]',
+      sm: 'text-xs h-8 px-3 gap-1.5 min-h-[36px] sm:min-h-[32px]',
+      md: 'text-sm h-10 px-4 gap-2 min-h-[44px] sm:min-h-[40px]',
+      lg: 'text-base h-11 px-5 gap-2.5 min-h-[44px]',
     }[size];
 
     const variants = {
       primary:
-        'bg-[#0A5C36] hover:bg-[#074628] active:bg-[#05331E] text-white border border-[#0A5C36] dark:bg-[#0A5C36] dark:hover:bg-[#0c6b3f] shadow-xs',
+        'bg-[#0A5C36] hover:bg-[#074528] active:bg-[#05331E] text-[#FAF4E8] border border-[#0A5C36] shadow-xs font-semibold',
       secondary:
-        'bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800/80 text-neutral-800 dark:text-neutral-200 border border-neutral-300 dark:border-neutral-700 shadow-2xs',
+        'bg-white dark:bg-[#25201A] hover:bg-[#F5EFEB] dark:hover:bg-[#2F2821] text-[#1F1B16] dark:text-[#EDE7DF] border border-[#D4C5B3] dark:border-[#3D352C] shadow-xs',
       outline:
-        'bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border border-neutral-300 dark:border-neutral-700',
+        'bg-transparent hover:bg-[#F5EFEB] dark:hover:bg-[#25201A] text-[#1F1B16] dark:text-[#EDE7DF] border border-[#D4C5B3] dark:border-[#3D352C]',
       ghost:
-        'bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border border-transparent',
+        'bg-transparent hover:bg-[#F5EFEB] dark:hover:bg-[#25201A] text-[#63584C] dark:text-[#A89E90] hover:text-[#1F1B16] dark:hover:text-[#EDE7DF] border border-transparent',
       danger:
-        'bg-red-700 hover:bg-red-800 text-white border border-red-700 dark:bg-red-800 dark:hover:bg-red-700 shadow-xs',
+        'bg-[#B91C1C] hover:bg-[#991B1B] text-white border border-[#B91C1C] shadow-xs',
       subtle:
-        'bg-[#EBF4EF] hover:bg-[#D9EBDF] text-[#0A5C36] dark:bg-[#0D2D1E] dark:hover:bg-[#123B28] dark:text-[#6EE7B7] border border-[#C2DEC9] dark:border-[#1F4A33]',
+        'bg-[#EBF4EF] hover:bg-[#D4E8DC] text-[#0A5C36] dark:bg-[#192E22] dark:hover:bg-[#233F2E] dark:text-[#6EE7B7] border border-[#BBD8C3] dark:border-[#2D563D] font-semibold',
     }[variant];
 
     return (
