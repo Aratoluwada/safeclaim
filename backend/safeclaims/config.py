@@ -32,9 +32,25 @@ class Config:
     SYNTHETIC_MESSAGES_PATH: Path = SYNTHETIC_MESSAGES_PATH
 
     # LLM settings (Open-weight model served via OpenAI-compatible endpoint)
-    LLM_BASE_URL: str = os.getenv("LLM_BASE_URL", "http://localhost:11434/v1")
-    LLM_MODEL: str = os.getenv("LLM_MODEL", "qwen2.5:7b-instruct")
-    LLM_API_KEY: str = os.getenv("LLM_API_KEY", "ollama")
+    # Supports local Ollama or hosted inference (e.g. Groq Cloud for open-weight Qwen 2.5)
+    _raw_groq_key: str = os.getenv("GROQ_API_KEY", "").strip()
+    _raw_llm_key: str = os.getenv("LLM_API_KEY", "").strip()
+    LLM_API_KEY: str = _raw_llm_key or _raw_groq_key or "ollama"
+
+    _is_groq: bool = bool(
+        LLM_API_KEY.startswith("gsk_")
+        or _raw_groq_key
+        or "groq.com" in os.getenv("LLM_BASE_URL", "")
+    )
+
+    LLM_BASE_URL: str = os.getenv(
+        "LLM_BASE_URL",
+        "https://api.groq.com/openai/v1" if _is_groq else "http://localhost:11434/v1",
+    )
+    LLM_MODEL: str = os.getenv(
+        "LLM_MODEL",
+        "qwen-2.5-32b" if (_is_groq or "groq.com" in LLM_BASE_URL) else "qwen2.5:7b-instruct",
+    )
     LLM_TIMEOUT: float = float(os.getenv("LLM_TIMEOUT", "60.0"))
     ADMIN_API_TOKEN: str = os.getenv("SAFECLAIM_ADMIN_TOKEN", "")
     WHATSAPP_WEBHOOK_TOKEN: str = os.getenv("SAFECLAIM_WEBHOOK_TOKEN", "")
