@@ -15,7 +15,7 @@ def generate_daily_brief(date_str: Optional[str] = None) -> Dict[str, Any]:
     now = datetime.now(timezone.utc)
     date_display = date_str or now.strftime("%Y-%m-%d")
 
-    clusters = cluster_engine.clusters
+    clusters = [cluster for cluster in cluster_engine.clusters if cluster.is_synthetic]
     sorted_by_count = sorted(clusters, key=lambda c: c.message_count, reverse=True)
 
     top_clusters_data = [

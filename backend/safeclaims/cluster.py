@@ -36,6 +36,7 @@ class ClaimCluster:
     sample_messages: List[str]
     is_guidance_gap: bool
     centroid: Optional[List[float]] = None
+    is_synthetic: bool = False
 
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
@@ -79,7 +80,7 @@ class ClusterEngine:
         best_sim = -1.0
 
         for idx, cluster in enumerate(self.clusters):
-            if cluster.domain != extracted.domain:
+            if cluster.is_synthetic or cluster.domain != extracted.domain:
                 continue
             centroid = self._centroids[idx]
             sim = float(np.dot(vec, centroid))
@@ -109,9 +110,6 @@ class ClusterEngine:
             if message.language not in target.languages_seen:
                 target.languages_seen.append(message.language)
 
-            if len(target.sample_messages) < 6 and message.raw_text not in target.sample_messages:
-                target.sample_messages.append(message.raw_text[:200])
-
             return target
 
         # Otherwise create a new cluster
@@ -126,13 +124,14 @@ class ClusterEngine:
             representative_claim=extracted.normalized_claim,
             verdict=verdict,
             message_count=1,
-            growth_rate_24h="+12%",
+            growth_rate_24h="not measured",
             languages_seen=[message.language],
             first_seen=now_iso,
             last_seen=now_iso,
-            sample_messages=[message.raw_text[:200]],
+            sample_messages=[],
             is_guidance_gap=is_guidance_gap,
             centroid=vec.tolist(),
+            is_synthetic=False,
         )
 
         self.clusters.append(new_cluster)
@@ -147,7 +146,7 @@ class ClusterEngine:
         search_query: Optional[str] = None,
     ) -> List[ClaimCluster]:
         """Returns filtered clusters."""
-        results = self.clusters
+        results = [cluster for cluster in self.clusters if cluster.is_synthetic]
         if domain and domain != "all":
             results = [c for c in results if c.domain == domain]
         if label and label != "all":
@@ -165,9 +164,10 @@ class ClusterEngine:
 
     def get_stats(self) -> Dict[str, Any]:
         """Aggregates metrics for Rumour Desk overview cards."""
-        total_messages = sum(c.message_count for c in self.clusters)
-        total_clusters = len(self.clusters)
-        guidance_gaps = sum(1 for c in self.clusters if c.is_guidance_gap)
+        demo_clusters = [cluster for cluster in self.clusters if cluster.is_synthetic]
+        total_messages = sum(c.message_count for c in demo_clusters)
+        total_clusters = len(demo_clusters)
+        guidance_gaps = sum(1 for c in demo_clusters if c.is_guidance_gap)
 
         verdict_counts: Dict[str, int] = {
             "CONTRADICTED_BY_OFFICIAL_SOURCE": 0,
@@ -182,7 +182,7 @@ class ClusterEngine:
             "other": 0,
         }
 
-        for c in self.clusters:
+        for c in demo_clusters:
             if c.verdict.label in verdict_counts:
                 verdict_counts[c.verdict.label] += 1
             domain_counts[c.domain] = domain_counts.get(c.domain, 0) + c.message_count
@@ -191,8 +191,8 @@ class ClusterEngine:
             "total_messages_analyzed": total_messages,
             "total_clusters": total_clusters,
             "source_distribution": {
-                "synthetic": round(total_messages * 0.85),
-                "submitted": total_messages - round(total_messages * 0.85),
+                "synthetic": total_messages,
+                "submitted": 0,
             },
             "verdict_counts": verdict_counts,
             "guidance_gaps_count": guidance_gaps,
@@ -231,6 +231,7 @@ class ClusterEngine:
                 sample_messages=item.get("sample_messages", []),
                 is_guidance_gap=item.get("is_guidance_gap", False),
             )
+            cluster.is_synthetic = True
             self.clusters.append(cluster)
 
             # Recompute centroid vector from representative claim
