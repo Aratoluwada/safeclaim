@@ -1,0 +1,185 @@
+[
+  {
+    "cluster_id": "cluster-ob-01",
+    "domain": "outbreak",
+    "representative_claim": "Viral voice note claims multiple Ebola fatalities admitted secretly in Lagos general hospitals.",
+    "verdict": {
+      "label": "CONTRADICTED_BY_OFFICIAL_SOURCE",
+      "short_explanation": "NCDC epidemiological surveillance reports zero confirmed Ebola cases nationwide. Lagos State Ministry of Health refuted the viral audio as fabricated.",
+      "suggested_reply": "PUBLIC HEALTH VERIFICATION: The Nigeria Centre for Disease Control (NCDC) and Lagos State Ministry of Health confirm NO Ebola cases in Lagos or Nigeria. Do not forward unverified voice notes. Call toll-free 6232 for medical verification.",
+      "evidence_passage_ids": [
+        "ncdc_ebola_advisory_2026#1",
+        "ncdc_ebola_advisory_2026#3"
+      ],
+      "evidence_passages": [
+        {
+          "passage_id": "ncdc_ebola_advisory_2026#1",
+          "doc_title": "Public Health Advisory: Ebola Virus Disease Prevention and Response",
+          "publisher": "NCDC",
+          "url": "https://ncdc.gov.ng/news/410/public-health-advisory-ebola-virus-disease",
+          "domain": "outbreak",
+          "excerpt": "Nigeria has recorded zero confirmed cases of Ebola Virus Disease. Speculative alerts circulating on messaging platforms regarding cases in Lagos are unsubstantiated."
+        }
+      ]
+    },
+    "message_count": 76,
+    "growth_rate_24h": "+48%",
+    "languages_seen": ["en", "pcm"],
+    "first_seen": "2026-10-26T08:15:00Z",
+    "last_seen": "2026-10-28T19:40:00Z",
+    "sample_messages": [
+      "Pls warn your people in Ikeja, they just brought 4 people bleeding to general hospital Ebola has entered Lagos again o!",
+      "Abeg make una avoid hospitals in Yaba, my friend nurse talk say Ebola people dey inside emergency ward now now.",
+      "Forward as received: Ebola virus confirmed in Lagos Mainland, government is hiding it drink bitter leaf now."
+    ],
+    "is_guidance_gap": false
+  },
+  {
+    "cluster_id": "cluster-scam-02",
+    "domain": "scam",
+    "representative_claim": "Viral WhatsApp link promises N50,000 Federal Palliative Relief disbursement after BVN entry.",
+    "verdict": {
+      "label": "CONTRADICTED_BY_OFFICIAL_SOURCE",
+      "short_explanation": "Federal Ministry of Humanitarian Affairs disclaims unofficial blog links and tinyurls. Federal government never requests BVN or debit card PINs via messaging apps.",
+      "suggested_reply": "CYBERSAFETY WARNING: The Federal Government is NOT disbursing N50,000 grants through WhatsApp broadcast links. Do not provide your BVN or bank security credentials. Verify government initiatives exclusively via official .gov.ng portals.",
+      "evidence_passage_ids": [
+        "nassp_conditional_cash_transfer_2026#2"
+      ],
+      "evidence_passages": [
+        {
+          "passage_id": "nassp_conditional_cash_transfer_2026#2",
+          "doc_title": "National Social Safety Nets Project: Guidelines for Conditional Cash Transfer Verification and Anti-Fraud Safeguards",
+          "publisher": "NASSP / Federal Ministry of Humanitarian Affairs",
+          "url": "https://nassp.gov.ng/guidelines/cash-transfers-verification",
+          "domain": "benefit",
+          "excerpt": "The Federal Government never charges any application fee or validation payment. Any portal requesting money or BVN to release funds is fraudulent."
+        }
+      ]
+    },
+    "message_count": 104,
+    "growth_rate_24h": "+62%",
+    "languages_seen": ["en", "pcm"],
+    "first_seen": "2026-10-25T11:00:00Z",
+    "last_seen": "2026-10-28T20:10:00Z",
+    "sample_messages": [
+      "FG 50K Easter/Ramadan grant application is open! Click tinyurl.com/fg-relief-2026 to claim yours in 5 mins.",
+      "I just received my 50,000 naira from Federal Ministry palliative link! Share to 5 groups to activate your code.",
+      "Hurry now, FG palliative fund is closing by midnight today. Register your BVN here to get alert."
+    ],
+    "is_guidance_gap": false
+  },
+  {
+    "cluster_id": "cluster-scam-03",
+    "domain": "scam",
+    "representative_claim": "Unregistered loan apps threaten to freeze bank accounts and blast contact lists with defamatory images.",
+    "verdict": {
+      "label": "SUPPORTED_BY_OFFICIAL_SOURCE",
+      "short_explanation": "FCCPC regulations prohibit predatory harassment and unauthorized contact scraping. Regulators have instructed Google Play and banks to blacklist non-compliant loan operators.",
+      "suggested_reply": "CONSUMER RIGHTS ALERT: Under FCCPC regulations, loan operators are strictly prohibited from messaging your contacts or publishing defamatory images. Report predatory lenders to dmlcompliance@fccpc.gov.ng or call 0800 033 2272.",
+      "evidence_passage_ids": [
+        "fccpc_digital_lenders_advisory_2026#2"
+      ],
+      "evidence_passages": [
+        {
+          "passage_id": "fccpc_digital_lenders_advisory_2026#2",
+          "doc_title": "Consumer Protection Advisory: Digital Money Lending Applications and Defamatory Debt Recovery Practices",
+          "publisher": "FCCPC",
+          "url": "https://fccpc.gov.ng/advisories/digital-lending-guidelines-2026",
+          "domain": "scam",
+          "excerpt": "Accessing borrower contact lists and sending mass defamation text messages or funeral posters is illegal and constitutes criminal cyber-harassment."
+        }
+      ]
+    },
+    "message_count": 53,
+    "growth_rate_24h": "+18%",
+    "languages_seen": ["en", "pcm"],
+    "first_seen": "2026-10-24T14:20:00Z",
+    "last_seen": "2026-10-28T18:30:00Z",
+    "sample_messages": [
+      "This loan app called QuickNaira sent my picture to my church group calling me a criminal debtor, is this legal?",
+      "One loan company agent is threatening that EFCC will freeze my BVN tomorrow morning because of 12,000 loan.",
+      "How do I report these fake loan sharks who keep calling my mother and boss at night?"
+    ],
+    "is_guidance_gap": false
+  },
+  {
+    "cluster_id": "cluster-ob-04",
+    "domain": "outbreak",
+    "representative_claim": "Claims that drinking hot boiled guava leaves and ginger immediately cleanses suspected Mpox sores within 24 hours.",
+    "verdict": {
+      "label": "NO_OFFICIAL_SOURCE_FOUND",
+      "short_explanation": "No scientific advisory or NCDC clinical guide supports herbal guava decoctions for Mpox viral clearance. Urgent need for NCDC public advisory.",
+      "suggested_reply": "PUBLIC HEALTH NOTICE: There is NO scientific evidence that boiled guava leaf tea cures Mpox. Self-medicating unverified mixtures can aggravate lesions and delay clinical care. Visit the nearest accredited healthcare facility.",
+      "evidence_passage_ids": [],
+      "evidence_passages": []
+    },
+    "message_count": 43,
+    "growth_rate_24h": "+74%",
+    "languages_seen": ["en", "pcm"],
+    "first_seen": "2026-10-27T04:10:00Z",
+    "last_seen": "2026-10-28T21:15:00Z",
+    "sample_messages": [
+      "My auntie in Delta said if you boil guava leaves with garlic and ginger, you will not get that monkeypox rash.",
+      "Forget hospital medicine for mpox, just boil fresh dogonyaro and guava leaf, wash morning and night.",
+      "Is it true that taking strong guava tea cures mpox blisters in two days? People are buying all guava trees in market."
+    ],
+    "is_guidance_gap": true
+  },
+  {
+    "cluster_id": "cluster-ben-05",
+    "domain": "benefit",
+    "representative_claim": "Unverified circular claims all federal and state pensioners must surrender old NHIA cards for paid biometric verification.",
+    "verdict": {
+      "label": "NO_OFFICIAL_SOURCE_FOUND",
+      "short_explanation": "No public bulletin from NHIA announces card recall or biometric re-validation fee. Guidance gap requires formal NHIA press release.",
+      "suggested_reply": "ADVISORY ON NHIA CARDS: The National Health Insurance Authority has NOT issued any directive mandating card surrender or payment for biometric updates. Beware of unauthorized extortion at local branch offices.",
+      "evidence_passage_ids": [],
+      "evidence_passages": []
+    },
+    "message_count": 31,
+    "growth_rate_24h": "+35%",
+    "languages_seen": ["en"],
+    "first_seen": "2026-10-26T17:00:00Z",
+    "last_seen": "2026-10-28T16:45:00Z",
+    "sample_messages": [
+      "Attention all pensioners: NHIS cards expire next week and you must pay N2,500 at the liaison office for new biometrics.",
+      "Is NHIA calling back cards? People are queueing up in Kaduna saying old cards will stop working for hospital.",
+      "Heard that pensioners who don’t do new biometric scan by Friday will lose their health insurance cover."
+    ],
+    "is_guidance_gap": true
+  },
+  {
+    "cluster_id": "cluster-elec-06",
+    "domain": "election_procedure",
+    "representative_claim": "Broadcast claims INEC has extended Continuous Voter Registration (CVR) only for selected southern states.",
+    "verdict": {
+      "label": "CONTRADICTED_BY_OFFICIAL_SOURCE",
+      "short_explanation": "INEC regulations stipulate that electoral timeline alterations apply strictly nationwide pursuant to the Electoral Act. INEC has made no regional extension.",
+      "suggested_reply": "INEC FACT-CHECK: The Independent National Electoral Commission (INEC) confirms that voter registration schedules are established nationally and not granted on a selective regional basis. Verify electoral calendars at inecnigeria.org.",
+      "evidence_passage_ids": [
+        "inec_voter_accreditation_guidelines_2026#2"
+      ],
+      "evidence_passages": [
+        {
+          "passage_id": "inec_voter_accreditation_guidelines_2026#2",
+          "doc_title": "Regulations and Guidelines for Voting Procedures and BVAS Accreditation",
+          "publisher": "INEC",
+          "url": "https://inecnigeria.org/guidelines/voting-procedures-bvas",
+          "domain": "election_procedure",
+          "excerpt": "Official voting hours at all polling units nationwide commence at 8:30 AM and conclude at 2:30 PM."
+        }
+      ]
+    },
+    "message_count": 19,
+    "growth_rate_24h": "-12%",
+    "languages_seen": ["en", "pcm"],
+    "first_seen": "2026-10-23T09:30:00Z",
+    "last_seen": "2026-10-27T12:00:00Z",
+    "sample_messages": [
+      "Breaking: INEC extends voter registration by 3 months in South-South and South-East only due to flood disruptions.",
+      "Check if your state is among the 8 states where INEC approved extension of PVC collection.",
+      "INEC southern extension announced on radio this morning, go to your LGA immediately."
+    ],
+    "is_guidance_gap": false
+  }
+]
