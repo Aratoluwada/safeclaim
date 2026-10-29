@@ -17,6 +17,7 @@ import {
 import { ClaimCluster } from '../../types/api';
 import { VerdictBadge } from '../common/VerdictBadge';
 import { Button } from '../ui/Button';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 interface ClusterDrawerProps {
   cluster: ClaimCluster | null;
@@ -25,6 +26,7 @@ interface ClusterDrawerProps {
 
 export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }) => {
   const [copiedReply, setCopiedReply] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -36,10 +38,8 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [cluster, onClose]);
 
-  if (!cluster) return null;
-
   const handleCopyReply = () => {
-    if (cluster.verdict.suggested_reply) {
+    if (cluster?.verdict.suggested_reply) {
       navigator.clipboard.writeText(cluster.verdict.suggested_reply);
       setCopiedReply(true);
       setTimeout(() => setCopiedReply(false), 2000);
@@ -47,20 +47,32 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
   };
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="drawer-title"
-      className="fixed inset-0 z-50 overflow-hidden"
-    >
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/50 transition-opacity"
-        onClick={onClose}
-      />
+    <AnimatePresence>
+      {cluster && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="drawer-title"
+          className="fixed inset-0 z-50 overflow-hidden"
+        >
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+            className="absolute inset-0 bg-black/50"
+            onClick={onClose}
+          />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-8">
-        <aside className="w-screen max-w-lg bg-white dark:bg-neutral-900 shadow-xl flex flex-col h-full border-l border-neutral-200 dark:border-neutral-800">
+          <div className="fixed inset-y-0 right-0 max-w-full flex pl-8 pointer-events-none">
+            <motion.aside
+              initial={shouldReduceMotion ? { opacity: 0 } : { x: '100%' }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { x: 0 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { x: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 320 }}
+              className="w-screen max-w-lg bg-white dark:bg-neutral-900 shadow-xl flex flex-col h-full border-l border-neutral-200 dark:border-neutral-800 pointer-events-auto"
+            >
           {/* Header */}
           <header className="px-5 py-3.5 border-b border-neutral-200 dark:border-neutral-800 flex items-center justify-between bg-neutral-50/70 dark:bg-neutral-950/40">
             <div className="flex items-center gap-2">
@@ -233,8 +245,10 @@ export const ClusterDrawer: React.FC<ClusterDrawerProps> = ({ cluster, onClose }
               Close Drawer
             </Button>
           </footer>
-        </aside>
-      </div>
-    </div>
+        </motion.aside>
+          </div>
+        </div>
+      )}
+    </AnimatePresence>
   );
 };

@@ -19,6 +19,7 @@ import { TRANSLATIONS } from '../../utils/translations';
 import { LanguageSelect } from './LanguageSelect';
 import { ApiConfig } from '../../api/client';
 import { setTheme } from '../../utils/theme';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 interface NavbarProps {
   language: LanguageCode;
@@ -38,6 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleTheme,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
@@ -60,13 +62,15 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [mobileMenuOpen]);
 
+  const isAskActive = location.pathname === '/' || location.pathname === '/ask';
+
   const navItems = [
-    { to: '/', label: t.navHome },
-    { to: '/ask', label: t.navAsk },
-    { to: '/desk', label: t.navRumourDesk },
-    { to: '/how-it-works', label: t.navHowItWorks },
-    { to: '/verdicts', label: t.navVerdicts },
-    { to: '/faq', label: t.navFaq },
+    { to: '/', label: t.navAsk, isActive: isAskActive },
+    { to: '/desk', label: t.navRumourDesk, isActive: location.pathname === '/desk' || location.pathname === '/rumours' },
+    { to: '/overview', label: t.navHome, isActive: location.pathname === '/overview' },
+    { to: '/how-it-works', label: t.navHowItWorks, isActive: location.pathname === '/how-it-works' },
+    { to: '/verdicts', label: t.navVerdicts, isActive: location.pathname === '/verdicts' },
+    { to: '/faq', label: t.navFaq, isActive: location.pathname === '/faq' },
   ];
 
   return (
@@ -100,10 +104,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <li key={item.to} className="m-0 p-0">
                     <NavLink
                       to={item.to}
-                      end={item.to === '/'}
-                      className={({ isActive }) =>
+                      className={() =>
                         `inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md transition-colors focus-ring ${
-                          isActive
+                          item.isActive
                             ? 'bg-neutral-100 dark:bg-neutral-800 text-[#0A5C36] dark:text-emerald-400 font-semibold border-b-2 border-[#0A5C36] dark:border-emerald-400'
                             : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-neutral-800/50'
                         }`
@@ -177,56 +180,61 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Mobile Slide-down Menu with Trap and semantic list */}
-      {mobileMenuOpen && (
-        <div
-          id="mobile-nav-menu"
-          ref={menuRef}
-          className="lg:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-4 pt-3 pb-5 space-y-4 shadow-lg"
-        >
-          <nav aria-label="Mobile Navigation">
-            <ul className="space-y-1 m-0 p-0 list-none">
-              {navItems.map((item) => (
-                <li key={item.to} className="m-0 p-0">
-                  <NavLink
-                    to={item.to}
-                    end={item.to === '/'}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={({ isActive }) =>
-                      `block px-3 py-2 rounded-md text-sm font-medium transition ${
-                        isActive
-                          ? 'bg-[#EBF4EF] dark:bg-[#0D2D1E] text-[#0A5C36] dark:text-emerald-400 font-semibold'
-                          : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
-                      }`
-                    }
-                  >
-                    {item.label}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            id="mobile-nav-menu"
+            ref={menuRef}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+            className="overflow-hidden lg:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-4 pt-3 pb-5 space-y-4 shadow-lg"
+          >
+            <nav aria-label="Mobile Navigation">
+              <ul className="space-y-1 m-0 p-0 list-none">
+                {navItems.map((item) => (
+                  <li key={item.to} className="m-0 p-0">
+                    <NavLink
+                      to={item.to}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={() =>
+                        `block px-3 py-2 rounded-md text-sm font-medium transition ${
+                          item.isActive
+                            ? 'bg-[#EBF4EF] dark:bg-[#0D2D1E] text-[#0A5C36] dark:text-emerald-400 font-semibold'
+                            : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                        }`
+                      }
+                    >
+                      {item.label}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-          <div className="pt-3 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
-            <span className="text-xs font-mono text-neutral-500">Language:</span>
-            <LanguageSelect currentLanguage={language} onChange={onLanguageChange} />
-          </div>
+            <div className="pt-3 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
+              <span className="text-xs font-mono text-neutral-500">Language:</span>
+              <LanguageSelect currentLanguage={language} onChange={onLanguageChange} />
+            </div>
 
-          <div className="pt-2 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
-            <span className="text-xs font-mono text-neutral-500">Operating Mode:</span>
-            <button
-              type="button"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenSettings();
-              }}
-              className="text-xs font-mono font-medium text-[#0A5C36] dark:text-emerald-400 underline flex items-center gap-1"
-            >
-              <span className="capitalize">{apiConfig.mode} Mode</span>
-              <Settings2 className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
-      )}
+            <div className="pt-2 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
+              <span className="text-xs font-mono text-neutral-500">Operating Mode:</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenSettings();
+                }}
+                className="text-xs font-mono font-medium text-[#0A5C36] dark:text-emerald-400 underline flex items-center gap-1"
+              >
+                <span className="capitalize">{apiConfig.mode} Mode</span>
+                <Settings2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

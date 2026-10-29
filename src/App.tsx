@@ -25,6 +25,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { ApiConfig, getApiConfig } from './api/client';
 import { LanguageCode } from './types/api';
 import { initTheme, setTheme } from './utils/theme';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -50,6 +51,25 @@ function HashRedirect() {
     return () => window.removeEventListener('hashchange', handleHash);
   }, [navigate]);
   return null;
+}
+
+function AnimatedOutlet() {
+  const location = useLocation();
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}
+        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+        exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -6 }}
+        transition={{ duration: shouldReduceMotion ? 0 : 0.16 }}
+      >
+        <Outlet />
+      </motion.div>
+    </AnimatePresence>
+  );
 }
 
 function Layout({
@@ -99,7 +119,7 @@ function Layout({
 
       {/* Main Content Area */}
       <main id="main-content" className="flex-1 py-6 sm:py-8">
-        <Outlet />
+        <AnimatedOutlet />
       </main>
 
       {/* Grouped Link List Footer */}
@@ -156,7 +176,17 @@ export default function App() {
             />
           }
         >
-          <Route index element={<HomePage language={language} />} />
+          {/* Default entry point is the Public Ask verification assistant */}
+          <Route
+            index
+            element={
+              <AskPage
+                language={language}
+                apiConfig={apiConfig}
+                onOpenSettings={() => setIsSettingsOpen(true)}
+              />
+            }
+          />
           <Route
             path="ask"
             element={
@@ -176,6 +206,20 @@ export default function App() {
                 onOpenSettings={() => setIsSettingsOpen(true)}
               />
             }
+          />
+          <Route
+            path="rumours"
+            element={
+              <RumourDeskPage
+                language={language}
+                apiConfig={apiConfig}
+                onOpenSettings={() => setIsSettingsOpen(true)}
+              />
+            }
+          />
+          <Route
+            path="overview"
+            element={<HomePage language={language} />}
           />
           <Route
             path="how-it-works"

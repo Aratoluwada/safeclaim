@@ -17,6 +17,7 @@ import { ApiConfig, checkBackendHealth, getApiConfig, saveApiConfig } from '../.
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 interface BackendModeModalProps {
   isOpen: boolean;
@@ -30,6 +31,7 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
   onConfigUpdated,
 }) => {
   const [config, setConfig] = useState<ApiConfig>(getApiConfig());
+  const shouldReduceMotion = useReducedMotion();
   const [testResult, setTestResult] = useState<{
     status: 'idle' | 'checking' | 'success' | 'error';
     message?: string;
@@ -42,8 +44,6 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
       setTestResult({ status: 'idle' });
     }
   }, [isOpen]);
-
-  if (!isOpen) return null;
 
   const handleTestConnection = async () => {
     setTestResult({ status: 'checking' });
@@ -62,13 +62,31 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
   };
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="backend-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-none"
-    >
-      <div className="bg-white dark:bg-neutral-900 rounded-md max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-xl border border-neutral-300 dark:border-neutral-700">
+    <AnimatePresence>
+      {isOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="backend-modal-title"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        >
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-none"
+            onClick={onClose}
+          />
+
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 10 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 10 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+            className="relative z-10 bg-white dark:bg-neutral-900 rounded-md max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-xl border border-neutral-300 dark:border-neutral-700"
+          >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-950/40">
           <div className="flex items-center gap-2.5">
@@ -213,7 +231,9 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
             </Button>
           </div>
         </div>
+        </motion.div>
       </div>
-    </div>
+    )}
+  </AnimatePresence>
   );
 };

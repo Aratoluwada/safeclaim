@@ -17,6 +17,7 @@ import { DailyBrief } from '../../types/api';
 import { downloadMarkdownFile } from '../../utils/briefGenerator';
 import { getApiConfig } from '../../api/client';
 import { Button } from '../ui/Button';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 interface DailyBriefModalProps {
   brief: DailyBrief | null;
@@ -26,6 +27,7 @@ interface DailyBriefModalProps {
 
 export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -37,15 +39,16 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
-  if (!isOpen || !brief) return null;
-
   const handleCopy = () => {
-    navigator.clipboard.writeText(brief.markdown);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (brief?.markdown) {
+      navigator.clipboard.writeText(brief.markdown);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   const handleDownload = () => {
+    if (!brief) return;
     const { mode, baseUrl } = getApiConfig();
     if (mode === 'live') {
       window.open(`${baseUrl}/rumours/brief/download`, '_blank');
@@ -55,13 +58,31 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
   };
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="brief-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60"
-    >
-      <div className="bg-white dark:bg-neutral-900 rounded-md max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-neutral-300 dark:border-neutral-700 overflow-hidden">
+    <AnimatePresence>
+      {isOpen && brief && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="brief-modal-title"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        >
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+            className="fixed inset-0 bg-black/60"
+            onClick={onClose}
+          />
+
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 10 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 10 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+            className="relative z-10 bg-white dark:bg-neutral-900 rounded-md max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-neutral-300 dark:border-neutral-700 overflow-hidden"
+          >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-950/40">
           <div className="flex items-center gap-2.5">
@@ -213,7 +234,9 @@ export const DailyBriefModal: React.FC<DailyBriefModalProps> = ({ brief, isOpen,
             Close
           </Button>
         </div>
+        </motion.div>
       </div>
-    </div>
+    )}
+  </AnimatePresence>
   );
 };
