@@ -173,6 +173,7 @@ class ClusterEngine:
             "CONTRADICTED_BY_OFFICIAL_SOURCE": 0,
             "SUPPORTED_BY_OFFICIAL_SOURCE": 0,
             "NO_OFFICIAL_SOURCE_FOUND": 0,
+            "NOT_VALIDATED": 0,
         }
         domain_counts: Dict[str, int] = {
             "outbreak": 0,
@@ -183,8 +184,11 @@ class ClusterEngine:
         }
 
         for c in demo_clusters:
-            if c.verdict.label in verdict_counts:
-                verdict_counts[c.verdict.label] += 1
+            label = c.verdict.label
+            if label in verdict_counts:
+                verdict_counts[label] += 1
+            else:
+                verdict_counts[label] = 1
             domain_counts[c.domain] = domain_counts.get(c.domain, 0) + c.message_count
 
         return {
