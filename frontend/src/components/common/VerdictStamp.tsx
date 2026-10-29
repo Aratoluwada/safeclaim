@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { VerdictLabel } from '../../types/api';
-import { AlertTriangle, CheckCircle2, XCircle } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, CircleHelp, XCircle } from 'lucide-react';
 
 interface VerdictStampProps {
   verdict: VerdictLabel;
@@ -53,6 +53,17 @@ export const VerdictStamp: React.FC<VerdictStampProps> = ({
         >
           {showIcon && <CheckCircle2 className="w-4 h-4 shrink-0 stroke-[2.5]" aria-hidden="true" />}
           <span>{customLabel || 'Supported by Official Source'}</span>
+        </span>
+      );
+
+    case 'NOT_VALIDATED':
+      return (
+        <span
+          className={`inline-flex items-center font-mono font-bold uppercase rounded-[3px] border-[#475569] text-[#334155] bg-[#F1F5F9] dark:bg-[#1E293B] dark:border-[#64748B] dark:text-[#CBD5E1] shadow-xs select-none ${rotationClass} ${sizeClasses}`}
+          title="No validated verdict is available"
+        >
+          {showIcon && <CircleHelp className="w-4 h-4 shrink-0" aria-hidden="true" />}
+          <span>{customLabel || 'Not Validated'}</span>
         </span>
       );
 

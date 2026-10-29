@@ -51,9 +51,9 @@ export const SourceCard: React.FC<SourceCardProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-accent hover:underline"
-            title="Open official government publication"
+            title="Open the source URL recorded in the corpus manifest"
           >
-            <span>Official Portal</span>
+            <span>Source URL</span>
             <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
           </a>
           <button
@@ -85,8 +85,8 @@ export const SourceCard: React.FC<SourceCardProps> = ({
           {/* Authentic pulled excerpt blockquote */}
           <blockquote className="official-document-sheet rounded-xl p-4 sm:p-4.5 border-l-4 border-l-accent text-sm text-[#1F1B16] dark:text-[#F4EEE4] font-body italic leading-relaxed">
             <div className="font-mono text-[10px] font-bold text-accent not-italic uppercase tracking-wider mb-1.5 flex items-center justify-between">
-              <span>Verbatim Official Circular Excerpt:</span>
-              <span className="font-hand text-sm text-[#27358F] dark:text-[#AEB9FF]">Direct Official Receipt</span>
+              <span>Indexed passage (source not authenticated):</span>
+              <span className="font-hand text-sm text-[#27358F] dark:text-[#AEB9FF]">{citation.verification_status || 'unverified'}</span>
             </div>
             &ldquo;{citation.excerpt}&rdquo;
           </blockquote>

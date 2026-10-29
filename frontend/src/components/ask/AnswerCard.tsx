@@ -52,16 +52,7 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
   };
 
   // Determine verdict label
-  const lowerAnswer = (response.answer || '').toLowerCase();
-  const verdictLabel: VerdictLabel =
-    lowerAnswer.includes('not prevent') ||
-    lowerAnswer.includes('does not') ||
-    lowerAnswer.includes('refut') ||
-    lowerAnswer.includes('debunk') ||
-    lowerAnswer.includes('zero confirmed') ||
-    lowerAnswer.includes('no ebola')
-      ? 'CONTRADICTED_BY_OFFICIAL_SOURCE'
-      : 'SUPPORTED_BY_OFFICIAL_SOURCE';
+  const verdictLabel: VerdictLabel = 'NOT_VALIDATED';
 
   // Render text with clickable citation badges, e.g. [ncdc#1]
   const renderFormattedAnswer = (text: string) => {
@@ -94,7 +85,7 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
   return (
     <div
       role="region"
-      aria-label="Verified grounded response"
+      aria-label="Retrieved evidence response"
       className="rounded-2xl border-2 border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] shadow-sm overflow-hidden"
     >
       {/* Header bar */}

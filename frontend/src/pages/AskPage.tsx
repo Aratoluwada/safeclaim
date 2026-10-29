@@ -88,24 +88,24 @@ export const AskPage: React.FC<AskPageProps> = ({
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-accent-tint dark:bg-accent-tint text-accent font-mono font-bold text-xs">
               <Sparkles className="w-3.5 h-3.5" />
               <span>
-                {language === 'pcm' ? 'Official Receipts Assistant' : 'Public Verification Assistant'}
+                {language === 'pcm' ? 'Source Search Demo' : 'Public Evidence Search'}
               </span>
             </div>
 
             <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1F1B16] dark:text-[#F4EEE4] leading-tight">
               {language === 'pcm' ? (
                 <>
-                  Understand di claim.{' '}
+                  Find source text.{' '}
                   <span className="relative inline-block">
-                    Check di real facts.
+                    Review the evidence.
                     <WobblyUnderline className="absolute -bottom-2 left-0 w-full" color="#0A5C36" />
                   </span>
                 </>
               ) : (
                 <>
-                  Understand the claim.{' '}
+                  Find source text.{' '}
                   <span className="relative inline-block">
-                    Verify the facts.
+                    Review the evidence.
                     <WobblyUnderline className="absolute -bottom-2 left-0 w-full" color="#0A5C36" />
                   </span>
                 </>
@@ -115,8 +115,8 @@ export const AskPage: React.FC<AskPageProps> = ({
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1">
               <p className="text-base sm:text-lg text-[#63584C] dark:text-[#A89E90] font-body max-w-2xl leading-relaxed">
                 {language === 'pcm'
-                  ? 'Dem forward you something wey dey scare you or promise free money? Paste am enter here. SafeClaim dey check NCDC, FCCPC, and NHIA circulars to show you real proof.'
-                  : 'Forwarded a suspicious health rumour, loan app claim, or grant announcement? Paste it below to evaluate with official Nigerian publications and exact receipts.'}
+                  ? 'Paste a question to search the local demo or connected source index. Results are not validated verdicts.'
+                  : 'Search the local demo or connected source index. Retrieved passages are not validated verdicts.'}
               </p>
               <div className="hidden lg:flex items-center text-[#27358F] dark:text-[#AEB9FF] font-hand text-lg shrink-0">
                 <span>Paste forward here</span>
@@ -151,7 +151,7 @@ export const AskPage: React.FC<AskPageProps> = ({
                 {t.verifyingButton}
               </h3>
               <p className="text-xs sm:text-sm text-[#63584C] dark:text-[#A89E90] font-mono">
-                Matching against official NCDC, FCCPC, NHIA, and FMOH gazettes...
+                Searching configured source text...
               </p>
             </div>
           </div>
@@ -210,6 +210,9 @@ export const AskPage: React.FC<AskPageProps> = ({
             hotlineInfo={response.hotline_info}
             language={language}
             onAskAnother={handleReset}
+            citations={response.citations}
+            isIllustrative={response.abstention_reason === 'DEMO_MODE_NOT_CONNECTED'}
+            retrieval={response.retrieval}
           />
         )}
       </div>

@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { ExternalLink, Share2 } from 'lucide-react';
-import { HotlineInfo, LanguageCode } from '../../types/api';
+import { Citation, HotlineInfo, LanguageCode } from '../../types/api';
 import { TRANSLATIONS } from '../../utils/translations';
 import { VerdictStamp } from '../common/VerdictStamp';
 import { GuidanceGapIllustration } from '../illustrations';
@@ -19,6 +19,9 @@ interface AbstentionCardProps {
   hotlineInfo: HotlineInfo | null;
   language: LanguageCode;
   onAskAnother: () => void;
+  citations?: Citation[];
+  isIllustrative?: boolean;
+  retrieval?: { top_score: number; threshold: number; passages_evaluated: number };
 }
 
 export const AbstentionCard: React.FC<AbstentionCardProps> = ({
@@ -28,6 +31,9 @@ export const AbstentionCard: React.FC<AbstentionCardProps> = ({
   hotlineInfo,
   language,
   onAskAnother,
+  citations = [],
+  isIllustrative = false,
+  retrieval,
 }) => {
   const [isShareOpen, setIsShareOpen] = useState(false);
   const t = TRANSLATIONS[language];
@@ -47,11 +53,11 @@ export const AbstentionCard: React.FC<AbstentionCardProps> = ({
       {/* Header */}
       <div className="bg-[#FFFBEB] dark:bg-[#291F11] border-b border-[#FDE68A] dark:border-[#B45309]/40 px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <VerdictStamp
-            verdict="NO_OFFICIAL_SOURCE_FOUND"
-            size="sm"
-            rotate={false}
-          />
+          {isIllustrative || citations.length > 0 ? (
+            <VerdictStamp verdict="NOT_VALIDATED" size="sm" rotate={false} />
+          ) : (
+            <VerdictStamp verdict="NO_OFFICIAL_SOURCE_FOUND" size="sm" rotate={false} />
+          )}
           <span className="text-xs font-mono font-bold text-[#B45309] dark:text-[#FCD34D]">
             {t.abstentionHeading}
           </span>
@@ -88,11 +94,30 @@ export const AbstentionCard: React.FC<AbstentionCardProps> = ({
               {explanation}
             </p>
 
+            {retrieval && (
+              <p className="text-xs font-mono text-[#63584C] dark:text-[#A89E90]">
+                Raw TF-IDF match: {retrieval.top_score.toFixed(3)} / threshold {retrieval.threshold.toFixed(3)}; not a confidence score.
+              </p>
+            )}
+
             <div className="border-t border-[#FDE68A]/80 dark:border-[#B45309]/40 pt-3 text-xs text-[#92400E] dark:text-[#FCD34D] leading-relaxed font-mono">
-              <strong>Institutional Policy:</strong> A missing publication in our repository does not prove that a claim is false. It means no approved government agency has verified or addressed it.
+              <strong>Limit:</strong> {isIllustrative ? 'Demo Mode is a UI preview and does not search sources.' : citations.length > 0 ? 'Retrieved passages are potentially relevant only; their support for this question has not been validated.' : 'No matching passage in this index does not prove that no official guidance exists or that the claim is false.'}
             </div>
           </div>
         </div>
+
+        {citations.length > 0 && (
+          <section className="space-y-3" aria-label="Retrieved source passages">
+            <h3 className="text-xs font-mono font-bold uppercase">Retrieved passages (not validated)</h3>
+            {citations.map((citation) => (
+              <article key={citation.passage_id} className="border rounded-lg p-3 space-y-1">
+                <p className="text-xs font-bold">{citation.publisher}: {citation.doc_title}</p>
+                <p className="text-sm">{citation.excerpt}</p>
+                <a href={citation.url} target="_blank" rel="noopener noreferrer" className="text-xs underline">Open source</a>
+              </article>
+            ))}
+          </section>
+        )}
 
         {/* Semantic list of official portals */}
         <div className="space-y-3">

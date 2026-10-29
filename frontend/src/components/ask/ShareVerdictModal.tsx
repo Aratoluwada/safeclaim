@@ -25,33 +25,26 @@ export const ShareVerdictModal: React.FC<ShareVerdictModalProps> = ({
   if (!isOpen) return null;
 
   const isGrounded = response.grounded;
-  const lowerAnswer = (response.answer || '').toLowerCase();
-  const verdictLabel: VerdictLabel = !isGrounded
-    ? 'NO_OFFICIAL_SOURCE_FOUND'
-    : lowerAnswer.includes('not prevent') ||
-      lowerAnswer.includes('does not') ||
-      lowerAnswer.includes('refut') ||
-      lowerAnswer.includes('debunk') ||
-      lowerAnswer.includes('zero confirmed') ||
-      lowerAnswer.includes('no ebola')
-    ? 'CONTRADICTED_BY_OFFICIAL_SOURCE'
-    : 'SUPPORTED_BY_OFFICIAL_SOURCE';
+  const isIllustrative = response.abstention_reason === 'ILLUSTRATIVE_DEMO_NOT_VERIFIED';
+  const verdictLabel: VerdictLabel = isGrounded || isIllustrative
+    ? 'NOT_VALIDATED'
+    : 'NO_OFFICIAL_SOURCE_FOUND';
 
   const verdictText = verdictLabel.replace(/_/g, ' ');
 
-  const shareText = `*SafeClaim AI Verification Receipt* 🏛️
+  const shareText = `*SafeClaim Evidence Search* 🏛️
 Claim: "${query}"
-Verdict: ${verdictText}
+Status: ${verdictText}
 
 Summary:
-${isGrounded ? response.answer : t.abstentionLead}
+${response.answer}
 
 ${
-  isGrounded && response.citations.length > 0
+  response.citations.length > 0
     ? `Official Receipts:\n${response.citations
         .map((c) => `• ${c.publisher}: ${c.doc_title} (${c.url})`)
         .join('\n')}`
-    : 'No official government publication confirms this claim.'
+    : 'No source passages were attached to this result.'
 }
 
 ${
@@ -60,7 +53,7 @@ ${
     : 'NCDC Toll-Free Emergency: 6232'
 }
 
-Verified via SafeClaim AI — The trusted neighbour with the receipts.`;
+Not a verified fact-check. Review linked sources directly.`;
 
   const handleCopy = async () => {
     try {
