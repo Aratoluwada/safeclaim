@@ -11,9 +11,22 @@ export interface ApiConfig {
 const STORAGE_KEY_MODE = 'safeclaim_mode';
 const STORAGE_KEY_BASE_URL = 'safeclaim_api_base_url';
 
+export function normalizeApiUrl(rawUrl: string): string {
+  let url = (rawUrl || '').trim().replace(/\/+$/, '');
+  if (!url) return 'http://localhost:8000/api/v1';
+  if (!/^https?:\/\//i.test(url)) {
+    url = `https://${url}`;
+  }
+  if (!url.endsWith('/api/v1')) {
+    url = `${url}/api/v1`;
+  }
+  return url;
+}
+
 export const DEFAULT_API_BASE_URL =
-  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) ||
-  'http://localhost:8000/api/v1';
+  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL)
+    ? normalizeApiUrl(import.meta.env.VITE_API_BASE_URL)
+    : 'http://localhost:8000/api/v1';
 
 export function getApiConfig(): ApiConfig {
   if (typeof window === 'undefined') {
@@ -23,7 +36,7 @@ export function getApiConfig(): ApiConfig {
   const savedUrl = localStorage.getItem(STORAGE_KEY_BASE_URL) || DEFAULT_API_BASE_URL;
   return {
     mode: savedMode,
-    baseUrl: savedUrl.replace(/\/$/, ''),
+    baseUrl: normalizeApiUrl(savedUrl),
   };
 }
 
