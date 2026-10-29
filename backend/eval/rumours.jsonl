@@ -1,0 +1,30 @@
+{"claim":"Ebola virus spreads through airborne transmission like cough and sneeze.","domain":"outbreak","expected_verdict":"CONTRADICTED_BY_OFFICIAL_SOURCE","source_type":"whatsapp_forward"}
+{"claim":"Drinking hot concentrated salt water completely cures and prevents Ebola.","domain":"outbreak","expected_verdict":"CONTRADICTED_BY_OFFICIAL_SOURCE","source_type":"whatsapp_forward"}
+{"claim":"Loan apps have the legal right under Nigerian law to send funeral posters to borrower contacts.","domain":"scam","expected_verdict":"CONTRADICTED_BY_OFFICIAL_SOURCE","source_type":"x_post"}
+{"claim":"Federal government 50,000 cash grant requires paying a 2,500 registration fee on tinyurl link.","domain":"benefit","expected_verdict":"CONTRADICTED_BY_OFFICIAL_SOURCE","source_type":"whatsapp_forward"}
+{"claim":"Voters can vote with manual paper incident forms if BVAS fails to scan fingerprints.","domain":"election_procedure","expected_verdict":"CONTRADICTED_BY_OFFICIAL_SOURCE","source_type":"x_post"}
+{"claim":"Consuming raw bitter kola protects against viral hemorrhagic fever infections.","domain":"outbreak","expected_verdict":"CONTRADICTED_BY_OFFICIAL_SOURCE","source_type":"whatsapp_forward"}
+{"claim":"Unregistered loan apps distributed via APK links can legally scrape personal phone storage.","domain":"scam","expected_verdict":"CONTRADICTED_BY_OFFICIAL_SOURCE","source_type":"x_post"}
+{"claim":"Federal government cash transfers require submitting ATM debit card PIN and CVV.","domain":"benefit","expected_verdict":"CONTRADICTED_BY_OFFICIAL_SOURCE","source_type":"whatsapp_forward"}
+{"claim":"INEC polling officials can close voting lines before 2:30 PM even if voters are queueing.","domain":"election_procedure","expected_verdict":"CONTRADICTED_BY_OFFICIAL_SOURCE","source_type":"web_submission"}
+{"claim":"Touching deceased bodies of Ebola victims during burial poses zero health risk.","domain":"outbreak","expected_verdict":"CONTRADICTED_BY_OFFICIAL_SOURCE","source_type":"whatsapp_forward"}
+{"claim":"Ebola virus is transmitted through direct contact with blood, secretions, and bodily fluids.","domain":"outbreak","expected_verdict":"SUPPORTED_BY_OFFICIAL_SOURCE","source_type":"web_submission"}
+{"claim":"NCDC official emergency toll-free contact center number is 6232.","domain":"outbreak","expected_verdict":"SUPPORTED_BY_OFFICIAL_SOURCE","source_type":"whatsapp_forward"}
+{"claim":"FCCPC mandates that only registered digital money lenders on the official whitelist can operate.","domain":"scam","expected_verdict":"SUPPORTED_BY_OFFICIAL_SOURCE","source_type":"web_submission"}
+{"claim":"FCCPC consumer protection complaints can be reported via toll-free number 0800 033 2272.","domain":"scam","expected_verdict":"SUPPORTED_BY_OFFICIAL_SOURCE","source_type":"x_post"}
+{"claim":"Enrollment into the National Social Register is conducted in person through community enumerators.","domain":"benefit","expected_verdict":"SUPPORTED_BY_OFFICIAL_SOURCE","source_type":"web_submission"}
+{"claim":"National Social Safety Nets Project requires NIN and BVN for direct account verification.","domain":"benefit","expected_verdict":"SUPPORTED_BY_OFFICIAL_SOURCE","source_type":"whatsapp_forward"}
+{"claim":"NASSP grievance redress mechanism helpline is 0700 227 4835.","domain":"benefit","expected_verdict":"SUPPORTED_BY_OFFICIAL_SOURCE","source_type":"web_submission"}
+{"claim":"Bimodal Voter Accreditation System BVAS is mandatory for accreditation in INEC elections.","domain":"election_procedure","expected_verdict":"SUPPORTED_BY_OFFICIAL_SOURCE","source_type":"x_post"}
+{"claim":"INEC polling unit official voting hours nationwide run from 8:30 AM to 2:30 PM.","domain":"election_procedure","expected_verdict":"SUPPORTED_BY_OFFICIAL_SOURCE","source_type":"web_submission"}
+{"claim":"INEC Citizens Contact Centre toll-free line is 0700-CALL-INEC 0700 2255 4632.","domain":"election_procedure","expected_verdict":"SUPPORTED_BY_OFFICIAL_SOURCE","source_type":"whatsapp_forward"}
+{"claim":"Boiled guava leaf tea with ginger cures monkeypox lesions within 24 hours.","domain":"outbreak","expected_verdict":"NO_OFFICIAL_SOURCE_FOUND","source_type":"whatsapp_forward"}
+{"claim":"All pensioners must surrender old NHIA insurance cards and pay 2500 for biometric updates.","domain":"benefit","expected_verdict":"NO_OFFICIAL_SOURCE_FOUND","source_type":"whatsapp_forward"}
+{"claim":"Federal ministry of communications distributing free Apple iPads to all tertiary students.","domain":"benefit","expected_verdict":"NO_OFFICIAL_SOURCE_FOUND","source_type":"x_post"}
+{"claim":"INEC has launched an official mobile app on Google Play to allow voting from home.","domain":"election_procedure","expected_verdict":"NO_OFFICIAL_SOURCE_FOUND","source_type":"x_post"}
+{"claim":"Drinking neem tree leaf extract provides lifelong immunity against cholera infection.","domain":"outbreak","expected_verdict":"NO_OFFICIAL_SOURCE_FOUND","source_type":"whatsapp_forward"}
+{"claim":"CBN approved instant 500,000 naira business stimulus grants via Telegram bot.","domain":"scam","expected_verdict":"NO_OFFICIAL_SOURCE_FOUND","source_type":"whatsapp_forward"}
+{"claim":"Eating raw onions with charcoal neutralizes all toxic viral fevers in the body.","domain":"outbreak","expected_verdict":"NO_OFFICIAL_SOURCE_FOUND","source_type":"whatsapp_forward"}
+{"claim":"Customs auction selling confiscated Toyota Camry cars for 150,000 naira on Facebook.","domain":"scam","expected_verdict":"NO_OFFICIAL_SOURCE_FOUND","source_type":"x_post"}
+{"claim":"Federal government declared every Friday a national work-from-home day for private banks.","domain":"other","expected_verdict":"NO_OFFICIAL_SOURCE_FOUND","source_type":"x_post"}
+{"claim":"INEC cancelled general elections in 14 northern states due to sudden logistics shortage.","domain":"election_procedure","expected_verdict":"NO_OFFICIAL_SOURCE_FOUND","source_type":"whatsapp_forward"}
