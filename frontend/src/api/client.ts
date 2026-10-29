@@ -6,10 +6,12 @@
 export interface ApiConfig {
   mode: 'demo' | 'live';
   baseUrl: string;
+  adminToken?: string;
 }
 
 const STORAGE_KEY_MODE = 'safeclaim_mode';
 const STORAGE_KEY_BASE_URL = 'safeclaim_api_base_url';
+const STORAGE_KEY_ADMIN_TOKEN = 'safeclaim_admin_token';
 
 export function normalizeApiUrl(rawUrl: string): string {
   let url = (rawUrl || '').trim().replace(/\/+$/, '');
@@ -30,13 +32,15 @@ export const DEFAULT_API_BASE_URL =
 
 export function getApiConfig(): ApiConfig {
   if (typeof window === 'undefined') {
-    return { mode: 'demo', baseUrl: DEFAULT_API_BASE_URL };
+    return { mode: 'demo', baseUrl: DEFAULT_API_BASE_URL, adminToken: '' };
   }
   const savedMode = (localStorage.getItem(STORAGE_KEY_MODE) as 'demo' | 'live') || 'demo';
   const savedUrl = localStorage.getItem(STORAGE_KEY_BASE_URL) || DEFAULT_API_BASE_URL;
+  const savedToken = localStorage.getItem(STORAGE_KEY_ADMIN_TOKEN) || '';
   return {
     mode: savedMode,
     baseUrl: normalizeApiUrl(savedUrl),
+    adminToken: savedToken,
   };
 }
 
@@ -45,10 +49,12 @@ export function saveApiConfig(config: Partial<ApiConfig>): ApiConfig {
   const updated: ApiConfig = {
     mode: config.mode ?? current.mode,
     baseUrl: (config.baseUrl ?? current.baseUrl).replace(/\/$/, ''),
+    adminToken: config.adminToken !== undefined ? config.adminToken : current.adminToken,
   };
   if (typeof window !== 'undefined') {
     localStorage.setItem(STORAGE_KEY_MODE, updated.mode);
     localStorage.setItem(STORAGE_KEY_BASE_URL, updated.baseUrl);
+    localStorage.setItem(STORAGE_KEY_ADMIN_TOKEN, updated.adminToken || '');
     window.dispatchEvent(new CustomEvent('safeclaim_config_changed', { detail: updated }));
   }
   return updated;

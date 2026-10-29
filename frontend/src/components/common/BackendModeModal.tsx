@@ -205,6 +205,24 @@ export const BackendModeModal: React.FC<BackendModeModalProps> = ({
                 )}
               </div>
 
+              {/* Admin Token input */}
+              <div className="space-y-2">
+                <label htmlFor="admin-token" className="block text-xs font-mono uppercase tracking-wider text-[#63584C] dark:text-[#A89E90] font-bold">
+                  Admin API Token (Optional)
+                </label>
+                <input
+                  id="admin-token"
+                  type="password"
+                  value={config.adminToken || ''}
+                  onChange={(e) => setConfig({ ...config, adminToken: e.target.value })}
+                  placeholder="X-SafeClaim-Admin-Token (for protected reload/submit)"
+                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-white dark:bg-[#201C17] font-mono text-[#1F1B16] dark:text-[#F4EEE4] focus-ring"
+                />
+                <p className="text-[11px] text-[#8E8273] font-mono">
+                  Matches SAFECLAIM_ADMIN_TOKEN in your backend environment. Required to reload live synthetic clusters or submit claims.
+                </p>
+              </div>
+
               {/* Architecture note */}
               <div className="p-4 rounded-xl bg-[#FAF7F2] dark:bg-[#201C17] border border-[#D4C5B3] dark:border-[#3D352C] text-xs space-y-1.5 text-[#63584C] dark:text-[#A89E90] shadow-2xs">
                 <div className="flex items-center gap-2 font-bold text-[#1F1B16] dark:text-[#F4EEE4] font-mono">
