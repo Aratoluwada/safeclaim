@@ -123,12 +123,27 @@ def determine_verdict(
     if model_label == "CONTRADICTED_BY_OFFICIAL_SOURCE":
         label = model_label
         short_explanation = explanation.strip()
+        pidgin_line = "Government don debunk am! Make nobody forward this false message enter WhatsApp."
+        try:
+            from safeclaims.llm import generate_pidgin_receipt_with_llm
+
+            generated = generate_pidgin_receipt_with_llm(
+                claim_text=claim_text,
+                verdict=model_label,
+                evidence_summary=top_p.excerpt[:200],
+                hotline=res.hotline["number"] if res.hotline else "6232",
+            )
+            if generated and isinstance(generated, str) and generated.strip():
+                pidgin_line = generated.strip()
+        except Exception:
+            pass
+
         suggested_reply = (
             f"🚨 *SafeClaim Alert: This Claim is REFUTED by Official Sources*\n"
             f"Official Position: {top_p.excerpt[:220]}...\n\n"
             f"📖 Source: {top_p.publisher} [{top_p.url}]\n"
             f"☎️ Official Contact: {res.hotline['number'] if res.hotline else 'NCDC 6232'}\n"
-            f"Naija Pidgin: Government don debunk am! Make nobody forward this false message enter WhatsApp."
+            f"Naija Pidgin: {pidgin_line}"
         )
     elif model_label == "SUPPORTED_BY_OFFICIAL_SOURCE":
         label = model_label

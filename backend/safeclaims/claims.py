@@ -60,23 +60,40 @@ def extract_claim_from_message(
 ) -> ExtractedClaim:
     """
     Extracts normalized core claim from a raw message.
-    Strips noise like WhatsApp forwarding headers or tweet hashtags.
+    Attempts model-assisted claim normalization via normalize_claim_with_llm,
+    falling back reliably to deterministic regex sanitization and domain routing.
     """
     sanitized = sanitize_input_text(message.raw_text)
 
-    # Clean typical WhatsApp forward artifacts
-    cleaned = re.sub(r"^\[.*?\]\s*", "", sanitized)
-    cleaned = re.sub(r"^(?:Forwarded|FWD|URGENT|BREAKING NEWS|ALERT):\s*", "", cleaned, flags=re.IGNORECASE)
+    normalized_claim = None
+    domain = None
 
-    # Remove URL shorteners or query params from representative claim text
-    cleaned_no_url = re.sub(r"https?://\S+", "[link]", cleaned).strip()
+    try:
+        from safeclaims.llm import normalize_claim_with_llm
 
-    domain = classify_domain(cleaned)
+        res = normalize_claim_with_llm(sanitized)
+        if isinstance(res, dict) and res.get("claim"):
+            normalized_claim = str(res["claim"]).strip()
+            cand_domain = str(res.get("domain", "")).lower()
+            if cand_domain in ("outbreak", "scam", "benefit", "election_procedure", "other"):
+                domain = cand_domain
+    except Exception:
+        pass
+
+    if not normalized_claim:
+        # Clean typical WhatsApp forward artifacts
+        cleaned = re.sub(r"^\[.*?\]\s*", "", sanitized)
+        cleaned = re.sub(r"^(?:Forwarded|FWD|URGENT|BREAKING NEWS|ALERT):\s*", "", cleaned, flags=re.IGNORECASE)
+        cleaned_no_url = re.sub(r"https?://\S+", "[link]", cleaned).strip()
+        normalized_claim = cleaned_no_url if cleaned_no_url else sanitized
+
+    if not domain:
+        domain = classify_domain(normalized_claim)
 
     return ExtractedClaim(
         claim_id=f"clm_{message.message_id}",
         message_id=message.message_id,
-        normalized_claim=cleaned_no_url if cleaned_no_url else sanitized,
+        normalized_claim=normalized_claim,
         domain=domain,
         source_type=message.source_type,
         language=message.language,
