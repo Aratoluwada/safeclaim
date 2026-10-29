@@ -31,6 +31,7 @@ export const DEMO_ASK_RESPONSES: Record<string, AskResponse> = {
     hotline_info: DEMO_HOTLINE_NCDC,
     citations: [
       {
+        verification_status: 'unverified',
         passage_id: 'ncdc#1',
         doc_title: 'Public Health Advisory on Viral Haemorrhagic Fevers in Nigeria',
         publisher: 'Nigeria Centre for Disease Control and Prevention (NCDC)',
@@ -40,6 +41,7 @@ export const DEMO_ASK_RESPONSES: Record<string, AskResponse> = {
           'The Nigeria Centre for Disease Control and Prevention reassures the public that as of current epidemiology surveillance, Nigeria has recorded zero confirmed cases of Ebola Virus Disease. Speculative alerts circulating on messaging platforms regarding cases in Lagos are unsubstantiated.',
       },
       {
+        verification_status: 'unverified',
         passage_id: 'ncdc#2',
         doc_title: 'Point of Entry Biosecurity & Port Health Services Protocol',
         publisher: 'Federal Ministry of Health and Social Welfare',
@@ -49,6 +51,7 @@ export const DEMO_ASK_RESPONSES: Record<string, AskResponse> = {
           'Routine thermal screening and passenger health declaration monitoring are continuously enforced across all international transit terminals including Lagos and Abuja.',
       },
       {
+        verification_status: 'unverified',
         passage_id: 'ncdc#3',
         doc_title: 'Factsheet on Infectious Disease Rumours and Verification',
         publisher: 'NCDC Risk Communication Division',
@@ -70,6 +73,7 @@ export const DEMO_ASK_RESPONSES: Record<string, AskResponse> = {
     hotline_info: DEMO_HOTLINE_NCDC,
     citations: [
       {
+        verification_status: 'unverified',
         passage_id: 'ncdc#salt1',
         doc_title: 'Warning on Harmful Domestic Concoctions for Viral Haemorrhagic Fevers',
         publisher: 'Nigeria Centre for Disease Control (NCDC)',
@@ -79,6 +83,7 @@ export const DEMO_ASK_RESPONSES: Record<string, AskResponse> = {
           'Drinking salt water or bathing in hot saltwater mixtures provides zero antiviral protection against Ebola or any filovirus. Several individuals suffered severe medical emergencies in 2014 from this unscientific practice.',
       },
       {
+        verification_status: 'unverified',
         passage_id: 'ncdc#salt2',
         doc_title: 'Clinical Guidance on Acute Salt Toxicity and Hypernatremia',
         publisher: 'Federal Ministry of Health',
@@ -88,6 +93,7 @@ export const DEMO_ASK_RESPONSES: Record<string, AskResponse> = {
           'Ingesting high-salinity water causes hyperosmolar cell dehydration, blood pressure spikes, and irreversible kidney injury. It is strongly discouraged under all circumstances.',
       },
       {
+        verification_status: 'unverified',
         passage_id: 'who#salt3',
         doc_title: 'Ebola Virus Disease Mythbusters & Essential Facts',
         publisher: 'World Health Organization (WHO AFRO / Nigeria Office)',
@@ -109,6 +115,7 @@ export const DEMO_ASK_RESPONSES: Record<string, AskResponse> = {
     hotline_info: DEMO_HOTLINE_FCCPC,
     citations: [
       {
+        verification_status: 'unverified',
         passage_id: 'fccpc#1',
         doc_title: 'Status of Approved and Delisted Digital Lending Applications in Nigeria',
         publisher: 'Federal Competition and Consumer Protection Commission (FCCPC)',
@@ -118,6 +125,7 @@ export const DEMO_ASK_RESPONSES: Record<string, AskResponse> = {
           'The FCCPC maintains a dynamic public register of conditionally approved, fully approved, and delisted digital money lenders (DMLs). Only registered entities have demonstrated compliance with the Joint Regulatory and Enforcement Task Force guidelines.',
       },
       {
+        verification_status: 'unverified',
         passage_id: 'fccpc#2',
         doc_title: 'Consumer Guide on Identifying Predatory Loan Platforms',
         publisher: 'FCCPC Joint Regulatory Task Force',
@@ -127,6 +135,7 @@ export const DEMO_ASK_RESPONSES: Record<string, AskResponse> = {
           'Consumers are advised to inspect both the corporate entity name and the Android/iOS app package name on the official whitelist before providing personal details or consenting to contact-list access.',
       },
       {
+        verification_status: 'unverified',
         passage_id: 'fccpc#3',
         doc_title: 'Directives on Defamation and Illegal Debt Collection Practices',
         publisher: 'FCCPC & Nigeria Data Protection Commission (NDPC)',
@@ -153,6 +162,7 @@ export const DEMO_ASK_RESPONSES: Record<string, AskResponse> = {
     },
     citations: [
       {
+        verification_status: 'unverified',
         passage_id: 'nhia#1',
         doc_title: 'NHIA Operational Guidelines and Mandate Implementation',
         publisher: 'National Health Insurance Authority (NHIA)',
@@ -162,6 +172,7 @@ export const DEMO_ASK_RESPONSES: Record<string, AskResponse> = {
           'Section 13 of the NHIA Act provides that health insurance coverage is mandatory for every person resident in Nigeria, ensuring financial risk protection against catastrophic healthcare expenditure.',
       },
       {
+        verification_status: 'unverified',
         passage_id: 'nhia#2',
         doc_title: 'Formal Sector Social Health Insurance Programme Framework',
         publisher: 'NHIA Directorate of Standards and Quality',
@@ -171,6 +182,7 @@ export const DEMO_ASK_RESPONSES: Record<string, AskResponse> = {
           'Federal and participating state civil service employees are integrated via designated Health Maintenance Organisations (HMOs) upon submission of official employment records and primary healthcare provider selection.',
       },
       {
+        verification_status: 'unverified',
         passage_id: 'nhia#3',
         doc_title: 'GIFSHIP Citizen Enrollment Manual for Informal Sector and Families',
         publisher: 'NHIA Department of ICT and Enrollment',
@@ -265,7 +277,8 @@ export const DEMO_CLAIM_CLUSTERS: ClaimCluster[] = [
       evidence_passage_ids: ['ncdc#1', 'ncdc#3'],
       evidence_passages: [
         {
-          passage_id: 'ncdc#1',
+          verification_status: 'unverified',
+        passage_id: 'ncdc#1',
           doc_title: 'Public Health Advisory on Viral Haemorrhagic Fevers in Nigeria',
           publisher: 'NCDC',
           url: 'https://ncdc.gov.ng/news/advisories/vhf-status-update',
@@ -298,7 +311,8 @@ export const DEMO_CLAIM_CLUSTERS: ClaimCluster[] = [
       evidence_passage_ids: ['fccpc#scam1'],
       evidence_passages: [
         {
-          passage_id: 'fccpc#scam1',
+          verification_status: 'unverified',
+        passage_id: 'fccpc#scam1',
           doc_title: 'Notice on Fraudulent Palliative and Grant Distribution Web Portals',
           publisher: 'Federal Competition & Consumer Protection Commission (FCCPC)',
           url: 'https://fccpc.gov.ng/notices/scam-palliative-alert',
@@ -331,7 +345,8 @@ export const DEMO_CLAIM_CLUSTERS: ClaimCluster[] = [
       evidence_passage_ids: ['fccpc#2', 'fccpc#3'],
       evidence_passages: [
         {
-          passage_id: 'fccpc#3',
+          verification_status: 'unverified',
+        passage_id: 'fccpc#3',
           doc_title: 'Directives on Defamation and Illegal Debt Collection Practices',
           publisher: 'FCCPC',
           url: 'https://fccpc.gov.ng/enforcement/debt-collection-rules',
@@ -412,7 +427,8 @@ export const DEMO_CLAIM_CLUSTERS: ClaimCluster[] = [
       evidence_passage_ids: ['inec#cvr1'],
       evidence_passages: [
         {
-          passage_id: 'inec#cvr1',
+          verification_status: 'unverified',
+        passage_id: 'inec#cvr1',
           doc_title: 'Regulations and Guidelines for Voter Registration and PVC Collection',
           publisher: 'Independent National Electoral Commission (INEC)',
           url: 'https://inecnigeria.org/voter-education/regulations-cvr',

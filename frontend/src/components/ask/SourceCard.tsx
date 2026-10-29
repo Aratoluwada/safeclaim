@@ -43,6 +43,13 @@ export const SourceCard: React.FC<SourceCardProps> = ({
           <span className="font-mono text-[11px] px-2 py-0.5 rounded-md bg-white dark:bg-[#2A241E] border border-[#D4C5B3] dark:border-[#3D352C] text-[#63584C] dark:text-[#A89E90]">
             Passage: {citation.passage_id}
           </span>
+          <span className={`font-mono text-[11px] px-2 py-0.5 rounded-md border font-semibold ${
+            citation.verification_status === 'verified'
+              ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300'
+              : 'bg-amber-50 dark:bg-amber-950/60 border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-300'
+          }`}>
+            Provenance: {citation.verification_status || 'unverified'}
+          </span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -85,8 +92,10 @@ export const SourceCard: React.FC<SourceCardProps> = ({
           {/* Authentic pulled excerpt blockquote */}
           <blockquote className="official-document-sheet rounded-xl p-4 sm:p-4.5 border-l-4 border-l-accent text-sm text-[#1F1B16] dark:text-[#F4EEE4] font-body italic leading-relaxed">
             <div className="font-mono text-[10px] font-bold text-accent not-italic uppercase tracking-wider mb-1.5 flex items-center justify-between">
-              <span>Indexed passage (source not authenticated):</span>
-              <span className="font-hand text-sm text-[#27358F] dark:text-[#AEB9FF]">{citation.verification_status || 'unverified'}</span>
+              <span>Indexed passage excerpt (unverified source provenance):</span>
+              <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 uppercase">
+                {citation.verification_status || 'unverified'}
+              </span>
             </div>
             &ldquo;{citation.excerpt}&rdquo;
           </blockquote>

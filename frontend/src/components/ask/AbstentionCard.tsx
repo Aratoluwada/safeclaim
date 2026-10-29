@@ -108,14 +108,47 @@ export const AbstentionCard: React.FC<AbstentionCardProps> = ({
 
         {citations.length > 0 && (
           <section className="space-y-3" aria-label="Retrieved source passages">
-            <h3 className="text-xs font-mono font-bold uppercase">Retrieved passages (not validated)</h3>
-            {citations.map((citation) => (
-              <article key={citation.passage_id} className="border rounded-lg p-3 space-y-1">
-                <p className="text-xs font-bold">{citation.publisher}: {citation.doc_title}</p>
-                <p className="text-sm">{citation.excerpt}</p>
-                <a href={citation.url} target="_blank" rel="noopener noreferrer" className="text-xs underline">Open source</a>
-              </article>
-            ))}
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#63584C] dark:text-[#A89E90]">
+                Retrieved Passages (Not Validated &bull; Unverified Provenance)
+              </h3>
+              <span className="text-[10px] font-mono text-[#8E8273]">
+                {citations.length} excerpt{citations.length > 1 ? 's' : ''}
+              </span>
+            </div>
+            <div className="space-y-2.5">
+              {citations.map((citation) => (
+                <article
+                  key={citation.passage_id}
+                  className="rounded-xl border border-[#D4C5B3] dark:border-[#3D352C] bg-[#FAF7F2] dark:bg-[#1C1814] p-3.5 space-y-2 text-xs"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px]">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-[#1F1B16] dark:text-[#F4EEE4]">{citation.publisher}</span>
+                      <span className="text-[#8E8273]">({citation.passage_id})</span>
+                    </div>
+                    <span className="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200 uppercase font-bold text-[10px]">
+                      {citation.verification_status || 'unverified'}
+                    </span>
+                  </div>
+                  <p className="font-body text-[#1F1B16] dark:text-[#F4EEE4] italic text-xs leading-relaxed">
+                    &ldquo;{citation.excerpt}&rdquo;
+                  </p>
+                  <div className="flex items-center justify-between pt-1 border-t border-[#E8DFD5] dark:border-[#2D261F]">
+                    <span className="text-[10px] text-[#63584C] dark:text-[#A89E90] truncate max-w-xs">{citation.doc_title}</span>
+                    <a
+                      href={citation.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-mono text-accent hover:underline inline-flex items-center gap-1"
+                    >
+                      <span>Open Source URL</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
           </section>
         )}
 
