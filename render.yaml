@@ -30,8 +30,6 @@ services:
   - type: web
     name: safeclaim-frontend
     runtime: static
-    region: frankfurt
-    plan: free
     rootDir: frontend
     buildCommand: npm install --legacy-peer-deps && npm run build
     staticPublishPath: dist
@@ -45,3 +43,4 @@ services:
           type: web
           name: safeclaim-backend
           property: host
+
