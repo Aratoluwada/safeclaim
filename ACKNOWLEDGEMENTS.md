@@ -40,3 +40,20 @@ We draw workflow inspiration and taxonomy validation from the pioneering open jo
 SafeClaim is powered entirely by open-source technologies:
 - **Backend:** [FastAPI](https://fastapi.tiangolo.com/), [Scikit-learn](https://scikit-learn.org/), [NumPy](https://numpy.org/), [Pydantic](https://docs.pydantic.dev/), [Uvicorn](https://www.uvicorn.org/), [Pytest](https://docs.pytest.org/).
 - **Frontend:** [React](https://react.dev/), [Vite](https://vitejs.dev/), [Tailwind CSS v4](https://tailwindcss.com/), [Lucide React](https://lucide.dev/), [TypeScript](https://www.typescriptlang.org/).
+
+---
+
+## 🤖 Open-Weight Foundation Model
+
+SafeClaim integrates open-weight models for Natural Language Inference (NLI) and factual verification:
+* **Model:** [Qwen/Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct) (Alibaba Cloud / Qwen Team)
+* **License:** [Apache 2.0 License](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/blob/main/LICENSE) (Permissive open-weights, commercial and research friendly)
+* **Runtime:** Served via OpenAI-compatible API protocol (Ollama / vLLM / Groq).
+
+---
+
+## 🤝 AI-Assisted Contribution Disclosure
+
+In full compliance with the OSCA OPEN//BUILD 2026 Hackathon submission guidelines:
+* AI coding assistants (including Antigravity IDE and LLM code generation) were used during prototype development for boilerplate scaffolding, React UI styling, test authoring, and documentation drafting.
+* All architectural decisions, mathematical formulations, retrieval indexing thresholds, safety guardrails, and final codebase reviews were designed, verified, and directed by the human development team.

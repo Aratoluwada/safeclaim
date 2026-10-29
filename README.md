@@ -71,4 +71,4 @@ The API is a local prototype. Admin writes and WhatsApp webhook calls require to
 
 ## Acknowledgements
 
-See `backend/ACKNOWLEDGEMENTS.md` and `frontend/ATTRIBUTION.md` for dependencies, design assets, and data-source notes. AI coding assistance was used during implementation; the team remains responsible for reviewing and understanding submitted code.
+See `ACKNOWLEDGEMENTS.md` and `frontend/ATTRIBUTION.md` for dependencies, open-weight model licenses, design assets, and AI-assisted disclosures. AI coding assistance was used during implementation; the team remains responsible for reviewing and understanding submitted code.
