@@ -21,6 +21,7 @@ def test_sources_are_loaded_from_manifest():
     assert response.status_code == 200
     sources = response.json()["sources"]
     assert len(sources) == 4
+    assert all(source["verification_status"] == "unverified" for source in sources)
     assert {source["doc_id"] for source in sources} >= {
         "ncdc_ebola_advisory_2026",
         "fccpc_digital_lenders_advisory_2026",
@@ -51,6 +52,7 @@ def test_ask_returns_evidence_but_never_claims_grounded_answer():
     assert payload["abstention_reason"] == "ANSWER_SUPPORT_NOT_VALIDATED"
     assert payload["citations"]
     assert all(citation["passage_id"] for citation in payload["citations"])
+    assert all(citation["verification_status"] == "unverified" for citation in payload["citations"])
 
 
 def test_ask_rejects_oversized_input_as_problem_details():

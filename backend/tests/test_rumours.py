@@ -39,19 +39,30 @@ def test_rumour_clusters_endpoint_and_filtering():
         assert c["is_guidance_gap"] is True
 
 
-def test_submit_rumour_whatsapp_and_x():
+def test_submit_rumour_requires_admin_token():
+    response = client.post(
+        "/api/v1/rumours/submit",
+        json={"raw_text": "A forwarded public claim", "source_type": "web_submission"},
+    )
+    assert response.status_code == 503
+
+
+def test_submit_rumour_whatsapp_and_x(monkeypatch):
+    monkeypatch.setattr("safeclaims.server.config.ADMIN_API_TOKEN", "test-admin-token")
+    headers = {"X-SafeClaim-Admin-Token": "test-admin-token"}
     # WhatsApp forward submission
     payload_wa = {
         "raw_text": "FWD: Urgently beware! Fake loan app called QuickCash is threatening to call your church members!",
         "source_type": "whatsapp_forward",
         "language": "en",
     }
-    res_wa = client.post("/api/v1/rumours/submit", json=payload_wa)
+    res_wa = client.post("/api/v1/rumours/submit", json=payload_wa, headers=headers)
     assert res_wa.status_code == 200
     data_wa = res_wa.json()
     assert data_wa["status"] == "ingested"
     assert data_wa["domain"] == "scam"
     assert data_wa["cluster_id"].startswith("cl_scam_") or "scam" in data_wa["cluster_id"]
+    assert payload_wa["raw_text"] not in str(client.get("/api/v1/rumours/clusters").json())
 
     # Viral X post submission
     payload_x = {
@@ -59,7 +70,7 @@ def test_submit_rumour_whatsapp_and_x():
         "source_type": "x_post",
         "language": "en",
     }
-    res_x = client.post("/api/v1/rumours/submit", json=payload_x)
+    res_x = client.post("/api/v1/rumours/submit", json=payload_x, headers=headers)
     assert res_x.status_code == 200
     data_x = res_x.json()
     assert data_x["status"] == "ingested"
@@ -76,14 +87,30 @@ def test_daily_brief_generation():
     assert "Guidance Gaps" in brief["markdown"]
 
 
-def test_whatsapp_webhook_response():
+def test_brief_download_rejects_unsafe_date_filename():
+    response = client.get("/api/v1/rumours/brief/download?date=../../secrets")
+    assert response.status_code == 400
+
+
+def test_whatsapp_webhook_requires_token():
+    response = client.post("/api/v1/whatsapp/webhook", json={"Body": "hello"})
+    assert response.status_code == 503
+
+
+def test_whatsapp_webhook_response(monkeypatch):
+    monkeypatch.setattr("safeclaims.server.config.WHATSAPP_WEBHOOK_TOKEN", "test-webhook-token")
     payload = {
         "Body": "Is Ebola confirmed in Lagos right now?",
         "From": "whatsapp:+2348012345678",
     }
-    response = client.post("/api/v1/whatsapp/webhook", json=payload)
+    response = client.post(
+        "/api/v1/whatsapp/webhook",
+        json=payload,
+        headers={"X-SafeClaim-Webhook-Token": "test-webhook-token"},
+    )
     assert response.status_code == 200
     data = response.json()
     assert "reply" in data
-    assert "SafeClaim AI Verification Receipt" in data["reply"]
-    assert "whatsapp:+2348012345678" == data["recipient"]
+    assert "SafeClaim Evidence Search" in data["reply"]
+    assert "not a validated verdict" in data["reply"].lower()
+    assert "recipient" not in data
