@@ -25,10 +25,16 @@ export function normalizeApiUrl(rawUrl: string): string {
   return url;
 }
 
-export const DEFAULT_API_BASE_URL =
-  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL)
-    ? normalizeApiUrl(import.meta.env.VITE_API_BASE_URL)
-    : 'http://localhost:8000/api/v1';
+const envApiUrl =
+  (typeof import.meta !== 'undefined' &&
+    (import.meta.env?.API_BASE_URL || import.meta.env?.VITE_API_BASE_URL)) ||
+  (typeof process !== 'undefined' &&
+    (process.env?.API_BASE_URL || process.env?.VITE_API_BASE_URL)) ||
+  '';
+
+export const DEFAULT_API_BASE_URL = envApiUrl
+  ? normalizeApiUrl(envApiUrl)
+  : 'https://safeclaim-backend.onrender.com/api/v1';
 
 export function getApiConfig(): ApiConfig {
   if (typeof window === 'undefined') {
