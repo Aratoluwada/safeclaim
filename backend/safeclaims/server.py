@@ -1,25 +1,26 @@
 """FastAPI application exposing SafeClaim's complete REST API and WhatsApp webhook."""
 
-from contextlib import asynccontextmanager
 import csv
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
+import hmac
+import re
+import secrets
 import time
 from typing import Any, Dict, List, Literal, Optional
 import uuid
 
-from fastapi import FastAPI, Query, Request, Response
+from fastapi import FastAPI, HTTPException, Query, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from safeclaims import __version__
 from safeclaims.answer import answer_question
 from safeclaims.brief import generate_daily_brief
-from safeclaims.claims import DomainType, RawMessage, SourceType
+from safeclaims.claims import RawMessage, SourceType
 from safeclaims.cluster import cluster_engine
 from safeclaims.config import config
-from safeclaims.ingest import CorpusIndex
 from safeclaims.retrieve import retriever
 
 
@@ -33,7 +34,7 @@ app.add_middleware(
     allow_origins=config.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"],
+    allow_headers=["Content-Type", "Authorization", "X-SafeClaim-Admin-Token", "X-SafeClaim-Webhook-Token"],
 )
 
 
@@ -49,10 +50,18 @@ class RumourSubmitRequest(BaseModel):
 
 
 class WhatsAppWebhookRequest(BaseModel):
-    Body: Optional[str] = None
-    message: Optional[str] = None
-    From: Optional[str] = None
-    sender: Optional[str] = None
+    Body: Optional[str] = Field(default=None, max_length=500)
+    message: Optional[str] = Field(default=None, max_length=500)
+    From: Optional[str] = Field(default=None, max_length=64)
+    sender: Optional[str] = Field(default=None, max_length=64)
+
+
+def _require_token(request: Request, expected_token: str, header_name: str) -> None:
+    if not expected_token:
+        raise HTTPException(status_code=503, detail="This endpoint is not configured.")
+    supplied_token = request.headers.get(header_name, "")
+    if not secrets.compare_digest(supplied_token, expected_token):
+        raise HTTPException(status_code=401, detail="Unauthorized.")
 
 
 @app.exception_handler(RequestValidationError)
@@ -132,6 +141,7 @@ def corpus_sources() -> Dict[str, Any]:
                     "date_retrieved": row["date_retrieved"],
                     "domain": row["domain"],
                     "reuse_terms": row.get("reuse_terms", ""),
+                    "verification_status": row.get("verification_status", "unverified"),
                 }
             )
     return {"sources": sources}
@@ -169,7 +179,8 @@ def rumour_clusters(
 
 
 @app.post("/api/v1/rumours/load-synthetic")
-def load_synthetic_demo() -> Dict[str, Any]:
+def load_synthetic_demo(request: Request) -> Dict[str, Any]:
+    _require_token(request, config.ADMIN_API_TOKEN, "X-SafeClaim-Admin-Token")
     start = time.perf_counter()
     loaded = cluster_engine.load_precomputed(config.PRECOMPUTED_CLUSTERS_PATH)
     elapsed = round(time.perf_counter() - start, 3)
@@ -184,7 +195,8 @@ def load_synthetic_demo() -> Dict[str, Any]:
 
 
 @app.post("/api/v1/rumours/submit")
-def submit_rumour(req: RumourSubmitRequest) -> Dict[str, Any]:
+def submit_rumour(req: RumourSubmitRequest, request: Request) -> Dict[str, Any]:
+    _require_token(request, config.ADMIN_API_TOKEN, "X-SafeClaim-Admin-Token")
     msg_id = f"msg_{uuid.uuid4().hex[:8]}"
     raw_msg = RawMessage(
         message_id=msg_id,
@@ -206,11 +218,21 @@ def submit_rumour(req: RumourSubmitRequest) -> Dict[str, Any]:
 
 @app.get("/api/v1/rumours/brief")
 def rumour_brief(date: Optional[str] = Query(None)) -> Dict[str, Any]:
+    if date is not None:
+        try:
+            date = datetime.strptime(date, "%Y-%m-%d").date().isoformat()
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail="date must use YYYY-MM-DD format") from exc
     return generate_daily_brief(date)
 
 
 @app.get("/api/v1/rumours/brief/download")
 def download_rumour_brief(date: Optional[str] = Query(None)) -> Response:
+    if date is not None:
+        try:
+            date = datetime.strptime(date, "%Y-%m-%d").date().isoformat()
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail="date must use YYYY-MM-DD format") from exc
     brief = generate_daily_brief(date)
     filename = f"SafeClaim_Intelligence_Brief_{brief['date']}.md"
     return Response(
@@ -226,19 +248,19 @@ def download_rumour_brief(date: Optional[str] = Query(None)) -> Response:
 
 
 @app.post("/api/v1/whatsapp/webhook")
-def whatsapp_webhook(req: WhatsAppWebhookRequest) -> Dict[str, Any]:
+def whatsapp_webhook(req: WhatsAppWebhookRequest, request: Request) -> Dict[str, Any]:
     """
     Webhook endpoint compatible with WhatsApp Business Cloud API / Twilio webhooks.
     Receives incoming text from a citizen on WhatsApp, runs grounded verification,
     and returns a formatted WhatsApp verification receipt.
     """
-    incoming_text = req.Body or req.message or ""
+    _require_token(request, config.WHATSAPP_WEBHOOK_TOKEN, "X-SafeClaim-Webhook-Token")
+    incoming_text = (req.Body or req.message or "")[:500]
     sender = req.From or req.sender or "citizen"
 
     if not incoming_text.strip():
         return {
-            "reply": "⚠️ SafeClaim AI: Please send a rumour, voice note transcript, or question to verify.",
-            "recipient": sender,
+            "reply": "SafeClaim can search its indexed source text, but does not provide a validated verdict.",
         }
 
     res = answer_question(incoming_text.strip(), language="en")
@@ -257,18 +279,10 @@ def whatsapp_webhook(req: WhatsAppWebhookRequest) -> Dict[str, Any]:
     if hotline:
         hotline_text = f"\n\n☎️ *Official Helpline:* {hotline['name']} ({hotline['number']})"
 
-    reply = (
-        f"🏛️ *SafeClaim AI Verification Receipt*\n\n"
-        f"🔍 *Query:* \"{incoming_text[:120]}\"\n\n"
-        f"📋 *Official Finding:*\n{answer}"
-        f"{citations_text}"
-        f"{hotline_text}\n\n"
-        f"_Verified via SafeClaim AI — The trusted neighbour with the receipts._"
-    )
+    reply = f"📚 *SafeClaim Evidence Search*\n\n{answer}{citations_text}{hotline_text}\n\n_Not a validated verdict. Check the linked source directly._"
 
     return {
         "reply": reply,
-        "recipient": sender,
         "grounded": is_grounded,
     }
 
