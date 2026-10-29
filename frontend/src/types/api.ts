@@ -15,7 +15,8 @@ export type DomainType =
 export type VerdictLabel = 
   | 'CONTRADICTED_BY_OFFICIAL_SOURCE' 
   | 'SUPPORTED_BY_OFFICIAL_SOURCE' 
-  | 'NO_OFFICIAL_SOURCE_FOUND';
+  | 'NO_OFFICIAL_SOURCE_FOUND'
+  | 'NOT_VALIDATED';
 
 export interface Citation {
   passage_id: string;
@@ -24,6 +25,7 @@ export interface Citation {
   url: string;
   domain: DomainType;
   excerpt: string;
+  verification_status?: 'verified' | 'unverified';
 }
 
 export interface HotlineInfo {
@@ -41,6 +43,11 @@ export interface AskResponse {
   answer: string;
   hotline_info: HotlineInfo | null;
   citations: Citation[];
+  retrieval?: {
+    top_score: number;
+    threshold: number;
+    passages_evaluated: number;
+  };
 }
 
 export interface ClusterVerdict {

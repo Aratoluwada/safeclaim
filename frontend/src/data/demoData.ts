@@ -446,6 +446,7 @@ export const DEMO_RUMOUR_STATS: RumourStats = {
     CONTRADICTED_BY_OFFICIAL_SOURCE: 3,
     SUPPORTED_BY_OFFICIAL_SOURCE: 1,
     NO_OFFICIAL_SOURCE_FOUND: 2,
+    NOT_VALIDATED: 0,
   },
   guidance_gaps_count: 2,
   domains: {

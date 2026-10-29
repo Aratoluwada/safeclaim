@@ -35,6 +35,7 @@ export async function getRumourStats(): Promise<RumourStats> {
     CONTRADICTED_BY_OFFICIAL_SOURCE: 0,
     SUPPORTED_BY_OFFICIAL_SOURCE: 0,
     NO_OFFICIAL_SOURCE_FOUND: 0,
+    NOT_VALIDATED: 0,
   };
   const domains: Record<string, number> = {
     outbreak: 0,
