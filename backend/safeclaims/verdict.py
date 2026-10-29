@@ -4,14 +4,18 @@ Determines strict 3-label verdicts against official corpus evidence,
 detects Guidance Gaps, and formats WhatsApp/radio broadcast replies in English & Pidgin.
 """
 
-from dataclasses import asdict, dataclass
-import re
-from typing import Any, Dict, List, Optional
+from dataclasses import dataclass
+from typing import Any, Dict, List, Literal, Optional
 
-from safeclaims.claims import DomainType, ExtractedClaim
+from safeclaims.claims import DomainType
 from safeclaims.retrieve import RetrievalResult, retriever
 
-VerdictLabel = str  # "CONTRADICTED_BY_OFFICIAL_SOURCE" | "SUPPORTED_BY_OFFICIAL_SOURCE" | "NO_OFFICIAL_SOURCE_FOUND"
+VerdictLabel = Literal[
+    "CONTRADICTED_BY_OFFICIAL_SOURCE",
+    "SUPPORTED_BY_OFFICIAL_SOURCE",
+    "NO_OFFICIAL_SOURCE_FOUND",
+    "NOT_VALIDATED",
+]
 
 
 @dataclass
@@ -64,19 +68,8 @@ def determine_verdict(
         )
         return verdict, True  # is_guidance_gap = True
 
-    # 2. Evidence available -> Check contradiction vs support
+    # 2. Evidence exists; only a validated model result may classify it.
     top_p = res.passages[0]
-    claim_lower = claim_text.lower()
-
-    # Heuristic polarity check against official guidelines
-    contradiction_cues = [
-        "airborne", "air", "salt water", "bath", "cure", "bitter kola", "burial", "deceased", "dead", "zero risk",  # Ebola myths
-        "funeral poster", "message contacts", "scrape", "apk", "50,000", "50000", "fee", "pay", "legal right", "legally",  # Scam & loan apps
-        "pin", "cvv", "atm", "card details", "tinyurl", "link",  # Benefit fraud
-        "incident form", "without bvas", "cancelled", "close voting", "close lines", "close before", "relocat",  # Election procedure
-    ]
-
-    is_contradicted = any(cue in claim_lower for cue in contradiction_cues)
 
     citations = [
         {
@@ -91,25 +84,45 @@ def determine_verdict(
     ]
     passage_ids = [p.passage_id for p in res.passages]
 
-    # Meaningful Open-Weight Model Reasoning (Qwen 2.5 7B Instruct):
-    # Attempt neural NLI verification; if Ollama/vLLM is offline, gracefully fall back to deterministic polarity check
-    llm_explanation: Optional[str] = None
+    allowed_labels = {
+        "CONTRADICTED_BY_OFFICIAL_SOURCE",
+        "SUPPORTED_BY_OFFICIAL_SOURCE",
+        "NO_OFFICIAL_SOURCE_FOUND",
+    }
+    allowed_passage_ids = set(passage_ids)
     try:
         from safeclaims.llm import verify_claim_with_llm
-        llm_out = verify_claim_with_llm(claim_text, domain, citations)
-        if llm_out.get("verdict") in ["CONTRADICTED_BY_OFFICIAL_SOURCE", "SUPPORTED_BY_OFFICIAL_SOURCE"]:
-            is_contradicted = (llm_out["verdict"] == "CONTRADICTED_BY_OFFICIAL_SOURCE")
-            llm_explanation = llm_out.get("explanation")
-    except Exception:
-        # Graceful fallback: keeps 100% offline edge operability
-        pass
 
-    if is_contradicted:
-        label = "CONTRADICTED_BY_OFFICIAL_SOURCE"
-        short_explanation = (
-            llm_explanation
-            or f"This claim directly contradicts official guidance issued by {top_p.publisher} ({top_p.doc_title})."
-        )
+        llm_out = verify_claim_with_llm(claim_text, domain, citations)
+    except Exception:
+        llm_out = {}
+
+    model_label = llm_out.get("verdict")
+    explanation = llm_out.get("explanation")
+    cited_ids = llm_out.get("cited_passage_ids")
+    valid_model_result = (
+        model_label in allowed_labels
+        and isinstance(explanation, str)
+        and bool(explanation.strip())
+        and isinstance(cited_ids, list)
+        and bool(cited_ids)
+        and all(isinstance(passage_id, str) and passage_id in allowed_passage_ids for passage_id in cited_ids)
+    )
+
+    if not valid_model_result:
+        return ClusterVerdict(
+            label="NOT_VALIDATED",
+            short_explanation="Relevant evidence was retrieved, but no validated verdict is available.",
+            suggested_reply=None,
+            evidence_passage_ids=passage_ids,
+            evidence_passages=citations,
+        ), False
+
+    model_citations = [citation for citation in citations if citation["passage_id"] in cited_ids]
+
+    if model_label == "CONTRADICTED_BY_OFFICIAL_SOURCE":
+        label = model_label
+        short_explanation = explanation.strip()
         suggested_reply = (
             f"🚨 *SafeClaim Alert: This Claim is REFUTED by Official Sources*\n"
             f"Official Position: {top_p.excerpt[:220]}...\n\n"
@@ -117,25 +130,29 @@ def determine_verdict(
             f"☎️ Official Contact: {res.hotline['number'] if res.hotline else 'NCDC 6232'}\n"
             f"Naija Pidgin: Government don debunk am! Make nobody forward this false message enter WhatsApp."
         )
-    else:
-        label = "SUPPORTED_BY_OFFICIAL_SOURCE"
-        short_explanation = (
-            llm_explanation
-            or f"This statement aligns with official directives published by {top_p.publisher} ({top_p.doc_title})."
-        )
-
+    elif model_label == "SUPPORTED_BY_OFFICIAL_SOURCE":
+        label = model_label
+        short_explanation = explanation.strip()
         suggested_reply = (
             f"✅ *SafeClaim Notice: Official Guidance Confirmed*\n"
             f"Official Position: {top_p.excerpt[:220]}...\n\n"
             f"📖 Source: {top_p.publisher} [{top_p.url}]\n"
             f"☎️ Support Line: {res.hotline['number'] if res.hotline else 'Official Gov Desk'}"
         )
+    else:
+        return ClusterVerdict(
+            label="NO_OFFICIAL_SOURCE_FOUND",
+            short_explanation=explanation.strip(),
+            suggested_reply=None,
+            evidence_passage_ids=[],
+            evidence_passages=[],
+        ), True
 
     verdict = ClusterVerdict(
         label=label,
         short_explanation=short_explanation,
         suggested_reply=suggested_reply,
-        evidence_passage_ids=passage_ids,
-        evidence_passages=citations,
+        evidence_passage_ids=[citation["passage_id"] for citation in model_citations],
+        evidence_passages=model_citations,
     )
     return verdict, False

@@ -190,10 +190,13 @@ def verify_claim_with_llm(
         "4. You must provide a concise explanation citing the exact passage.\n"
         "Output ONLY JSON with keys: verdict, explanation, cited_passage_ids."
     )
-    user_prompt = (
-        f"CLAIM TO VERIFY: \"{claim_text}\"\n"
-        f"DOMAIN: {domain}\n\n"
-        f"OFFICIAL EVIDENCE CHUNKS:\n{evidence_context}"
+    user_prompt = json.dumps(
+        {
+            "claim": claim_text[:500],
+            "domain": domain,
+            "evidence_passages": evidence_context,
+        },
+        ensure_ascii=True,
     )
 
     messages = [
