@@ -102,9 +102,9 @@ def health() -> Dict[str, Any]:
         "status": "healthy",
         "version": __version__,
         "model": {
-            "name": "TF-IDF retrieval (answer generation disabled)",
-            "provider": "local",
-            "embedding_model": "not used",
+            "name": config.LLM_MODEL,
+            "provider": "groq" if "groq.com" in config.LLM_BASE_URL else "ollama",
+            "base_url": config.LLM_BASE_URL,
             "retrieval_similarity_threshold": config.RETRIEVAL_SIMILARITY_THRESHOLD,
         },
         "corpus": {

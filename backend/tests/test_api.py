@@ -7,13 +7,13 @@ from safeclaims.server import app
 client = TestClient(app)
 
 
-def test_health_reports_local_index_and_disabled_answer_generation():
+def test_health_reports_local_index_and_configured_model():
     response = client.get("/api/v1/health")
     assert response.status_code == 200
     payload = response.json()
     assert payload["status"] == "healthy"
     assert payload["corpus"]["documents_indexed"] == 4
-    assert "disabled" in payload["model"]["name"]
+    assert payload["model"]["name"]
 
 
 def test_sources_are_loaded_from_manifest():
@@ -82,3 +82,24 @@ def test_ask_does_not_show_evidence_or_hotline_below_relevance_threshold():
     assert payload["abstention_reason"] == "NO_OFFICIAL_SOURCE_FOUND_IN_CORPUS"
     assert payload["citations"] == []
     assert payload["hotline_info"] is None
+
+
+def test_ask_returns_grounded_answer_when_model_validates_evidence():
+    from unittest.mock import patch
+
+    mock_llm_result = {
+        "verdict": "CONTRADICTED_BY_OFFICIAL_SOURCE",
+        "explanation": "Official NCDC circular Section 3 explicitly confirms that Ebola does not spread through air.",
+        "cited_passage_ids": ["ncdc_ebola_advisory_2026#3"],
+    }
+    with patch("safeclaims.answer.verify_claim_with_llm", return_value=mock_llm_result):
+        response = client.post(
+            "/api/v1/ask",
+            json={"question": "Does Ebola spread through air?", "language": "en"},
+        )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["grounded"] is True
+    assert payload["verdict"] == "CONTRADICTED_BY_OFFICIAL_SOURCE"
+    assert "Official NCDC circular" in payload["answer"]
+    assert any(c["passage_id"] == "ncdc_ebola_advisory_2026#3" for c in payload["citations"])
