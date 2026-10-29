@@ -1,0 +1,22 @@
+[
+  {
+    "phone": "demo_subscriber",
+    "name": "Demo Citizen",
+    "registered_at": "2026-10-28T09:00:00Z",
+    "status": "active"
+  },
+  {
+    "phone": "274689532383239",
+    "jid": "274689532383239@lid",
+    "name": "Danchi",
+    "registered_at": "2026-10-29T17:55:21.755Z",
+    "status": "active"
+  },
+  {
+    "phone": "9977611735079",
+    "jid": "9977611735079@lid",
+    "name": "mojo.xq",
+    "registered_at": "2026-10-29T17:56:06.700Z",
+    "status": "active"
+  }
+]
