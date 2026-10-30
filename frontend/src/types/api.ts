@@ -39,6 +39,7 @@ export interface AskResponse {
   question: string;
   language: LanguageCode;
   grounded: boolean;
+  verdict?: VerdictLabel;
   abstention_reason: string | null;
   answer: string;
   hotline_info: HotlineInfo | null;

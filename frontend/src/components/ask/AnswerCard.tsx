@@ -52,7 +52,8 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
   };
 
   // Determine verdict label
-  const verdictLabel: VerdictLabel = 'NOT_VALIDATED';
+  const verdictLabel: VerdictLabel =
+    response.verdict || (response.grounded ? 'SUPPORTED_BY_OFFICIAL_SOURCE' : 'NOT_VALIDATED');
 
   // Render text with clickable citation badges, e.g. [ncdc#1]
   const renderFormattedAnswer = (text: string) => {
